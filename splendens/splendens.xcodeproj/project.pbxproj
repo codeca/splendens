@@ -23,6 +23,9 @@
 		98DF30C118181E620092E8A7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98DF309C18181E620092E8A7 /* UIKit.framework */; };
 		98DF30C918181E620092E8A7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 98DF30C718181E620092E8A7 /* InfoPlist.strings */; };
 		98DF30CB18181E620092E8A7 /* splendensTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 98DF30CA18181E620092E8A7 /* splendensTests.m */; };
+		98DF30D6181825820092E8A7 /* Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = 98DF30D5181825820092E8A7 /* Cell.m */; };
+		98DF30D91818258F0092E8A7 /* Map.m in Sources */ = {isa = PBXBuildFile; fileRef = 98DF30D81818258F0092E8A7 /* Map.m */; };
+		98DF30DC18182C9E0092E8A7 /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 98DF30DB18182C9E0092E8A7 /* Player.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +61,12 @@
 		98DF30C618181E620092E8A7 /* splendensTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "splendensTests-Info.plist"; sourceTree = "<group>"; };
 		98DF30C818181E620092E8A7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		98DF30CA18181E620092E8A7 /* splendensTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = splendensTests.m; sourceTree = "<group>"; };
+		98DF30D4181825820092E8A7 /* Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cell.h; sourceTree = "<group>"; };
+		98DF30D5181825820092E8A7 /* Cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cell.m; sourceTree = "<group>"; };
+		98DF30D71818258F0092E8A7 /* Map.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Map.h; sourceTree = "<group>"; };
+		98DF30D81818258F0092E8A7 /* Map.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Map.m; sourceTree = "<group>"; };
+		98DF30DA18182C9E0092E8A7 /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
+		98DF30DB18182C9E0092E8A7 /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Player.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +137,12 @@
 				98DF30B318181E620092E8A7 /* GameScene.m */,
 				98DF30B718181E620092E8A7 /* Images.xcassets */,
 				98DF30A118181E620092E8A7 /* Supporting Files */,
+				98DF30D4181825820092E8A7 /* Cell.h */,
+				98DF30D5181825820092E8A7 /* Cell.m */,
+				98DF30D71818258F0092E8A7 /* Map.h */,
+				98DF30D81818258F0092E8A7 /* Map.m */,
+				98DF30DA18182C9E0092E8A7 /* Player.h */,
+				98DF30DB18182C9E0092E8A7 /* Player.m */,
 			);
 			path = splendens;
 			sourceTree = "<group>";
@@ -258,9 +273,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				98DF30D91818258F0092E8A7 /* Map.m in Sources */,
 				98DF30B418181E620092E8A7 /* GameScene.m in Sources */,
 				98DF30B118181E620092E8A7 /* ViewController.m in Sources */,
 				98DF30AB18181E620092E8A7 /* AppDelegate.m in Sources */,
+				98DF30D6181825820092E8A7 /* Cell.m in Sources */,
+				98DF30DC18182C9E0092E8A7 /* Player.m in Sources */,
 				98DF30A718181E620092E8A7 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

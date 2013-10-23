@@ -7,7 +7,9 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+#import "Map.h"
 
+// The main scene, for the game itself
 @interface GameScene : SKScene
 
 @end
