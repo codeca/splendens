@@ -19,15 +19,14 @@ typedef enum {
 	CellTypeLab
 } CellType;
 
-@interface Cell : NSObject
+@interface Cell : SKSpriteNode
 
-@property (nonatomic) int x;
-@property (nonatomic) int y;
+@property (nonatomic, readonly) int x;
+@property (nonatomic, readonly) int y;
 @property (nonatomic) CellType type;
 @property (nonatomic) int population;
 @property (nonatomic) int level;
 @property (nonatomic) Player* owner;
-@property (nonatomic) SKSpriteNode* node;
 
 - (id)initWithX:(int)x y:(int)y;
 

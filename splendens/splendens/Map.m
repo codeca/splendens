@@ -34,12 +34,19 @@
 		}
 		self.players = players;
 		
+		// Create root node
+		self.position = CGPointMake((768-MAP_SIZE)/2, (1024-MAP_SIZE)/2);
+		
 		// Create each cell
+		float cellSize = MAP_SIZE/self.size;
 		NSMutableArray* cells = [[NSMutableArray alloc] initWithCapacity:self.size*self.size];
 		for (int y=0; y<self.size; y++) {
 			for (int x=0; x<self.size; x++) {
 				Cell* cell = [[Cell alloc] initWithX:x y:y];
+				cell.size = CGSizeMake(cellSize, cellSize);
+				cell.position = CGPointMake(x*cellSize+cellSize/2, y*cellSize+cellSize/2);
 				[cells addObject:cell];
+				[self addChild:cell];
 			}
 		}
 		self.cells = cells;
@@ -56,53 +63,12 @@
 			if (cell.type != CellTypeEmpty && cell.type != CellTypeWall)
 				cell.owner = [players objectAtIndex:[[savedCell objectForKey:@"owner"] integerValue]];
 		}
-		
-		// Create the node tree
-		[self createNodeTree];
 	}
 	return self;
 }
 
 - (Cell*)cellAtX:(int)x y:(int)y {
 	return [self.cells objectAtIndex:y*self.size+x];
-}
-
-- (void)createNodeTree {
-	// Create the root node
-	self.node = [SKNode node];
-	self.node.position = CGPointMake((768-MAP_SIZE)/2, (1024-MAP_SIZE)/2);
-	
-	// Create each cell node
-	for (Cell* cell in self.cells)
-		[self updateSpriteForCell:cell];
-}
-
-- (void)updateSpriteForCell:(Cell*)cell {
-	// Remove previous sprite
-	if (cell.node)
-		[cell.node removeFromParent];
-	
-	// Choose the right color
-	UIColor* color;
-	switch (cell.type) {
-		case CellTypeEmpty: color = [UIColor clearColor]; break;
-		case CellTypeWall: color = [UIColor whiteColor]; break;
-		case CellTypeBasic: color = [UIColor grayColor]; break;
-		case CellTypeCity: color = [UIColor greenColor]; break;
-		case CellTypeTower: color = [UIColor redColor]; break;
-		case CellTypeLab: color = [UIColor blueColor]; break;
-	}
-	
-	// Create basic sprite
-	float cellSize = MAP_SIZE/self.size;
-	cell.node = [SKSpriteNode spriteNodeWithColor:color size:CGSizeMake(cellSize, cellSize)];
-	cell.node.position = CGPointMake(cell.x*cellSize+cellSize/2, cell.y*cellSize+cellSize/2);
-	[self.node addChild:cell.node];
-	
-	// Debug label
-	SKLabelNode* label = [SKLabelNode labelNodeWithFontNamed:@"arial"];
-	label.text = [NSString stringWithFormat:@"(%d, %d)", cell.x, cell.y];
-	[cell.node addChild:label];
 }
 
 @end

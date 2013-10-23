@@ -14,17 +14,14 @@
 #define MAP_SIZE 700.0
 
 // Represent the whole map, with all centers and troops
-@interface Map : NSObject
+@interface Map : SKNode
 
 @property (nonatomic) int size;
 @property (nonatomic) NSArray* cells;
 @property (nonatomic) NSArray* players;
-@property (nonatomic) SKNode* node;
 
 - (id)initWithDefinition:(NSString*)def;
 
 - (Cell*)cellAtX:(int)x y:(int)y;
-
-- (void)updateSpriteForCell:(Cell*)cell;
 
 @end
