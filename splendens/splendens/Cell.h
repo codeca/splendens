@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <SpriteKit/SpriteKit.h>
 #import "Player.h"
 
 typedef enum {
@@ -26,6 +27,7 @@ typedef enum {
 @property (nonatomic) int population;
 @property (nonatomic) int level;
 @property (nonatomic) Player* owner;
+@property (nonatomic) SKSpriteNode* node;
 
 - (id)initWithX:(int)x y:(int)y;
 
