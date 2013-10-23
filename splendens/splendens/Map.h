@@ -13,15 +13,17 @@
 
 #define MAP_SIZE 700.0
 
-// Represent the whole map, with all centers and troops
+// Represent the whole map, with all cells and troops
 @interface Map : SKNode
 
 @property (nonatomic) int size;
 @property (nonatomic) NSArray* cells;
 @property (nonatomic) NSArray* players;
 
+// Create a new map from a JSON string (see the structure in the project wiki)
 - (id)initWithDefinition:(NSString*)def;
 
+// Return the cell at the given position
 - (Cell*)cellAtX:(int)x y:(int)y;
 
 @end

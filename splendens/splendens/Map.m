@@ -60,8 +60,11 @@
 			cell.type = [[savedCell objectForKey:@"type"] integerValue];
 			cell.population = [[savedCell objectForKey:@"population"] integerValue];
 			cell.level = [[savedCell objectForKey:@"level"] integerValue];
-			if (cell.type != CellTypeEmpty && cell.type != CellTypeWall)
-				cell.owner = [players objectAtIndex:[[savedCell objectForKey:@"owner"] integerValue]];
+			if (cell.type != CellTypeEmpty && cell.type != CellTypeWall) {
+				id owner = [savedCell objectForKey:@"owner"];
+				if (owner != [NSNull null])
+					cell.owner = [players objectAtIndex:[owner integerValue]];
+			}
 		}
 	}
 	return self;

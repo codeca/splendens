@@ -20,6 +20,7 @@
 		// Debug label
 		SKLabelNode* label = [SKLabelNode labelNodeWithFontNamed:@"arial"];
 		label.text = [NSString stringWithFormat:@"(%d, %d)", x, y];
+		label.fontSize = 16;
 		[self addChild:label];
 	}
 	return self;
@@ -45,7 +46,22 @@
 }
 
 - (void)setLevel:(int)level {
-	// TODO
+	// Remove all previous stars
+	SKNode* node;
+	while ((node = [self childNodeWithName:@"star"]))
+		[node removeFromParent];
+	
+	// Put the right number of stars
+	float iniX = -self.size.width/2;
+	float iniY = -self.size.height/2;
+	for (int i=0; i<level; i++) {
+		SKSpriteNode* star = [SKSpriteNode spriteNodeWithImageNamed:@"star"];
+		float w = star.size.width;
+		float h = star.size.height;
+		star.position = CGPointMake(iniX+w*i+w/2, iniY+h/2);
+		[self addChild:star];
+	}
+	_level = level;
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
