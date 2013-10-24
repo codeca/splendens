@@ -35,7 +35,6 @@
 		98DF3118181937570092E8A7 /* empty@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 98DF3108181937570092E8A7 /* empty@2X.png */; };
 		98DF3119181937570092E8A7 /* lab@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 98DF3109181937570092E8A7 /* lab@2X.png */; };
 		98DF311A181937570092E8A7 /* lab2@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 98DF310A181937570092E8A7 /* lab2@2X.png */; };
-		98DF311B181937570092E8A7 /* path2@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 98DF310B181937570092E8A7 /* path2@2X.png */; };
 		98DF311C181937570092E8A7 /* path2L@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 98DF310C181937570092E8A7 /* path2L@2X.png */; };
 		98DF311D181937570092E8A7 /* path3@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 98DF310D181937570092E8A7 /* path3@2X.png */; };
 		98DF311E181937570092E8A7 /* path4@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 98DF310E181937570092E8A7 /* path4@2X.png */; };
@@ -45,6 +44,7 @@
 		98DF3122181937570092E8A7 /* wall4@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 98DF3112181937570092E8A7 /* wall4@2X.png */; };
 		98DF312818195A780092E8A7 /* Economy.m in Sources */ = {isa = PBXBuildFile; fileRef = 98DF312718195A780092E8A7 /* Economy.m */; };
 		D05CE05718193C2500827611 /* PathFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = D05CE05618193C2500827611 /* PathFinder.m */; };
+		D05CE05918198F6400827611 /* path2I@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = D05CE05818198F6400827611 /* path2I@2X.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,7 +95,6 @@
 		98DF3108181937570092E8A7 /* empty@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "empty@2X.png"; sourceTree = "<group>"; };
 		98DF3109181937570092E8A7 /* lab@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lab@2X.png"; sourceTree = "<group>"; };
 		98DF310A181937570092E8A7 /* lab2@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lab2@2X.png"; sourceTree = "<group>"; };
-		98DF310B181937570092E8A7 /* path2@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "path2@2X.png"; sourceTree = "<group>"; };
 		98DF310C181937570092E8A7 /* path2L@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "path2L@2X.png"; sourceTree = "<group>"; };
 		98DF310D181937570092E8A7 /* path3@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "path3@2X.png"; sourceTree = "<group>"; };
 		98DF310E181937570092E8A7 /* path4@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "path4@2X.png"; sourceTree = "<group>"; };
@@ -107,6 +106,7 @@
 		98DF312718195A780092E8A7 /* Economy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Economy.m; sourceTree = "<group>"; };
 		D05CE05518193C2500827611 /* PathFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathFinder.h; sourceTree = "<group>"; };
 		D05CE05618193C2500827611 /* PathFinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PathFinder.m; sourceTree = "<group>"; };
+		D05CE05818198F6400827611 /* path2I@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "path2I@2X.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -224,6 +224,7 @@
 		98DF30E21819317B0092E8A7 /* sprites */ = {
 			isa = PBXGroup;
 			children = (
+				D05CE05818198F6400827611 /* path2I@2X.png */,
 				98DF3103181937570092E8A7 /* basic@2X.png */,
 				98DF3104181937570092E8A7 /* basic2@2X.png */,
 				98DF3105181937570092E8A7 /* beta@2X.png */,
@@ -232,7 +233,6 @@
 				98DF3108181937570092E8A7 /* empty@2X.png */,
 				98DF3109181937570092E8A7 /* lab@2X.png */,
 				98DF310A181937570092E8A7 /* lab2@2X.png */,
-				98DF310B181937570092E8A7 /* path2@2X.png */,
 				98DF310C181937570092E8A7 /* path2L@2X.png */,
 				98DF310D181937570092E8A7 /* path3@2X.png */,
 				98DF310E181937570092E8A7 /* path4@2X.png */,
@@ -325,13 +325,13 @@
 				98DF3116181937570092E8A7 /* city@2X.png in Resources */,
 				98DF30E1181848E30092E8A7 /* star.png in Resources */,
 				98DF311C181937570092E8A7 /* path2L@2X.png in Resources */,
-				98DF311B181937570092E8A7 /* path2@2X.png in Resources */,
 				98DF3119181937570092E8A7 /* lab@2X.png in Resources */,
 				98DF311D181937570092E8A7 /* path3@2X.png in Resources */,
 				98DF3114181937570092E8A7 /* basic2@2X.png in Resources */,
 				98DF311A181937570092E8A7 /* lab2@2X.png in Resources */,
 				98DF3113181937570092E8A7 /* basic@2X.png in Resources */,
 				98DF311E181937570092E8A7 /* path4@2X.png in Resources */,
+				D05CE05918198F6400827611 /* path2I@2X.png in Resources */,
 				98DF30B818181E620092E8A7 /* Images.xcassets in Resources */,
 				98DF3115181937570092E8A7 /* beta@2X.png in Resources */,
 				98DF30AE18181E620092E8A7 /* Main.storyboard in Resources */,

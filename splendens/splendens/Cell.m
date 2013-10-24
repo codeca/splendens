@@ -9,6 +9,7 @@
 #import "Cell.h"
 #import "Map.h"
 #import "PathFinder.h"
+#import "Economy.h"
 
 @interface Cell()
 
@@ -274,6 +275,11 @@
 }
 
 - (void) upgradeTo: (CellType)type{
+	int popCost = [Economy upgradePopulationCostForType:type level:1];
+	int manaCost = [Economy upgradeManaCostForType:type level:1];
+	if (popCost>-1 && manaCost>-1){
+		if (self.population >= popCost && ((Map*)self.parent).)
+	}
 	
 }
 
