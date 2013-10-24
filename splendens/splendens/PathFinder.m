@@ -19,7 +19,7 @@
 
 @implementation PathFinder
 
-//A* algorithm to find a sortest path from cell start to cell goal, returns a NSArray with the path.
+//A* algorithm to find a shortest path from cell start to cell goal, returns a NSArray with the path.
 //More info about A* at wiki
 + (NSArray*) findPathwithStart: (Cell*)start andGoal: (Cell*)goal andMap:(Map *)map{
 	

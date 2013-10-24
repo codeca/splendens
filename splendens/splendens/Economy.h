@@ -11,6 +11,8 @@
 
 @interface Economy : NSObject
 
+// Static methods to return values for the game economy
+
 + (int)productionForType:(CellType)type level:(int)level;
 + (int)maxPopulationForType:(CellType)type level:(int)level;
 + (int)speedForType:(CellType)type level:(int)level;
@@ -20,6 +22,6 @@
 + (int)attackRangeForType:(CellType)type level:(int)level;
 + (int)bonusMaxManaForType:(CellType)type level:(int)level;
 + (int)upgradePopulationCostForType:(CellType)type level:(int)level;
-+ (int)upgradePopulationForType:(CellType)type level:(int)level;
++ (int)upgradeManaCostForType:(CellType)type level:(int)level;
 
 @end

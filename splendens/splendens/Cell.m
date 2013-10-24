@@ -19,6 +19,8 @@
 @property (nonatomic) SKSpriteNode* populationMask;
 @property (nonatomic) SKLabelNode* populationLabel;
 @property (nonatomic) SKSpriteNode* pathFocus;
+@property (nonatomic) SKSpriteNode* selectedFocus;
+
 
 @end
 
@@ -50,10 +52,18 @@
 		self.populationLabel.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
 		[self addChild:self.populationLabel];
 		
-		// PathFocus block
-		self.pathFocus = [SKSpriteNode spriteNodeWithTexture:[SKTexture textureWithImageNamed:@"path4"] size:size];
+		// PathFocus
+		self.pathFocus = [SKSpriteNode spriteNodeWithTexture: Cell.path4Texture size:size];
+		self.pathFocus.colorBlendFactor = 1;
 		self.pathFocus.hidden = YES;
 		[self addChild:self.pathFocus];
+		
+		// selectedFocus
+		self.selectedFocus = [SKSpriteNode spriteNodeWithTexture: Cell.path4Texture size:size];
+		self.selectedFocus.color = [UIColor greenColor];
+		self.selectedFocus.colorBlendFactor = 1;
+		self.selectedFocus.hidden = YES;
+		[self addChild:self.selectedFocus];
 		
 		self.userInteractionEnabled = YES;
 		_x = x;
@@ -190,6 +200,11 @@
 	return t ? t : (t=[SKTexture textureWithImageNamed:@"lab2"]);
 }
 
++ (SKTexture*) path4Texture{
+	static SKTexture* t = nil;
+	return t ? t : (t=[SKTexture textureWithImageNamed:@"path4"]);
+}
+
 #pragma mark - touchs
 
 // Check if the user dragged over another cell and dispatch draggedToCell:
@@ -210,12 +225,32 @@
 	Cell* cell = [map cellAtPixelX:location.x pixelY:location.y];
 	if (cell == self)
 		[self cellClicked];
+	else if (cell)
+		[self stopedDragToCell:cell];
 }
 
 #pragma mark - interactivity
 
 - (void)cellClicked {
 	NSLog(@"Clicked at (%d, %d)", self.x, self.y);
+	
+	if (((Map*)self.parent).selected != nil){
+		((Cell*)((Map*)self.parent).selected).selectedFocus.hidden = YES;
+		NSLog(@"Despinta");
+	}
+	if (self.type == CellTypeWall || self.type == CellTypeEmpty){
+		((Map*)self.parent).selected = nil;
+		((Cell*)((Map*)self.parent).selected).selectedFocus.hidden = YES;
+	}
+	else{
+		if (((Map*)self.parent).selected != self){
+			((Map*)self.parent).selected = self;
+			((Cell*)((Map*)self.parent).selected).selectedFocus.hidden = NO;
+		}
+		else{
+			((Map*)self.parent).selected = nil;
+		}
+	}
 }
 
 - (void)draggedToCell:(Cell*)cell {
@@ -223,11 +258,32 @@
 	for (Cell* i in ((Map*)self.parent).cells){
 		i.pathFocus.hidden = YES;
 	}
-	NSArray* caminho = [PathFinder findPathwithStart:self andGoal:cell andMap:(Map*)self.parent];
-	NSLog(@"%@",caminho);
-	for (Cell* i in caminho){
-		i.pathFocus.hidden = NO;
+	if (self.isCenter == YES){
+		NSArray* caminho = [PathFinder findPathwithStart:self andGoal:cell andMap:(Map*)self.parent];
+		NSLog(@"%@",caminho);
+		for (Cell* i in caminho){
+			i.pathFocus.hidden = NO;
+			if (cell.isCenter == YES)i.pathFocus.color = [UIColor magentaColor];
+			else i.pathFocus.color = [UIColor redColor];
+		}
 	}
+}
+
+- (void) stopedDragToCell: (Cell*)cell{
+	//Manda atacar@!!!@!@!@!@!@!@!#!@#!@#!@#!@#!@#!@##!@#!#!#!!@!#@#!@!#@!#@!#@
+}
+
+- (void) upgradeTo: (CellType)type{
+	
+}
+
+- (void) upgrade{
+	
+}
+
+- (BOOL) isCenter{
+	if (self.type == CellTypeEmpty || self.type == CellTypeWall) return NO;
+	return YES;
 }
 
 @end

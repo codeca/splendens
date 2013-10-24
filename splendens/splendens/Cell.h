@@ -29,8 +29,11 @@ typedef enum {
 @property (nonatomic) int level; // not used for empty, wall and basic cells
 @property (nonatomic) Player* owner; // not used for empty and wall cells. nil means abandoned cell
 
+
 // Create a new empty cell with the given position
 - (id)initWithX:(int)x y:(int)y size:(CGSize)size;
+- (void) upgradeTo: (CellType)type;
+- (void) upgrade;
 
 // Cached textures
 + (SKTexture*)emptyTexture;
