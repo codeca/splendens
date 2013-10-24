@@ -20,6 +20,7 @@
 @property (nonatomic) SKLabelNode* populationLabel;
 @property (nonatomic) SKSpriteNode* pathFocus;
 
+
 @end
 
 @implementation Cell
@@ -50,10 +51,15 @@
 		self.populationLabel.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
 		[self addChild:self.populationLabel];
 		
-		// PathFocus block
-		self.pathFocus = [SKSpriteNode spriteNodeWithTexture:[SKTexture textureWithImageNamed:@"path4"] size:size];
+		// PathFocus
+		self.pathFocus = [SKSpriteNode spriteNodeWithTexture: Cell.path4Texture];
 		self.pathFocus.hidden = YES;
 		[self addChild:self.pathFocus];
+		
+		// selectedFocus
+		self.selectedFocus = [SKSpriteNode spriteNodeWithTexture: Cell.path4Texture];
+		self.pathFocus.hidden = YES;
+		[self addChild:self.selectedFocus];
 		
 		self.userInteractionEnabled = YES;
 		_x = x;
@@ -190,6 +196,11 @@
 	return t ? t : (t=[SKTexture textureWithImageNamed:@"lab2"]);
 }
 
++ (SKTexture*) path4Texture{
+	static SKTexture* t = nil;
+	return t ? t : (t=[SKTexture textureWithImageNamed:@"path4"]);
+}
+
 #pragma mark - touchs
 
 // Check if the user dragged over another cell and dispatch draggedToCell:
@@ -216,6 +227,8 @@
 
 - (void)cellClicked {
 	NSLog(@"Clicked at (%d, %d)", self.x, self.y);
+	((Map*)self.parent).selected = self;
+	
 }
 
 - (void)draggedToCell:(Cell*)cell {
@@ -228,6 +241,14 @@
 	for (Cell* i in caminho){
 		i.pathFocus.hidden = NO;
 	}
+}
+
+- (void) upgradeTo: (CellType)type{
+	
+}
+
+- (void) upgrade{
+	
 }
 
 @end
