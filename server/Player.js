@@ -25,6 +25,7 @@ util.inherits(Player, events.EventEmitter)
 // type is an int and data is anything that can be transformed into JSON
 Player.prototype.sendMessage = function (type, data) {
 	var buffer, len, lenBuffer
+	data = data===undefined ? null : data
 	buffer = new Buffer(JSON.stringify([type, data]))
 	len = buffer.length
 	lenBuffer = new Buffer([len>>16, (len>>8)%256, len%256])
