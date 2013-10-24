@@ -7,6 +7,7 @@
 //
 
 #import "Cell.h"
+#import "Map.h"
 
 @interface Cell()
 
@@ -109,6 +110,24 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
 	NSLog(@"(%d, %d)", self.x, self.y);
+}
+
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{
+	UITouch *attack = [touches anyObject];
+	CGPoint finallocation = [attack locationInNode: self.parent];
+	Map* parent = (Map*)self.parent;
+	int posx = finallocation.x/(self.size.width);
+	int posy = finallocation.y/(self.size.height);
+	NSLog(@"(%d, %d)",posx,posy);
+	
+	if (posx < 0 || posx >= parent.size || posy < 0 || posy >= parent.size){
+		NSLog(@"FORA!");
+	}
+	else{
+		Cell *final = [parent cellAtX: posx y: posy];
+		NSLog(@"Im at (%d, %d)->(%d, %d)",self.x,self.y,final.x,final.y);
+	}
+	
 }
 
 @end
