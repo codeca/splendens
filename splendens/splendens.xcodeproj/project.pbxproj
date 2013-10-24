@@ -43,6 +43,7 @@
 		98DF3120181937570092E8A7 /* tower2@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 98DF3110181937570092E8A7 /* tower2@2X.png */; };
 		98DF3121181937570092E8A7 /* tropa@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 98DF3111181937570092E8A7 /* tropa@2X.png */; };
 		98DF3122181937570092E8A7 /* wall4@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 98DF3112181937570092E8A7 /* wall4@2X.png */; };
+		D05CE05718193C2500827611 /* PathFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = D05CE05618193C2500827611 /* PathFinder.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,6 +102,8 @@
 		98DF3110181937570092E8A7 /* tower2@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tower2@2X.png"; sourceTree = "<group>"; };
 		98DF3111181937570092E8A7 /* tropa@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tropa@2X.png"; sourceTree = "<group>"; };
 		98DF3112181937570092E8A7 /* wall4@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wall4@2X.png"; sourceTree = "<group>"; };
+		D05CE05518193C2500827611 /* PathFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathFinder.h; sourceTree = "<group>"; };
+		D05CE05618193C2500827611 /* PathFinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PathFinder.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,6 +181,8 @@
 				98DF30D81818258F0092E8A7 /* Map.m */,
 				98DF30DA18182C9E0092E8A7 /* Player.h */,
 				98DF30DB18182C9E0092E8A7 /* Player.m */,
+				D05CE05518193C2500827611 /* PathFinder.h */,
+				D05CE05618193C2500827611 /* PathFinder.m */,
 			);
 			path = splendens;
 			sourceTree = "<group>";
@@ -353,6 +358,7 @@
 				98DF30B418181E620092E8A7 /* GameScene.m in Sources */,
 				98DF30B118181E620092E8A7 /* ViewController.m in Sources */,
 				98DF30AB18181E620092E8A7 /* AppDelegate.m in Sources */,
+				D05CE05718193C2500827611 /* PathFinder.m in Sources */,
 				98DF30D6181825820092E8A7 /* Cell.m in Sources */,
 				98DF30DC18182C9E0092E8A7 /* Player.m in Sources */,
 				98DF30A718181E620092E8A7 /* main.m in Sources */,
@@ -568,6 +574,7 @@
 				98DF30D018181E620092E8A7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		98DF30D118181E620092E8A7 /* Build configuration list for PBXNativeTarget "splendensTests" */ = {
 			isa = XCConfigurationList;
@@ -576,6 +583,7 @@
 				98DF30D318181E620092E8A7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -73,6 +73,7 @@
 }
 
 - (Cell*)cellAtX:(int)x y:(int)y {
+	if (x<0 || y<0 || x>=self.size || y>=self.size) return nil;
 	return [self.cells objectAtIndex:y*self.size+x];
 }
 
