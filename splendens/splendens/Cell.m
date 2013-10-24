@@ -265,6 +265,10 @@
 
 - (void) stopedDragToCell: (Cell*)cell{
 	//Manda atacar@!!!@!@!@!@!@!@!#!@#!@#!@#!@#!@#!@##!@#!#!#!!@!#@#!@!#@!#@!#@
+	Map* map = (Map*)self.parent;
+	for (Cell* i in map.cells){
+		i.pathFocus.hidden = YES;
+	}
 }
 
 - (void) upgradeTo: (CellType)type{

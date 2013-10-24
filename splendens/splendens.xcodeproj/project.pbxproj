@@ -48,6 +48,7 @@
 		98DF3137181994760092E8A7 /* TextButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 98DF3136181994760092E8A7 /* TextButton.m */; };
 		D05CE05718193C2500827611 /* PathFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = D05CE05618193C2500827611 /* PathFinder.m */; };
 		D05CE05918198F6400827611 /* path2I@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = D05CE05818198F6400827611 /* path2I@2X.png */; };
+		D05CE05C1819957600827611 /* UpgradeArrow.m in Sources */ = {isa = PBXBuildFile; fileRef = D05CE05B1819957600827611 /* UpgradeArrow.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -116,6 +117,8 @@
 		D05CE05518193C2500827611 /* PathFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathFinder.h; sourceTree = "<group>"; };
 		D05CE05618193C2500827611 /* PathFinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PathFinder.m; sourceTree = "<group>"; };
 		D05CE05818198F6400827611 /* path2I@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "path2I@2X.png"; sourceTree = "<group>"; };
+		D05CE05A1819957600827611 /* UpgradeArrow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpgradeArrow.h; sourceTree = "<group>"; };
+		D05CE05B1819957600827611 /* UpgradeArrow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpgradeArrow.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -200,6 +203,8 @@
 				98DF312F1819907C0092E8A7 /* Plug.m */,
 				98DF3135181994760092E8A7 /* TextButton.h */,
 				98DF3136181994760092E8A7 /* TextButton.m */,
+				D05CE05A1819957600827611 /* UpgradeArrow.h */,
+				D05CE05B1819957600827611 /* UpgradeArrow.m */,
 			);
 			path = splendens;
 			sourceTree = "<group>";
@@ -393,6 +398,7 @@
 				98DF3137181994760092E8A7 /* TextButton.m in Sources */,
 				98DF30D6181825820092E8A7 /* Cell.m in Sources */,
 				98DF30DC18182C9E0092E8A7 /* Player.m in Sources */,
+				D05CE05C1819957600827611 /* UpgradeArrow.m in Sources */,
 				98DF30A718181E620092E8A7 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
