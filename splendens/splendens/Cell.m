@@ -214,7 +214,7 @@
 	Map* map = (Map*)self.parent;
 	CGPoint location = [touch locationInNode:map];
 	Cell* cell = [map cellAtPixelX:location.x pixelY:location.y];
-	if (cell && cell != self)
+	if (cell)
 		[self draggedToCell:cell];
 }
 
@@ -261,8 +261,7 @@
 	}
 	if (self.isCenter == YES){
 		NSArray* caminho = [PathFinder findPathwithStart:self andGoal:cell andMap:(Map*)self.parent];
-		NSLog(@"%@",caminho);
-		for (Cell* i in caminho){
+			for (Cell* i in caminho){
 			i.pathFocus.hidden = NO;
 			if (cell.isCenter == YES)i.pathFocus.color = [UIColor magentaColor];
 			else i.pathFocus.color = [UIColor redColor];
@@ -278,12 +277,25 @@
 	int popCost = [Economy upgradePopulationCostForType:type level:1];
 	int manaCost = [Economy upgradeManaCostForType:type level:1];
 	if (popCost>-1 && manaCost>-1){
-		if (self.population >= popCost && ((Map*)self.parent).)
+		if (self.population >= popCost && ((Map*)self.parent).thisPlayer.mana >= manaCost){
+			self.population -= popCost;
+			((Map*)self.parent).thisPlayer.mana -= manaCost;
+			self.type = type;
+			self.level = 1;
+		}
 	}
-	
 }
 
 - (void) upgrade{
+	int popCost = [Economy upgradePopulationCostForType:self.type level:self.level];
+	int manaCost = [Economy upgradeManaCostForType:self.type level:self.level];
+	if (popCost>-1 && manaCost>-1){
+		if (self.population >= popCost && ((Map*)self.parent).thisPlayer.mana >= manaCost){
+			self.population -= popCost;
+			((Map*)self.parent).thisPlayer.mana -= manaCost;
+			self.level += 1;
+		}
+	}
 	
 }
 

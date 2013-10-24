@@ -22,7 +22,7 @@
 //A* algorithm to find a shortest path from cell start to cell goal, returns a NSArray with the path.
 //More info about A* at wiki
 + (NSArray*) findPathwithStart: (Cell*)start andGoal: (Cell*)goal andMap:(Map *)map{
-	
+	if (start == goal) return nil;
 	//init
 	int* possibleDistance;
 	possibleDistance = (int*)malloc(map.size*map.size*sizeof(int));
