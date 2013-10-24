@@ -11,6 +11,7 @@
 
 @interface Cell()
 
+// Visual nodes
 @property (nonatomic) SKSpriteNode* typeOverlay;
 @property (nonatomic) SKCropNode* populationOverlay;
 @property (nonatomic) SKSpriteNode* populationFull;
@@ -89,6 +90,7 @@
 		[self addChild:star];
 	}
 	_level = level;
+	[self updateOverlay];
 }
 
 #pragma mark - internal methods
@@ -183,26 +185,34 @@
 
 #pragma mark - touchs
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-	NSLog(@"(%d, %d)", self.x, self.y);
+// Check if the user dragged over another cell and dispatch draggedToCell:
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{
+	UITouch *touch = [touches anyObject];
+	Map* map = (Map*)self.parent;
+	CGPoint location = [touch locationInNode:map];
+	Cell* cell = [map cellAtPixelX:location.x pixelY:location.y];
+	if (cell != self)
+		[self draggedToCell:cell];
 }
 
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{
-	UITouch *attack = [touches anyObject];
-	CGPoint finallocation = [attack locationInNode: self.parent];
-	Map* parent = (Map*)self.parent;
-	int posx = finallocation.x/(self.size.width);
-	int posy = finallocation.y/(self.size.height);
-	NSLog(@"(%d, %d)",posx,posy);
-	
-	if (posx < 0 || posx >= parent.size || posy < 0 || posy >= parent.size){
-		NSLog(@"FORA!");
-	}
-	else{
-		Cell *final = [parent cellAtX: posx y: posy];
-		NSLog(@"Im at (%d, %d)->(%d, %d)",self.x,self.y,final.x,final.y);
-	}
-	
+// Check for touch up inside event and dispatch cellClicked
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+	UITouch *touch = [touches anyObject];
+	Map* map = (Map*)self.parent;
+	CGPoint location = [touch locationInNode:map];
+	Cell* cell = [map cellAtPixelX:location.x pixelY:location.y];
+	if (cell == self)
+		[self cellClicked];
+}
+
+#pragma mark - interactivity
+
+- (void)cellClicked {
+	NSLog(@"Clicked at (%d, %d)", self.x, self.y);
+}
+
+- (void)draggedToCell:(Cell*)cell {
+	NSLog(@"Dragged from (%d, %d) to (%d, %d)", cell.x, cell.y, self.x, self.y);
 }
 
 @end

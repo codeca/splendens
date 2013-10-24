@@ -26,4 +26,7 @@
 // Return the cell at the given position
 - (Cell*)cellAtX:(int)x y:(int)y;
 
+// Return the cell at the given pixel position (relative to the map node)
+- (Cell*)cellAtPixelX:(float)x pixelY:(float)y;
+
 @end

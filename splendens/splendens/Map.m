@@ -76,4 +76,10 @@
 	return [self.cells objectAtIndex:y*self.size+x];
 }
 
+- (Cell*)cellAtPixelX:(float)pX pixelY:(float)pY {
+	int x = pX/(MAP_SIZE/self.size);
+	int y = pY/(MAP_SIZE/self.size);
+	return [self cellAtX:x y:y];
+}
+
 @end
