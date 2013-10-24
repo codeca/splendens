@@ -20,6 +20,8 @@
 @property (nonatomic) NSArray* cells;
 @property (nonatomic) NSArray* players;
 @property (nonatomic) Cell* selected;
+@property (nonatomic) Player* humamPlayingInThisDevice;
+
 
 // Create a new map from a JSON string (see the structure in the project wiki)
 - (id)initWithDefinition:(NSString*)def;

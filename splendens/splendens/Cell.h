@@ -29,7 +29,6 @@ typedef enum {
 @property (nonatomic) int level; // not used for empty, wall and basic cells
 @property (nonatomic) Player* owner; // not used for empty and wall cells. nil means abandoned cell
 
-@property (nonatomic) SKSpriteNode* selectedFocus;
 
 // Create a new empty cell with the given position
 - (id)initWithX:(int)x y:(int)y size:(CGSize)size;
