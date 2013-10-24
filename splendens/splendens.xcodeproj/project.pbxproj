@@ -43,6 +43,7 @@
 		98DF3120181937570092E8A7 /* tower2@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 98DF3110181937570092E8A7 /* tower2@2X.png */; };
 		98DF3121181937570092E8A7 /* tropa@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 98DF3111181937570092E8A7 /* tropa@2X.png */; };
 		98DF3122181937570092E8A7 /* wall4@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 98DF3112181937570092E8A7 /* wall4@2X.png */; };
+		98DF312818195A780092E8A7 /* Economy.m in Sources */ = {isa = PBXBuildFile; fileRef = 98DF312718195A780092E8A7 /* Economy.m */; };
 		D05CE05718193C2500827611 /* PathFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = D05CE05618193C2500827611 /* PathFinder.m */; };
 /* End PBXBuildFile section */
 
@@ -102,6 +103,8 @@
 		98DF3110181937570092E8A7 /* tower2@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tower2@2X.png"; sourceTree = "<group>"; };
 		98DF3111181937570092E8A7 /* tropa@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tropa@2X.png"; sourceTree = "<group>"; };
 		98DF3112181937570092E8A7 /* wall4@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wall4@2X.png"; sourceTree = "<group>"; };
+		98DF312618195A780092E8A7 /* Economy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Economy.h; sourceTree = "<group>"; };
+		98DF312718195A780092E8A7 /* Economy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Economy.m; sourceTree = "<group>"; };
 		D05CE05518193C2500827611 /* PathFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathFinder.h; sourceTree = "<group>"; };
 		D05CE05618193C2500827611 /* PathFinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PathFinder.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -183,6 +186,8 @@
 				98DF30DB18182C9E0092E8A7 /* Player.m */,
 				D05CE05518193C2500827611 /* PathFinder.h */,
 				D05CE05618193C2500827611 /* PathFinder.m */,
+				98DF312618195A780092E8A7 /* Economy.h */,
+				98DF312718195A780092E8A7 /* Economy.m */,
 			);
 			path = splendens;
 			sourceTree = "<group>";
@@ -357,6 +362,7 @@
 				98DF30D91818258F0092E8A7 /* Map.m in Sources */,
 				98DF30B418181E620092E8A7 /* GameScene.m in Sources */,
 				98DF30B118181E620092E8A7 /* ViewController.m in Sources */,
+				98DF312818195A780092E8A7 /* Economy.m in Sources */,
 				98DF30AB18181E620092E8A7 /* AppDelegate.m in Sources */,
 				D05CE05718193C2500827611 /* PathFinder.m in Sources */,
 				98DF30D6181825820092E8A7 /* Cell.m in Sources */,
