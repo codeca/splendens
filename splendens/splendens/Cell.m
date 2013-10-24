@@ -8,6 +8,7 @@
 
 #import "Cell.h"
 #import "Map.h"
+#import "PathFinder.h"
 
 @interface Cell()
 
@@ -17,6 +18,7 @@
 @property (nonatomic) SKSpriteNode* populationFull;
 @property (nonatomic) SKSpriteNode* populationMask;
 @property (nonatomic) SKLabelNode* populationLabel;
+@property (nonatomic) SKSpriteNode* pathFocus;
 
 @end
 
@@ -47,6 +49,11 @@
 		self.populationLabel.fontSize = self.size.height/3;
 		self.populationLabel.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
 		[self addChild:self.populationLabel];
+		
+		// PathFocus block
+		self.pathFocus = [SKSpriteNode spriteNodeWithTexture:[SKTexture textureWithImageNamed:@"path4"] size:size];
+		self.pathFocus.hidden = YES;
+		[self addChild:self.pathFocus];
 		
 		self.userInteractionEnabled = YES;
 		_x = x;
@@ -191,7 +198,7 @@
 	Map* map = (Map*)self.parent;
 	CGPoint location = [touch locationInNode:map];
 	Cell* cell = [map cellAtPixelX:location.x pixelY:location.y];
-	if (cell != self)
+	if (cell && cell != self)
 		[self draggedToCell:cell];
 }
 
@@ -212,7 +219,15 @@
 }
 
 - (void)draggedToCell:(Cell*)cell {
-	NSLog(@"Dragged from (%d, %d) to (%d, %d)", cell.x, cell.y, self.x, self.y);
+	NSLog(@"Dragged from (%d, %d) to (%d, %d)", self.x, self.y, cell.x, cell.y);
+	for (Cell* i in ((Map*)self.parent).cells){
+		i.pathFocus.hidden = YES;
+	}
+	NSArray* caminho = [PathFinder findPathwithStart:self andGoal:cell andMap:(Map*)self.parent];
+	NSLog(@"%@",caminho);
+	for (Cell* i in caminho){
+		i.pathFocus.hidden = NO;
+	}
 }
 
 @end

@@ -21,13 +21,15 @@
 
 + (NSArray*) findPathwithStart: (Cell*)start andGoal: (Cell*)goal andMap:(Map *)map{
 	int* possibleDistance;
-	possibleDistance = (int*)malloc(map.size*sizeof(int));
-	int startRealDistance[map.size];
-	int cameFrom[map.size];
+	possibleDistance = (int*)malloc(map.size*map.size*sizeof(int));
+	int* startRealDistance;
+	startRealDistance = (int*)malloc(map.size*map.size*sizeof(int));
+	int* cameFrom;
+	cameFrom = (int*)malloc(map.size*map.size*sizeof(int));
 	NSMutableArray* evaluated;
 	NSMutableArray* toEvaluate;
 	
-	for (int i = 0; i < map.size; i++){
+	for (int i = 0; i < map.size*map.size; i++){
 		cameFrom[i] = -1;
 	}
 
@@ -62,18 +64,20 @@
 			[evaluated addObject:current];
 			[toEvaluate removeObject:current];
 			for (int i=-1;i<=1;i++){
-				if (i==0) continue;
+				//if (i==0) continue;
 				for (int j=-1;j<=1;j++){
-					if (j==0) continue;
+					if (i==j || i==-j) continue;
 					Cell* neighbor = [map cellAtX:current.x+i y:current.y+j];
-					if (neighbor != nil){
+					if (neighbor != nil && (neighbor.type == CellTypeEmpty || neighbor == goal)){
 						int neighborInt = [PathFinder cellToInt:neighbor andMap:map];
 						int currentInt = [PathFinder cellToInt:current andMap:map];
 						int tentativeStartRealDistance = startRealDistance[currentInt]+1;
 						int tentativePossibleDistance = tentativeStartRealDistance + neighbor.x + neighbor.y;
 						if ([evaluated indexOfObject:neighbor]!=NSNotFound && tentativePossibleDistance >= possibleDistance[neighborInt]) continue;
 						if ([toEvaluate indexOfObject:neighbor]==NSNotFound || tentativePossibleDistance<possibleDistance[neighborInt]){
+							
 							cameFrom[neighborInt] = currentInt;
+							
 							possibleDistance[neighborInt] = tentativePossibleDistance;
 							startRealDistance[neighborInt] = tentativeStartRealDistance;
 							if ([toEvaluate indexOfObject:neighbor]==NSNotFound){
@@ -102,12 +106,13 @@
 
 
 + (NSMutableArray*) reconsPath: (int*)cameFrom andMap:(Map*) map andCurrent: (Cell*) current{
-	Cell* parent = [PathFinder intToCell: cameFrom[[PathFinder cellToInt: current andMap: map]] andMap:map];
-	if (parent == nil){
+	if (cameFrom[[PathFinder cellToInt: current andMap: map]] == -1){
 		return [[NSMutableArray alloc] initWithObjects:current, nil];
 	}
+	Cell* parent = [PathFinder intToCell: cameFrom[[PathFinder cellToInt: current andMap: map]] andMap:map];
+//	if (parent == nil){
 	NSMutableArray* temp = [PathFinder reconsPath: cameFrom andMap: map andCurrent:parent];
-	[temp addObject: parent];
+	[temp addObject: current];
 	return temp;
 }
 
