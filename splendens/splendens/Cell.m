@@ -8,32 +8,38 @@
 
 #import "Cell.h"
 
+@interface Cell()
+
+@property (nonatomic) SKSpriteNode* typeOverlay;
+
+@end
+
 @implementation Cell
 
 - (id)initWithX:(int)x y:(int)y {
-	if (self = [super init]) {
+	if (self = [super initWithTexture:self.class.emptyTexture]) {
+		// Create subnode to render the cell type texture
+		self.typeOverlay = [[SKSpriteNode alloc] init];
+		self.typeOverlay.name = @"type";
+		[self addChild:self.typeOverlay];
+		
 		self.userInteractionEnabled = YES;
 		_x = x;
 		_y = y;
 		self.type = CellTypeEmpty;
-		
-		// Debug label
-		SKLabelNode* label = [SKLabelNode labelNodeWithFontNamed:@"arial"];
-		label.text = [NSString stringWithFormat:@"(%d, %d)", x, y];
-		label.fontSize = 16;
-		[self addChild:label];
 	}
 	return self;
 }
 
 - (void)setType:(CellType)type {
+	self.typeOverlay.size = self.size;
 	switch (type) {
-		case CellTypeEmpty: self.color = [UIColor clearColor]; break;
-		case CellTypeWall: self.color = [UIColor whiteColor]; break;
-		case CellTypeBasic: self.color = [UIColor grayColor]; break;
-		case CellTypeCity: self.color = [UIColor greenColor]; break;
-		case CellTypeTower: self.color = [UIColor redColor]; break;
-		case CellTypeLab: self.color = [UIColor blueColor]; break;
+		case CellTypeEmpty: self.typeOverlay.texture = nil; break;
+		case CellTypeWall: self.typeOverlay.texture = self.class.wallTexture; break;
+		case CellTypeBasic: self.typeOverlay.texture = self.class.basicTexture; break;
+		case CellTypeCity: self.typeOverlay.texture = self.class.cityTexture; break;
+		case CellTypeTower: self.typeOverlay.texture = self.class.towerTexture; break;
+		case CellTypeLab: self.typeOverlay.texture = self.class.labTexture; break;
 	}
 }
 
@@ -62,6 +68,43 @@
 		[self addChild:star];
 	}
 	_level = level;
+}
+
++ (SKTexture*)emptyTexture {
+	static SKTexture* t = nil;
+	if (!t)
+		t = [SKTexture textureWithImageNamed:@"empty"];
+	return t;
+}
++ (SKTexture*)wallTexture {
+	static SKTexture* t = nil;
+	if (!t)
+		t = [SKTexture textureWithImageNamed:@"wall4"];
+	return t;
+}
++ (SKTexture*)basicTexture {
+	static SKTexture* t = nil;
+	if (!t)
+		t = [SKTexture textureWithImageNamed:@"basic"];
+	return t;
+}
++ (SKTexture*)cityTexture {
+	static SKTexture* t = nil;
+	if (!t)
+		t = [SKTexture textureWithImageNamed:@"city"];
+	return t;
+}
++ (SKTexture*)towerTexture {
+	static SKTexture* t = nil;
+	if (!t)
+		t = [SKTexture textureWithImageNamed:@"tower"];
+	return t;
+}
++ (SKTexture*)labTexture {
+	static SKTexture* t = nil;
+	if (!t)
+		t = [SKTexture textureWithImageNamed:@"lab"];
+	return t;
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {

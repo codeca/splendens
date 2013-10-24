@@ -32,4 +32,12 @@ typedef enum {
 // Create a new empty cell with the given position
 - (id)initWithX:(int)x y:(int)y;
 
+// Cached textures
++ (SKTexture*)emptyTexture;
++ (SKTexture*)wallTexture;
++ (SKTexture*)basicTexture;
++ (SKTexture*)cityTexture;
++ (SKTexture*)towerTexture;
++ (SKTexture*)labTexture;
+
 @end

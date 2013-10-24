@@ -27,6 +27,22 @@
 		98DF30D91818258F0092E8A7 /* Map.m in Sources */ = {isa = PBXBuildFile; fileRef = 98DF30D81818258F0092E8A7 /* Map.m */; };
 		98DF30DC18182C9E0092E8A7 /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 98DF30DB18182C9E0092E8A7 /* Player.m */; };
 		98DF30E1181848E30092E8A7 /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 98DF30E0181848E20092E8A7 /* star.png */; };
+		98DF3113181937570092E8A7 /* basic@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 98DF3103181937570092E8A7 /* basic@2X.png */; };
+		98DF3114181937570092E8A7 /* basic2@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 98DF3104181937570092E8A7 /* basic2@2X.png */; };
+		98DF3115181937570092E8A7 /* beta@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 98DF3105181937570092E8A7 /* beta@2X.png */; };
+		98DF3116181937570092E8A7 /* city@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 98DF3106181937570092E8A7 /* city@2X.png */; };
+		98DF3117181937570092E8A7 /* city2@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 98DF3107181937570092E8A7 /* city2@2X.png */; };
+		98DF3118181937570092E8A7 /* empty@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 98DF3108181937570092E8A7 /* empty@2X.png */; };
+		98DF3119181937570092E8A7 /* lab@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 98DF3109181937570092E8A7 /* lab@2X.png */; };
+		98DF311A181937570092E8A7 /* lab2@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 98DF310A181937570092E8A7 /* lab2@2X.png */; };
+		98DF311B181937570092E8A7 /* path2@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 98DF310B181937570092E8A7 /* path2@2X.png */; };
+		98DF311C181937570092E8A7 /* path2L@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 98DF310C181937570092E8A7 /* path2L@2X.png */; };
+		98DF311D181937570092E8A7 /* path3@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 98DF310D181937570092E8A7 /* path3@2X.png */; };
+		98DF311E181937570092E8A7 /* path4@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 98DF310E181937570092E8A7 /* path4@2X.png */; };
+		98DF311F181937570092E8A7 /* tower@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 98DF310F181937570092E8A7 /* tower@2X.png */; };
+		98DF3120181937570092E8A7 /* tower2@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 98DF3110181937570092E8A7 /* tower2@2X.png */; };
+		98DF3121181937570092E8A7 /* tropa@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 98DF3111181937570092E8A7 /* tropa@2X.png */; };
+		98DF3122181937570092E8A7 /* wall4@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 98DF3112181937570092E8A7 /* wall4@2X.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,7 +84,23 @@
 		98DF30D81818258F0092E8A7 /* Map.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Map.m; sourceTree = "<group>"; };
 		98DF30DA18182C9E0092E8A7 /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
 		98DF30DB18182C9E0092E8A7 /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Player.m; sourceTree = "<group>"; };
-		98DF30E0181848E20092E8A7 /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
+		98DF30E0181848E20092E8A7 /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = star.png; path = ../star.png; sourceTree = "<group>"; };
+		98DF3103181937570092E8A7 /* basic@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "basic@2X.png"; sourceTree = "<group>"; };
+		98DF3104181937570092E8A7 /* basic2@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "basic2@2X.png"; sourceTree = "<group>"; };
+		98DF3105181937570092E8A7 /* beta@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "beta@2X.png"; sourceTree = "<group>"; };
+		98DF3106181937570092E8A7 /* city@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "city@2X.png"; sourceTree = "<group>"; };
+		98DF3107181937570092E8A7 /* city2@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "city2@2X.png"; sourceTree = "<group>"; };
+		98DF3108181937570092E8A7 /* empty@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "empty@2X.png"; sourceTree = "<group>"; };
+		98DF3109181937570092E8A7 /* lab@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lab@2X.png"; sourceTree = "<group>"; };
+		98DF310A181937570092E8A7 /* lab2@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lab2@2X.png"; sourceTree = "<group>"; };
+		98DF310B181937570092E8A7 /* path2@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "path2@2X.png"; sourceTree = "<group>"; };
+		98DF310C181937570092E8A7 /* path2L@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "path2L@2X.png"; sourceTree = "<group>"; };
+		98DF310D181937570092E8A7 /* path3@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "path3@2X.png"; sourceTree = "<group>"; };
+		98DF310E181937570092E8A7 /* path4@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "path4@2X.png"; sourceTree = "<group>"; };
+		98DF310F181937570092E8A7 /* tower@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tower@2X.png"; sourceTree = "<group>"; };
+		98DF3110181937570092E8A7 /* tower2@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tower2@2X.png"; sourceTree = "<group>"; };
+		98DF3111181937570092E8A7 /* tropa@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tropa@2X.png"; sourceTree = "<group>"; };
+		98DF3112181937570092E8A7 /* wall4@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wall4@2X.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +162,7 @@
 		98DF30A018181E620092E8A7 /* splendens */ = {
 			isa = PBXGroup;
 			children = (
+				98DF30E21819317B0092E8A7 /* sprites */,
 				98DF30A918181E620092E8A7 /* AppDelegate.h */,
 				98DF30AA18181E620092E8A7 /* AppDelegate.m */,
 				98DF30AC18181E620092E8A7 /* Main.storyboard */,
@@ -145,7 +178,6 @@
 				98DF30D81818258F0092E8A7 /* Map.m */,
 				98DF30DA18182C9E0092E8A7 /* Player.h */,
 				98DF30DB18182C9E0092E8A7 /* Player.m */,
-				98DF30E0181848E20092E8A7 /* star.png */,
 			);
 			path = splendens;
 			sourceTree = "<group>";
@@ -177,6 +209,30 @@
 				98DF30C718181E620092E8A7 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		98DF30E21819317B0092E8A7 /* sprites */ = {
+			isa = PBXGroup;
+			children = (
+				98DF3103181937570092E8A7 /* basic@2X.png */,
+				98DF3104181937570092E8A7 /* basic2@2X.png */,
+				98DF3105181937570092E8A7 /* beta@2X.png */,
+				98DF3106181937570092E8A7 /* city@2X.png */,
+				98DF3107181937570092E8A7 /* city2@2X.png */,
+				98DF3108181937570092E8A7 /* empty@2X.png */,
+				98DF3109181937570092E8A7 /* lab@2X.png */,
+				98DF310A181937570092E8A7 /* lab2@2X.png */,
+				98DF310B181937570092E8A7 /* path2@2X.png */,
+				98DF310C181937570092E8A7 /* path2L@2X.png */,
+				98DF310D181937570092E8A7 /* path3@2X.png */,
+				98DF310E181937570092E8A7 /* path4@2X.png */,
+				98DF310F181937570092E8A7 /* tower@2X.png */,
+				98DF3110181937570092E8A7 /* tower2@2X.png */,
+				98DF3111181937570092E8A7 /* tropa@2X.png */,
+				98DF3112181937570092E8A7 /* wall4@2X.png */,
+				98DF30E0181848E20092E8A7 /* star.png */,
+			);
+			path = sprites;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -256,9 +312,25 @@
 			buildActionMask = 2147483647;
 			files = (
 				98DF30A518181E620092E8A7 /* InfoPlist.strings in Resources */,
+				98DF3116181937570092E8A7 /* city@2X.png in Resources */,
 				98DF30E1181848E30092E8A7 /* star.png in Resources */,
+				98DF311C181937570092E8A7 /* path2L@2X.png in Resources */,
+				98DF311B181937570092E8A7 /* path2@2X.png in Resources */,
+				98DF3119181937570092E8A7 /* lab@2X.png in Resources */,
+				98DF311D181937570092E8A7 /* path3@2X.png in Resources */,
+				98DF3114181937570092E8A7 /* basic2@2X.png in Resources */,
+				98DF311A181937570092E8A7 /* lab2@2X.png in Resources */,
+				98DF3113181937570092E8A7 /* basic@2X.png in Resources */,
+				98DF311E181937570092E8A7 /* path4@2X.png in Resources */,
 				98DF30B818181E620092E8A7 /* Images.xcassets in Resources */,
+				98DF3115181937570092E8A7 /* beta@2X.png in Resources */,
 				98DF30AE18181E620092E8A7 /* Main.storyboard in Resources */,
+				98DF3118181937570092E8A7 /* empty@2X.png in Resources */,
+				98DF3117181937570092E8A7 /* city2@2X.png in Resources */,
+				98DF311F181937570092E8A7 /* tower@2X.png in Resources */,
+				98DF3122181937570092E8A7 /* wall4@2X.png in Resources */,
+				98DF3120181937570092E8A7 /* tower2@2X.png in Resources */,
+				98DF3121181937570092E8A7 /* tropa@2X.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,8 +1,8 @@
-﻿var Player = require("./Player.js")
+var Player = require("./Player.js")
 var simpleMatch = require("./simpleMatch.js")
 var friendMatch = require("./friendMatch.js")
 
-require("setIp.js")
+require("./setIp.js")
 
 // Constants
 var MSG_PLAYER_DISCONNECTED = -1
