@@ -30,7 +30,7 @@ typedef enum {
 @property (nonatomic) Player* owner; // not used for empty and wall cells. nil means abandoned cell
 
 // Create a new empty cell with the given position
-- (id)initWithX:(int)x y:(int)y;
+- (id)initWithX:(int)x y:(int)y size:(CGSize)size;
 
 // Cached textures
 + (SKTexture*)emptyTexture;
@@ -39,5 +39,10 @@ typedef enum {
 + (SKTexture*)cityTexture;
 + (SKTexture*)towerTexture;
 + (SKTexture*)labTexture;
++ (SKTexture*)starTexture;
++ (SKTexture*)basicFullTexture;
++ (SKTexture*)cityFullTexture;
++ (SKTexture*)towerFullTexture;
++ (SKTexture*)labFullTexture;
 
 @end

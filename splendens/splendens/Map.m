@@ -27,9 +27,12 @@
 		// Extract all players
 		NSArray* savedPlayers = [obj objectForKey:@"players"];
 		NSMutableArray* players = [[NSMutableArray alloc] initWithCapacity:savedPlayers.count];
+		NSArray* colors = @[[UIColor redColor], [UIColor greenColor], [UIColor blueColor], [UIColor whiteColor]];
+		int i = 0;
 		for (NSDictionary* savedPlayer in savedPlayers) {
 			Player* player = [[Player alloc] init];
 			player.mana = [[savedPlayer objectForKey:@"mana"] integerValue];
+			player.color = colors[i++];
 			[players addObject:player];
 		}
 		self.players = players;
@@ -42,8 +45,7 @@
 		NSMutableArray* cells = [[NSMutableArray alloc] initWithCapacity:self.size*self.size];
 		for (int y=0; y<self.size; y++) {
 			for (int x=0; x<self.size; x++) {
-				Cell* cell = [[Cell alloc] initWithX:x y:y];
-				cell.size = CGSizeMake(cellSize, cellSize);
+				Cell* cell = [[Cell alloc] initWithX:x y:y size:CGSizeMake(cellSize, cellSize)];
 				cell.position = CGPointMake(x*cellSize+cellSize/2, y*cellSize+cellSize/2);
 				[cells addObject:cell];
 				[self addChild:cell];

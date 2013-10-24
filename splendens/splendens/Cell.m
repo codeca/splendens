@@ -12,17 +12,40 @@
 @interface Cell()
 
 @property (nonatomic) SKSpriteNode* typeOverlay;
+@property (nonatomic) SKCropNode* populationOverlay;
+@property (nonatomic) SKSpriteNode* populationFull;
+@property (nonatomic) SKSpriteNode* populationMask;
+@property (nonatomic) SKLabelNode* populationLabel;
 
 @end
 
 @implementation Cell
 
-- (id)initWithX:(int)x y:(int)y {
-	if (self = [super initWithTexture:self.class.emptyTexture]) {
+- (id)initWithX:(int)x y:(int)y size:(CGSize)size {
+	if (self = [super initWithTexture:Cell.emptyTexture color:[UIColor clearColor] size:size]) {
 		// Create subnode to render the cell type texture
-		self.typeOverlay = [[SKSpriteNode alloc] init];
-		self.typeOverlay.name = @"type";
+		self.typeOverlay = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:size];
 		[self addChild:self.typeOverlay];
+		
+		// Create subnodes to render the population level overlay
+		self.populationOverlay = [[SKCropNode alloc] init];
+		self.populationOverlay.hidden = YES;
+		self.populationFull = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:size];
+		self.populationFull.colorBlendFactor = 1;
+		self.populationMask = [SKSpriteNode spriteNodeWithColor:[UIColor blackColor] size:size];
+		self.populationMask.anchorPoint = CGPointMake(.5, 0);
+		self.populationMask.position = CGPointMake(0, -size.height/2);
+		self.populationOverlay.maskNode = self.populationMask;
+		[self.populationOverlay addChild:self.populationFull];
+		[self addChild:self.populationOverlay];
+		
+		// Population count label
+		self.populationLabel = [SKLabelNode labelNodeWithFontNamed:@"arial"];
+		self.populationLabel.hidden = YES;
+		self.populationLabel.fontColor = [UIColor whiteColor];
+		self.populationLabel.fontSize = self.size.height/3;
+		self.populationLabel.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
+		[self addChild:self.populationLabel];
 		
 		self.userInteractionEnabled = YES;
 		_x = x;
@@ -32,24 +55,21 @@
 	return self;
 }
 
+#pragma mark - setters
+
 - (void)setType:(CellType)type {
-	self.typeOverlay.size = self.size;
-	switch (type) {
-		case CellTypeEmpty: self.typeOverlay.texture = nil; break;
-		case CellTypeWall: self.typeOverlay.texture = self.class.wallTexture; break;
-		case CellTypeBasic: self.typeOverlay.texture = self.class.basicTexture; break;
-		case CellTypeCity: self.typeOverlay.texture = self.class.cityTexture; break;
-		case CellTypeTower: self.typeOverlay.texture = self.class.towerTexture; break;
-		case CellTypeLab: self.typeOverlay.texture = self.class.labTexture; break;
-	}
+	_type = type;
+	[self updateOverlay];
 }
 
 - (void)setOwner:(Player *)owner {
-	// TODO
+	_owner = owner;
+	[self updateOverlay];
 }
 
 - (void)setPopulation:(int)population {
-	// TODO
+	_population = population;
+	[self updateOverlay];
 }
 
 - (void)setLevel:(int)level {
@@ -61,8 +81,8 @@
 	// Put the right number of stars
 	float iniX = -self.size.width/2;
 	float iniY = -self.size.height/2;
-	for (int i=0; i<level; i++) {
-		SKSpriteNode* star = [SKSpriteNode spriteNodeWithImageNamed:@"star"];
+	for (int i=0; i<level-1; i++) {
+		SKSpriteNode* star = [SKSpriteNode spriteNodeWithTexture:Cell.starTexture];
 		float w = star.size.width;
 		float h = star.size.height;
 		star.position = CGPointMake(iniX+w*i+w/2, iniY+h/2);
@@ -71,42 +91,97 @@
 	_level = level;
 }
 
+#pragma mark - internal methods
+
+// Update the type overlay
+- (void)updateOverlay {
+	// Set size and texture overlay
+	switch (self.type) {
+		case CellTypeEmpty: self.typeOverlay.texture = nil; break;
+		case CellTypeWall: self.typeOverlay.texture = Cell.wallTexture; break;
+		case CellTypeBasic: self.typeOverlay.texture = Cell.basicTexture; break;
+		case CellTypeCity: self.typeOverlay.texture = Cell.cityTexture; break;
+		case CellTypeTower: self.typeOverlay.texture = Cell.towerTexture; break;
+		case CellTypeLab: self.typeOverlay.texture = Cell.labTexture; break;
+	}
+	
+	// Update player color
+	if (self.owner) {
+		self.typeOverlay.colorBlendFactor = .75;
+		self.typeOverlay.color = self.owner.color;
+	} else
+		self.typeOverlay.colorBlendFactor = 0;
+	
+	// Update population mask and label
+	if (self.type != CellTypeEmpty && self.type != CellTypeWall) {
+		// Mask
+		if (self.type == CellTypeBasic) self.populationFull.texture = Cell.basicFullTexture;
+		else if (self.type == CellTypeCity) self.populationFull.texture = Cell.cityFullTexture;
+		else if (self.type == CellTypeTower) self.populationFull.texture = Cell.towerFullTexture;
+		else self.populationFull.texture = Cell.labFullTexture;
+		self.populationOverlay.hidden = NO;
+		self.populationFull.color = self.owner ? self.owner.color : [UIColor grayColor];
+		int width = self.size.width;
+		int height = self.size.height;
+		self.populationMask.size = CGSizeMake(width, self.population*height/50);
+		
+		// Label
+		self.populationLabel.hidden = NO;
+		self.populationLabel.text = [NSString stringWithFormat:@"%d", self.population];
+	} else {
+		self.populationOverlay.hidden = YES;
+		self.populationLabel.hidden = YES;
+	}
+}
+
+#pragma mark - cached textures
+
 + (SKTexture*)emptyTexture {
 	static SKTexture* t = nil;
-	if (!t)
-		t = [SKTexture textureWithImageNamed:@"empty"];
-	return t;
+	return t ? t : (t=[SKTexture textureWithImageNamed:@"empty"]);
 }
 + (SKTexture*)wallTexture {
 	static SKTexture* t = nil;
-	if (!t)
-		t = [SKTexture textureWithImageNamed:@"wall4"];
-	return t;
+	return t ? t : (t=[SKTexture textureWithImageNamed:@"wall4"]);
 }
 + (SKTexture*)basicTexture {
 	static SKTexture* t = nil;
-	if (!t)
-		t = [SKTexture textureWithImageNamed:@"basic"];
-	return t;
+	return t ? t : (t=[SKTexture textureWithImageNamed:@"basic"]);
 }
 + (SKTexture*)cityTexture {
 	static SKTexture* t = nil;
-	if (!t)
-		t = [SKTexture textureWithImageNamed:@"city"];
-	return t;
+	return t ? t : (t=[SKTexture textureWithImageNamed:@"city"]);
 }
 + (SKTexture*)towerTexture {
 	static SKTexture* t = nil;
-	if (!t)
-		t = [SKTexture textureWithImageNamed:@"tower"];
-	return t;
+	return t ? t : (t=[SKTexture textureWithImageNamed:@"tower"]);
 }
 + (SKTexture*)labTexture {
 	static SKTexture* t = nil;
-	if (!t)
-		t = [SKTexture textureWithImageNamed:@"lab"];
-	return t;
+	return t ? t : (t=[SKTexture textureWithImageNamed:@"lab"]);
 }
++ (SKTexture*)starTexture {
+	static SKTexture* t = nil;
+	return t ? t : (t=[SKTexture textureWithImageNamed:@"star"]);
+}
++ (SKTexture*)basicFullTexture {
+	static SKTexture* t = nil;
+	return t ? t : (t=[SKTexture textureWithImageNamed:@"basic2"]);
+}
++ (SKTexture*)cityFullTexture {
+	static SKTexture* t = nil;
+	return t ? t : (t=[SKTexture textureWithImageNamed:@"city2"]);
+}
++ (SKTexture*)towerFullTexture {
+	static SKTexture* t = nil;
+	return t ? t : (t=[SKTexture textureWithImageNamed:@"tower2"]);
+}
++ (SKTexture*)labFullTexture {
+	static SKTexture* t = nil;
+	return t ? t : (t=[SKTexture textureWithImageNamed:@"lab2"]);
+}
+
+#pragma mark - touchs
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
 	NSLog(@"(%d, %d)", self.x, self.y);

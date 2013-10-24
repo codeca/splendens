@@ -11,5 +11,6 @@
 @interface Player : NSObject
 
 @property (nonatomic) int mana;
+@property (nonatomic) UIColor* color;
 
 @end
