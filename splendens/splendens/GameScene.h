@@ -8,8 +8,9 @@
 
 #import <SpriteKit/SpriteKit.h>
 #import "Map.h"
+#import "TextButton.h"
 
 // The main scene, for the game itself
-@interface GameScene : SKScene
+@interface GameScene : SKScene <TextButtonDelegate>
 
 @end

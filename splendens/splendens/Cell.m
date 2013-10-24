@@ -232,36 +232,30 @@
 
 #pragma mark - interactivity
 
+// Remove the last selection and select this cell (if possible)
 - (void)cellClicked {
-	NSLog(@"Clicked at (%d, %d)", self.x, self.y);
+	Map* map = (Map*)self.parent;
 	
-	if (((Map*)self.parent).selected != nil){
-		((Cell*)((Map*)self.parent).selected).selectedFocus.hidden = YES;
-		NSLog(@"Despinta");
-	}
-	if (self.type == CellTypeWall || self.type == CellTypeEmpty){
-		((Map*)self.parent).selected = nil;
-		((Cell*)((Map*)self.parent).selected).selectedFocus.hidden = YES;
-	}
-	else{
-		if (((Map*)self.parent).selected != self){
-			((Map*)self.parent).selected = self;
-			((Cell*)((Map*)self.parent).selected).selectedFocus.hidden = NO;
-		}
-		else{
-			((Map*)self.parent).selected = nil;
-		}
-	}
+	map.selected.selectedFocus.hidden = YES;
+	
+	if (self.type != CellTypeWall && self.type != CellTypeEmpty && map.selected != self) {
+		map.selected = self;
+		map.selected.selectedFocus.hidden = NO;
+	} else
+		map.selected = nil;
 }
 
 - (void)draggedToCell:(Cell*)cell {
-	NSLog(@"Dragged from (%d, %d) to (%d, %d)", self.x, self.y, cell.x, cell.y);
-	for (Cell* i in ((Map*)self.parent).cells){
+	Map* map = (Map*)self.parent;
+	map.selected.selectedFocus.hidden = YES;
+	map.selected = nil;
+	
+	for (Cell* i in map.cells){
 		i.pathFocus.hidden = YES;
 	}
 	if (self.isCenter == YES){
-		NSArray* caminho = [PathFinder findPathwithStart:self andGoal:cell andMap:(Map*)self.parent];
-			for (Cell* i in caminho){
+		NSArray* caminho = [PathFinder findPathwithStart:self andGoal:cell andMap:map];
+		for (Cell* i in caminho){
 			i.pathFocus.hidden = NO;
 			if (cell.isCenter == YES)i.pathFocus.color = [UIColor magentaColor];
 			else i.pathFocus.color = [UIColor redColor];
