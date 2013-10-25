@@ -21,7 +21,7 @@
 	if (self = [super init]) {
 		// Extract the size
 		self.size = [[def objectForKey:@"size"] integerValue];
-		
+		self.name = @"map";
 		// Extract all players
 		int numPlayers = [[def objectForKey:@"players"] integerValue];
 		int mana = [[def objectForKey:@"mana"] integerValue];

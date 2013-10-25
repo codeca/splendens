@@ -10,6 +10,6 @@
 
 
 @interface UpgradeArrow : SKSpriteNode
-
+- (id) init: (int) a;
 
 @end

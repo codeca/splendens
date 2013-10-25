@@ -26,7 +26,8 @@
 }
 
 - (void) update: (Cell*)selectedCell{
-	Map* map = (Map*)self.parent;
+	Map* map = (Map*)[[self scene] childNodeWithName: @"map"];
+
 	if (selectedCell == nil) [self.table removeAllChildren];
 	else{
 		int x = 76;
@@ -93,15 +94,18 @@
 		
 		if (selectedCell.owner == map.thisPlayer){
 			if (selectedCell.level<4){
-				UpgradeArrow* upgradeArrow = [[UpgradeArrow alloc]init];
-				upgradeArrow.position = CGPointMake(3*da+2*a-self.size.width/2, 0);
+				UpgradeArrow* upgradeArrow = [[UpgradeArrow alloc]init: a];
+				upgradeArrow.position = CGPointMake(2*x+dy1+2*dy2+upgradeArrow.size.width/2-self.size.width/2, 0);
 				[self.table addChild:upgradeArrow];
 			}
 			if (selectedCell.type == CellTypeBasic){
 				//mostra opcoes
 			}
 			else{
-				//mostra upgrade
+				
+				
+				
+				
 			}
 		}
 		
