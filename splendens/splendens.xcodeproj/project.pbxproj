@@ -48,6 +48,7 @@
 		98DF3137181994760092E8A7 /* TextButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 98DF3136181994760092E8A7 /* TextButton.m */; };
 		98DF3139181A95D90092E8A7 /* greenButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98DF3138181A95D90092E8A7 /* greenButton@2x.png */; };
 		98DF313C181AC1950092E8A7 /* Troop.m in Sources */ = {isa = PBXBuildFile; fileRef = 98DF313B181AC1950092E8A7 /* Troop.m */; };
+		D00114B1181AC576002ED389 /* BottomPainel.m in Sources */ = {isa = PBXBuildFile; fileRef = D00114B0181AC576002ED389 /* BottomPainel.m */; };
 		D05CE05718193C2500827611 /* PathFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = D05CE05618193C2500827611 /* PathFinder.m */; };
 		D05CE05918198F6400827611 /* path2I@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = D05CE05818198F6400827611 /* path2I@2X.png */; };
 		D05CE05C1819957600827611 /* UpgradeArrow.m in Sources */ = {isa = PBXBuildFile; fileRef = D05CE05B1819957600827611 /* UpgradeArrow.m */; };
@@ -119,6 +120,8 @@
 		98DF3138181A95D90092E8A7 /* greenButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "greenButton@2x.png"; sourceTree = "<group>"; };
 		98DF313A181AC1950092E8A7 /* Troop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Troop.h; sourceTree = "<group>"; };
 		98DF313B181AC1950092E8A7 /* Troop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Troop.m; sourceTree = "<group>"; };
+		D00114AF181AC576002ED389 /* BottomPainel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BottomPainel.h; sourceTree = "<group>"; };
+		D00114B0181AC576002ED389 /* BottomPainel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BottomPainel.m; sourceTree = "<group>"; };
 		D05CE05518193C2500827611 /* PathFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathFinder.h; sourceTree = "<group>"; };
 		D05CE05618193C2500827611 /* PathFinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PathFinder.m; sourceTree = "<group>"; };
 		D05CE05818198F6400827611 /* path2I@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "path2I@2X.png"; sourceTree = "<group>"; };
@@ -212,6 +215,8 @@
 				D05CE05B1819957600827611 /* UpgradeArrow.m */,
 				98DF313A181AC1950092E8A7 /* Troop.h */,
 				98DF313B181AC1950092E8A7 /* Troop.m */,
+				D00114AF181AC576002ED389 /* BottomPainel.h */,
+				D00114B0181AC576002ED389 /* BottomPainel.m */,
 			);
 			path = splendens;
 			sourceTree = "<group>";
@@ -399,6 +404,7 @@
 				98DF30D91818258F0092E8A7 /* Map.m in Sources */,
 				98DF30B418181E620092E8A7 /* GameScene.m in Sources */,
 				98DF30B118181E620092E8A7 /* ViewController.m in Sources */,
+				D00114B1181AC576002ED389 /* BottomPainel.m in Sources */,
 				98DF312818195A780092E8A7 /* Economy.m in Sources */,
 				98DF3133181992B20092E8A7 /* InitialScene.m in Sources */,
 				98DF30AB18181E620092E8A7 /* AppDelegate.m in Sources */,
