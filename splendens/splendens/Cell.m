@@ -10,6 +10,7 @@
 #import "Map.h"
 #import "PathFinder.h"
 #import "Economy.h"
+#import "BottomPainel.h"
 
 @interface Cell()
 
@@ -257,6 +258,9 @@
 		map.selected.selectedFocus.hidden = NO;
 	} else
 		map.selected = nil;
+	BottomPainel* bottomPainel = (BottomPainel*)[[self scene] childNodeWithName: @"bottomPainel"];
+	[bottomPainel update: map.selected];
+	
 }
 
 - (void)draggedToCell:(Cell*)cell {

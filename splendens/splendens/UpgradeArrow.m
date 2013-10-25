@@ -10,8 +10,10 @@
 
 @implementation UpgradeArrow
 
-- (id) init{
-	self = [self initWithImageNamed:@"beta"];
+- (id) init: (int) a{
+	if (self = [super initWithImageNamed:@"beta"]){
+		self.size = CGSizeMake(a,a/2);
+	}
 	return self;
 }
 

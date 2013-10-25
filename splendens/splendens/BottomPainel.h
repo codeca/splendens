@@ -7,7 +7,13 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+#import "Cell.h"
 
 @interface BottomPainel : SKSpriteNode
+
+@property (nonatomic) SKNode* table;
+
+
+- (void) update: (Cell*)selectedCell;
 
 @end

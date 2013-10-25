@@ -8,7 +8,7 @@
 
 #import "GameScene.h"
 #import "UpgradeArrow.h"
-
+#import "BottomPainel.h"
 
 @implementation GameScene
 
@@ -21,7 +21,9 @@
 
 - (void)didMoveToView:(SKView *)view {
 	Map* map = [[Map alloc] initWithDefinition:self.gameStructure];
+	BottomPainel* bottomPainel = [[BottomPainel alloc]init];
 	[self addChild:map];
+	[self addChild:bottomPainel];
 	
 }
 
