@@ -20,6 +20,10 @@
 	if (type == CellTypeLab && level == 2) return 2;
 	if (type == CellTypeLab && level == 3) return 3;
 	if (type == CellTypeLab && level == 4) return 4;
+	if (type == CellTypeTower && level == 1) return 1*2; //attack * damage, to make easier for showing.
+	if (type == CellTypeTower && level == 2) return 1*3;
+	if (type == CellTypeTower && level == 3) return 2*3;
+	if (type == CellTypeTower && level == 4) return 2*4;
 	return -1;
 }
 

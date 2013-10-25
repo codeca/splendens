@@ -9,6 +9,7 @@
 #import "BottomPainel.h"
 #import "Map.h"
 #import "UpgradeArrow.h"
+#import "Economy.h"
 
 
 @implementation BottomPainel
@@ -34,6 +35,7 @@
 		int y = 40;
 		int dy2 = 10;
 		int dy1 = (116-dy2-2*y)/2;
+		int fontSize = 28;
 		
 		CGSize size = CGSizeMake(x,y);
 		SKSpriteNode* tableCell1 = [[SKSpriteNode alloc] initWithColor:[UIColor blueColor] size:size];
@@ -70,21 +72,26 @@
 		[tableCell4 addChild:attributeCell4];
 		
 		
+		
 		SKLabelNode* infoCell1 = [[SKLabelNode alloc] initWithFontNamed:@"arial"];
+		infoCell1.fontSize = fontSize;
 		infoCell1.position = CGPointMake(2*da+a+a/2-x/2, da+a/2-y/2);
-		infoCell1.text = @"1";
+		infoCell1.text = [NSString stringWithFormat:@"%d",[Economy productionForType:selectedCell.type level:selectedCell.level]];
 		infoCell1.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
 		SKLabelNode* infoCell2 = [[SKLabelNode alloc] initWithFontNamed:@"arial"];
+		infoCell2.fontSize = fontSize;
 		infoCell2.position = CGPointMake(2*da+a+a/2-x/2, da+a/2-y/2);
-		infoCell2.text = @"1";
+		infoCell2.text = [NSString stringWithFormat:@"%d",[Economy armorForType:selectedCell.type level:selectedCell.level]];
 		infoCell2.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
 		SKLabelNode* infoCell3 = [[SKLabelNode alloc] initWithFontNamed:@"arial"];
+		infoCell3.fontSize = fontSize;
 		infoCell3.position = CGPointMake(2*da+a+a/2-x/2, da+a/2-y/2);
-		infoCell3.text = @"1";
+		infoCell3.text = [NSString stringWithFormat:@"%d",[Economy maxPopulationForType:selectedCell.type level:selectedCell.level]];
 		infoCell3.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
 		SKLabelNode* infoCell4 = [[SKLabelNode alloc] initWithFontNamed:@"arial"];
+		infoCell4.fontSize = fontSize;
 		infoCell4.position = CGPointMake(2*da+a+a/2-x/2, da+a/2-y/2);
-		infoCell4.text = @"1";
+		infoCell4.text = [NSString stringWithFormat:@"%d",[Economy speedForType:selectedCell.type level:selectedCell.level]];
 		infoCell4.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
 		
 		[tableCell1 addChild:infoCell1];
@@ -137,20 +144,24 @@
 				
 				
 				SKLabelNode* infoCell5 = [[SKLabelNode alloc] initWithFontNamed:@"arial"];
+				infoCell5.fontSize = fontSize;
 				infoCell5.position = CGPointMake(2*da+a+a/2-x/2, da+a/2-y/2);
-				infoCell5.text = @"1";
+				infoCell5.text = [NSString stringWithFormat:@"%d",[Economy productionForType:selectedCell.type level:selectedCell.level+1]];
 				infoCell5.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
 				SKLabelNode* infoCell6 = [[SKLabelNode alloc] initWithFontNamed:@"arial"];
+				infoCell6.fontSize = fontSize;
 				infoCell6.position = CGPointMake(2*da+a+a/2-x/2, da+a/2-y/2);
-				infoCell6.text = @"1";
+				infoCell6.text = [NSString stringWithFormat:@"%d",[Economy armorForType:selectedCell.type level:selectedCell.level+1]];
 				infoCell6.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
 				SKLabelNode* infoCell7 = [[SKLabelNode alloc] initWithFontNamed:@"arial"];
+				infoCell7.fontSize = fontSize;
 				infoCell7.position = CGPointMake(2*da+a+a/2-x/2, da+a/2-y/2);
-				infoCell7.text = @"1";
+				infoCell7.text = [NSString stringWithFormat:@"%d",[Economy maxPopulationForType:selectedCell.type level:selectedCell.level+1]];
 				infoCell7.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
 				SKLabelNode* infoCell8 = [[SKLabelNode alloc] initWithFontNamed:@"arial"];
+				infoCell8.fontSize = fontSize;
 				infoCell8.position = CGPointMake(2*da+a+a/2-x/2, da+a/2-y/2);
-				infoCell8.text = @"1";
+				infoCell8.text = [NSString stringWithFormat:@"%d",[Economy speedForType:selectedCell.type level:selectedCell.level+1]];
 				infoCell8.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
 				
 				[tableCell5 addChild:infoCell5];
