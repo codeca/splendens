@@ -12,21 +12,29 @@
 @implementation Troop
 
 - (id)initWithPath:(NSArray *)path amount:(int)amount {
-	if (self = [super initWithImageNamed:@"troop"]) {
-		Cell* cell = path[0];
+	if (self = [super init]) {
+		Cell* firstCell = path[0];
+		
+		// Create the node
+		self.node = [SKSpriteNode spriteNodeWithImageNamed:@"troop"];
+		self.node.size = firstCell.size;
+		self.node.xScale = self.node.yScale = 0;
+		self.node.position = [firstCell randomPointNear];
+		[self.node runAction:[SKAction scaleTo:1 duration:.5]];
+		
 		self.path = path;
-		self.speed = [Economy speedForType:cell.type level:cell.level];
+		self.speed = [Economy speedForType:firstCell.type level:firstCell.level];
 		self.pos = 0;
-		self.owner = cell.owner;
-		self.color = cell.owner.color;
-		self.colorBlendFactor = 1;
+		self.owner = firstCell.owner;
+		self.node.color = firstCell.owner.color;
+		self.node.colorBlendFactor = 1;
 		
 		// Set amount label
 		SKLabelNode* label = [SKLabelNode labelNodeWithFontNamed:@"arial"];
 		label.text = [NSString stringWithFormat:@"%d", amount];
 		label.fontSize = 16;
 		label.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
-		[self addChild:label];
+		[self.node addChild:label];
 	}
 	return self;
 }

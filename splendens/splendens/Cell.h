@@ -38,4 +38,7 @@ typedef enum {
 // Cached textures
 + (SKTexture*)textureWithName:(NSString*)name;
 
+// Return a random point near the center of this cell (used to place troops)
+- (CGPoint)randomPointNear;
+
 @end

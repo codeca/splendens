@@ -90,7 +90,7 @@
 	firstCell.population -= amount;
 	Troop* troop = [[Troop alloc] initWithPath:path amount:amount];
 	[self.troops addObject:troop];
-	[firstCell addChild:troop];
+	[self addChild:troop.node];
 }
 
 @end
