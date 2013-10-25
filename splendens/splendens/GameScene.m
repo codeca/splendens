@@ -9,6 +9,7 @@
 #import "GameScene.h"
 #import "UpgradeArrow.h"
 
+
 @implementation GameScene
 
 -(id)initWithSize:(CGSize)size {    
@@ -20,9 +21,8 @@
 
 - (void)didMoveToView:(SKView *)view {
 	Map* map = [[Map alloc] initWithDefinition:self.gameStructure];
-	UpgradeArrow* upgradeArrow = [[UpgradeArrow alloc]init];
 	[self addChild:map];
-	[self addChild: upgradeArrow];
+	
 }
 
 - (void)textButtonClicked:(TextButton*)button {

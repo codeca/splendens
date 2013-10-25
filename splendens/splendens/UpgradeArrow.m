@@ -12,7 +12,6 @@
 
 - (id) init{
 	self = [self initWithImageNamed:@"beta"];
-	self.position = CGPointMake(150, 20);
 	return self;
 }
 
