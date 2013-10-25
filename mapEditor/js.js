@@ -1,4 +1,4 @@
-﻿"use strict"
+"use strict"
 
 var map = []
 var mapSize = 20
@@ -186,7 +186,7 @@ function save() {
 	for (y = 0; y < mapSize; y++) {
 		for (x = 0; x < mapSize; x++) {
 			cell = map[x][y]
-			cellData = { x: mapSize - x, y: mapSize - y, type: cell.type }
+			cellData = { x: x, y: mapSize - y - 1, type: cell.type }
 			if (cell.type > 1) {
 				owner = cell.owner
 				if (owner == 0)
@@ -196,7 +196,7 @@ function save() {
 						players[owner - 1] = nPlayers++
 					cellData.owner = players[owner-1]
 				}
-				cellData.population = x
+				cellData.population = getPopulation(cell)
 			}
 			if (cell.type > 2)
 				cellData.level = cell.level
@@ -209,6 +209,18 @@ function save() {
 	// Open the output file
 	var blob = new Blob(["module.exports=" + JSON.stringify(data).replace(/"/g, "")], {type: "text/plain"})
 	window.open(window.URL.createObjectURL(blob))
+}
+
+// Return the amount of population for a given cell object
+function getPopulation(cell) {
+    var max = getMaxPopulation(cell)
+    switch (cell.population) {
+        case "\u2205": return 0;
+        case "\u00BC": return Math.round(max/4);
+        case "\u00BD": return Math.round(max/2);
+        case "\u00BE": return Math.round(3*max/4);
+        case "1": return max;
+    }
 }
 
 // Return the max population for the given cell object

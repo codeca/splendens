@@ -13,4 +13,6 @@
 // The main scene, for the game itself
 @interface GameScene : SKScene <TextButtonDelegate>
 
+@property (nonatomic) id gameStructure;
+
 @end

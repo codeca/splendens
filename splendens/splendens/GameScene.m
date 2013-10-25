@@ -13,14 +13,16 @@
 
 -(id)initWithSize:(CGSize)size {    
     if (self = [super initWithSize:size]) {
-		Map* map = [[Map alloc] initWithDefinition:@"{\"size\": 15, \"players\": 3, \"mana\": 10, \"cells\": [{\"x\": 0, \"y\": 1, \"type\": 1}, {\"x\": 2, \"y\": 3, \"type\": 2, \"owner\": 0, \"population\": 17}, {\"x\": 4, \"y\":5, \"type\": 5, \"owner\": 2, \"population\": 27, \"level\": 2}]}"];
-		UpgradeArrow* upgradeArrow = [[UpgradeArrow alloc]init];
-		[self addChild:map];
-
-		[self addChild: upgradeArrow];
 
     }
     return self;
+}
+
+- (void)didMoveToView:(SKView *)view {
+	Map* map = [[Map alloc] initWithDefinition:self.gameStructure];
+	UpgradeArrow* upgradeArrow = [[UpgradeArrow alloc]init];
+	[self addChild:map];
+	[self addChild: upgradeArrow];
 }
 
 - (void)textButtonClicked:(TextButton*)button {

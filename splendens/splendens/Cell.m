@@ -143,7 +143,8 @@
 		self.populationFull.color = self.owner ? self.owner.color : [UIColor grayColor];
 		int width = self.size.width;
 		int height = self.size.height;
-		self.populationMask.size = CGSizeMake(width, self.population*height/50);
+		int maxPop = [Economy maxPopulationForType:self.type level:self.level];
+		self.populationMask.size = CGSizeMake(width, self.population*height/maxPop);
 		
 		// Label
 		self.populationLabel.hidden = NO;
@@ -250,10 +251,9 @@
 	map.selected.selectedFocus.hidden = YES;
 	map.selected = nil;
 	
-	for (Cell* i in map.cells){
+	for (Cell* i in map.cells)
 		i.pathFocus.hidden = YES;
-	}
-	if (self.isCenter == YES){
+	if (self.isCenter == YES) {
 		NSArray* caminho = [PathFinder findPathwithStart:self andGoal:cell andMap:map];
 		for (Cell* i in caminho){
 			i.pathFocus.hidden = NO;

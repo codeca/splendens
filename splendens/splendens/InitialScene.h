@@ -8,11 +8,13 @@
 
 #import <SpriteKit/SpriteKit.h>
 #import "TextButton.h"
+#import "Plug.h"
 
 // The initial scene, to present the start game button
-@interface InitialScene : SKScene<TextButtonDelegate>
+@interface InitialScene : SKScene<TextButtonDelegate, PlugDelegate>
 
 @property (nonatomic) TextButton* multiplayerButton;
 @property (nonatomic) TextButton* debugButton;
+@property (nonatomic) Plug* plug;
 
 @end

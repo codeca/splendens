@@ -21,10 +21,11 @@
 @property (nonatomic) NSArray* players;
 @property (nonatomic) Cell* selected;
 @property (nonatomic) Player* thisPlayer;
+@property (nonatomic) NSArray* lastPath;
 
 
 // Create a new map from a JSON string (see the structure in the project wiki)
-- (id)initWithDefinition:(NSString*)def;
+- (id)initWithDefinition:(id)def;
 
 // Return the cell at the given position
 - (Cell*)cellAtX:(int)x y:(int)y;

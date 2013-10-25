@@ -10,23 +10,14 @@
 
 @implementation Map
 
-- (id)initWithDefinition:(NSString *)def {
+- (id)initWithDefinition:(id)def {
 	if (self = [super init]) {
-		// Inflate the JSON
-		NSError* error = nil;
-		NSData* defData = [def dataUsingEncoding:NSUTF8StringEncoding];
-		NSDictionary* obj = [NSJSONSerialization JSONObjectWithData:defData options:0 error:&error];
-		
-		// Check the result
-		if (error)
-			@throw error;
-		
 		// Extract the size
-		self.size = [[obj objectForKey:@"size"] integerValue];
+		self.size = [[def objectForKey:@"size"] integerValue];
 		
 		// Extract all players
-		int numPlayers = [[obj objectForKey:@"players"] integerValue];
-		int mana = [[obj objectForKey:@"mana"] integerValue];
+		int numPlayers = [[def objectForKey:@"players"] integerValue];
+		int mana = [[def objectForKey:@"mana"] integerValue];
 		NSMutableArray* players = [[NSMutableArray alloc] initWithCapacity:numPlayers];
 		NSArray* colors = @[[UIColor redColor], [UIColor greenColor], [UIColor blueColor], [UIColor whiteColor]];
 		for (int i=0; i<numPlayers; i++) {
@@ -54,7 +45,7 @@
 		self.cells = cells;
 		
 		// Update each cell to the saved type
-		NSArray* savedCells = [obj objectForKey:@"cells"];
+		NSArray* savedCells = [def objectForKey:@"cells"];
 		for (NSDictionary* savedCell in savedCells) {
 			int x = [[savedCell objectForKey:@"x"] integerValue];
 			int y = [[savedCell objectForKey:@"y"] integerValue];

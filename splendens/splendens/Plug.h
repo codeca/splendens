@@ -8,6 +8,7 @@
 #import <Foundation/Foundation.h>
 
 typedef enum {
+	MSG_DEBUG = -2,
 	MSG_PLAYER_DISCONNECTED = -1,
 	MATCH_TYPE_UNKNOW = 0,
 	MATCH_TYPE_SIMPLE = 1,
@@ -47,7 +48,7 @@ typedef enum {
 @interface Plug : NSObject <NSStreamDelegate>
 
 @property (nonatomic) PlugState readyState;
-@property (nonatomic) id<PlugDelegate> delegate;
+@property (nonatomic, weak) id<PlugDelegate> delegate;
 
 // Create a new Plug and start connecting
 - (id)init;

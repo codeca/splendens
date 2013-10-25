@@ -35,10 +35,28 @@
 	if (button == self.multiplayerButton) {
 		// TODO
 	} else {
-		SKView* view = self.view;
-		SKScene* scene = [GameScene sceneWithSize:view.bounds.size];
-		[view presentScene:scene transition:[SKTransition pushWithDirection:SKTransitionDirectionLeft duration:.5]];
+		self.plug = [[Plug alloc] init];
+		self.plug.delegate = self;
 	}
+}
+
+- (void)plug:(Plug *)plug hasClosedWithError:(BOOL)error {
+	NSLog(@"Connection closed");
+}
+
+- (void)plug:(Plug *)plug receivedMessage:(PlugMsgType)type data:(id)data {
+	if (type == MSG_DEBUG) {
+		SKView* view = self.view;
+		GameScene* scene = [GameScene sceneWithSize:view.bounds.size];
+		scene.gameStructure = data;
+		[view presentScene:scene transition:[SKTransition pushWithDirection:SKTransitionDirectionLeft duration:.5]];
+		[plug close];
+	}
+}
+
+- (void)plugHasConnected:(Plug *)plug {
+	NSLog(@"Connected");
+	[plug sendMessage:MSG_DEBUG data:[NSNull null]];
 }
 
 @end
