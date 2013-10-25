@@ -22,8 +22,17 @@
 		self.table = [[SKNode alloc]init];
 		[self addChild:self.table];
 		
+		TextButton* tb = [[TextButton alloc] initWithFontNamed:@"arial" text:@"Next turn"];
+		tb.position = CGPointMake(self.size.width/2-100, 0);
+		[self addChild:tb];
+		tb.delegate = self;
 	}
 	return self;
+}
+
+- (void)textButtonClicked:(TextButton *)button {
+	Map* map = (Map*)[self.scene childNodeWithName:@"map"];
+	[map updateTroops];
 }
 
 - (void) update: (Cell*)selectedCell{

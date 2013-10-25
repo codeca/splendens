@@ -8,8 +8,9 @@
 
 #import <SpriteKit/SpriteKit.h>
 #import "Cell.h"
+#import "TextButton.h"
 
-@interface BottomPainel : SKSpriteNode
+@interface BottomPainel : SKSpriteNode<TextButtonDelegate>
 
 @property (nonatomic) SKNode* table;
 

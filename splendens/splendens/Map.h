@@ -41,4 +41,7 @@
 // Move all troops towards their goal
 - (void)updateTroops;
 
+// Solve all troops conflicts
+- (void)processDeliveredTroops:(NSArray*)troops;
+
 @end

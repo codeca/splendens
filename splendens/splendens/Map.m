@@ -96,7 +96,39 @@
 }
 
 - (void)updateTroops {
+	NSMutableArray* deliveredTroops = [NSMutableArray array];
 	
+	// Process each troop, collect all delivered ones
+	for (Troop* troop in self.troops) {
+		NSMutableArray* animations = [[NSMutableArray alloc] initWithCapacity:troop.speed];
+		
+		for (int i=1; i<=troop.speed && troop.pos+i<troop.path.count-1; i++) {
+			// Move for each cell
+			Cell* cell = troop.path[troop.pos+i];
+			SKAction* action = [SKAction moveTo:cell.position duration:.25];
+			[animations addObject:action];
+		}
+		
+		troop.pos += troop.speed;
+		
+		if (troop.pos >= troop.path.count-1) {
+			// Reached the final destinations
+			Cell* cell = troop.path.lastObject;
+			SKAction* lastMove = [SKAction moveTo:cell.position duration:.25];
+			SKAction* vanish = [SKAction scaleTo:0 duration:.5];
+			[animations addObject:[SKAction group:@[lastMove, vanish]]];
+			[deliveredTroops addObject:troop];
+		}
+		
+		[troop.node runAction:[SKAction sequence:animations]];
+	}
+	
+	if (deliveredTroops.count)
+		[self processDeliveredTroops:deliveredTroops];
+}
+
+- (void)processDeliveredTroops:(NSArray*)troops {
+	NSLog(@"delivered!");
 }
 
 @end
