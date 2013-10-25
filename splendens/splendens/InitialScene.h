@@ -13,5 +13,6 @@
 @interface InitialScene : SKScene<TextButtonDelegate>
 
 @property (nonatomic) TextButton* multiplayerButton;
+@property (nonatomic) TextButton* debugButton;
 
 @end

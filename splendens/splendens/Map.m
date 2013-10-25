@@ -25,14 +25,14 @@
 		self.size = [[obj objectForKey:@"size"] integerValue];
 		
 		// Extract all players
-		NSArray* savedPlayers = [obj objectForKey:@"players"];
-		NSMutableArray* players = [[NSMutableArray alloc] initWithCapacity:savedPlayers.count];
+		int numPlayers = [[obj objectForKey:@"players"] integerValue];
+		int mana = [[obj objectForKey:@"mana"] integerValue];
+		NSMutableArray* players = [[NSMutableArray alloc] initWithCapacity:numPlayers];
 		NSArray* colors = @[[UIColor redColor], [UIColor greenColor], [UIColor blueColor], [UIColor whiteColor]];
-		int i = 0;
-		for (NSDictionary* savedPlayer in savedPlayers) {
+		for (int i=0; i<numPlayers; i++) {
 			Player* player = [[Player alloc] init];
-			player.mana = [[savedPlayer objectForKey:@"mana"] integerValue];
-			player.color = colors[i++];
+			player.mana = mana;
+			player.color = colors[i];
 			[players addObject:player];
 		}
 		self.players = players;

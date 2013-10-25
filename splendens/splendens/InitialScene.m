@@ -13,20 +13,32 @@
 
 - (id)initWithSize:(CGSize)size {
 	if (self = [super initWithSize:size]) {
-		SKLabelNode* label = [SKLabelNode labelNodeWithFontNamed:@"arial"];
-		label.text = @"Multiplayer";
-		self.multiplayerButton = [[TextButton alloc] initWithLabel:label];
-		self.multiplayerButton.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+		int x = CGRectGetMidX(self.frame);
+		int y = CGRectGetMidY(self.frame);
+		
+		// Add the multiplayer button
+		self.multiplayerButton = [[TextButton alloc] initWithFontNamed:@"arial" text:@"Multiplayer"];
+		self.multiplayerButton.position = CGPointMake(x, y+30);
 		self.multiplayerButton.delegate = self;
 		[self addChild:self.multiplayerButton];
+		
+		// Add the debug button
+		self.debugButton = [[TextButton alloc] initWithFontNamed:@"arial" text:@"Debug"];
+		self.debugButton.position = CGPointMake(x, y-30);
+		self.debugButton.delegate = self;
+		[self addChild:self.debugButton];
 	}
 	return self;
 }
 
 - (void)textButtonClicked:(TextButton *)button {
-	SKView* view = self.view;
-	SKScene* scene = [GameScene sceneWithSize:view.bounds.size];
-	[view presentScene:scene transition:[SKTransition pushWithDirection:SKTransitionDirectionLeft duration:.5]];
+	if (button == self.multiplayerButton) {
+		// TODO
+	} else {
+		SKView* view = self.view;
+		SKScene* scene = [GameScene sceneWithSize:view.bounds.size];
+		[view presentScene:scene transition:[SKTransition pushWithDirection:SKTransitionDirectionLeft duration:.5]];
+	}
 }
 
 @end

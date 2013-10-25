@@ -10,19 +10,19 @@
 
 @implementation TextButton
 
-- (id)initWithLabel:(SKLabelNode *)label size:(CGSize)size {
+- (id)initWithFontNamed:(NSString *)fontName text:(NSString *)text {
 	if (self = [super initWithImageNamed:@"greenButton"]) {
-		self.centerRect = CGRectMake(18./36, 18./36, 0./36, 0./36);
-		self.size = size;
+		// Create the text label
+		SKLabelNode* label = [SKLabelNode labelNodeWithFontNamed:fontName];
+		label.text = text;
+		label.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
+		
+		self.centerRect = CGRectMake(18./36, 18./36, 0./36, 0./36); // Not working, why?
+		self.size = CGSizeMake(label.frame.size.width+30, label.frame.size.height+10);
 		self.userInteractionEnabled = YES;
 		[self addChild:label];
 	}
 	return self;
-}
-
-- (id)initWithLabel:(SKLabelNode *)label {
-	label.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
-	return [self initWithLabel:label size:CGSizeMake(label.frame.size.width+50, label.frame.size.height+20)];
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {

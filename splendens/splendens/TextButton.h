@@ -20,7 +20,6 @@
 
 @property (nonatomic, weak) id<TextButtonDelegate> delegate;
 
-- (id)initWithLabel:(SKLabelNode*)label;
-- (id)initWithLabel:(SKLabelNode*)label size:(CGSize)size;
+- (id)initWithFontNamed:(NSString*)fontName text:(NSString*)text;
 
 @end
