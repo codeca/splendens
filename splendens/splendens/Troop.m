@@ -14,10 +14,11 @@
 - (id)initWithPath:(NSArray *)path amount:(int)amount {
 	if (self = [super init]) {
 		Cell* firstCell = path[0];
+		float size = firstCell.size.width;
 		
 		// Create the node
 		self.node = [SKSpriteNode spriteNodeWithImageNamed:@"troop"];
-		self.node.size = firstCell.size;
+		self.node.size = CGSizeMake(size/2, size/2);
 		self.node.xScale = self.node.yScale = 0;
 		self.node.position = [firstCell randomPointNear];
 		[self.node runAction:[SKAction scaleTo:1 duration:.5]];

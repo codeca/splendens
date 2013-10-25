@@ -20,6 +20,14 @@ typedef enum {
 	CellTypeLab
 } CellType;
 
+// Possible neighbour cell relative position
+typedef enum {
+	CellPositionRight,
+	CellPositionAbove,
+	CellPositionLeft,
+	CellPositionBellow,
+} CellPosition;
+
 @interface Cell : SKSpriteNode
 
 @property (nonatomic, readonly) int x;
@@ -37,6 +45,10 @@ typedef enum {
 
 // Cached textures
 + (SKTexture*)textureWithName:(NSString*)name;
+
+// Return the relavite position beetween this cell and the given one
+- (CellPosition)relativePositionToCell:(Cell*)cell;
+- (float)relativeAngleToCell:(Cell*)cell;
 
 // Return a random point near the center of this cell (used to place troops)
 - (CGPoint)randomPointNear;

@@ -159,49 +159,41 @@
 	self.pathFocus.hidden = NO;
 	
 	// Check the relative position for each cell
-	int prevPos, nextPos;
-	if (prev) {
-		if (prev.x == self.x)
-			prevPos = prev.y>self.y ? 1 : 3;
-		else
-			prevPos = prev.x>self.x ? 0 : 2;
-	}
-	if (next) {
-		if (next.x == self.x)
-			nextPos = next.y>self.y ? 1 : 3;
-		else
-			nextPos = next.x>self.x ? 0 : 2;
-	}
+	CellPosition prevPos, nextPos;
+	if (prev)
+		prevPos = [self relativePositionToCell:prev];
+	if (next)
+		nextPos = [self relativePositionToCell:next];
 	
 	if (!prev) {
 		// Path start
 		self.pathFocus.texture = [Cell textureWithName:@"path3"];
-		self.pathFocus.zRotation = M_PI*(nextPos==0 ? 0 : (nextPos==1 ? .5 : (nextPos==2 ? 1 : 1.5)));
+		self.pathFocus.zRotation = [self relativeAngleToCell:next];
 	} else if (!next) {
 		// Path end
 		self.pathFocus.texture = [Cell textureWithName:@"path3"];
-		self.pathFocus.zRotation = M_PI*(prevPos==0 ? 0 : (prevPos==1 ? .5 : (prevPos==2 ? 1 : 1.5)));
-	} else if ((prevPos==0 && nextPos==2) || (prevPos==2 && nextPos==0)) {
+		self.pathFocus.zRotation = [self relativeAngleToCell:prev];
+	} else if ((prevPos==CellPositionRight && nextPos==CellPositionLeft) || (prevPos==CellPositionLeft && nextPos==CellPositionRight)) {
 		// Horizontal path
 		self.pathFocus.texture = [Cell textureWithName:@"path2I"];
 		self.pathFocus.zRotation = 0;
-	} else if ((prevPos==1 && nextPos==3) || (prevPos==3 && nextPos==1)) {
+	} else if ((prevPos==CellPositionAbove && nextPos==CellPositionBellow) || (prevPos==CellPositionBellow && nextPos==CellPositionAbove)) {
 		// Vertical path
 		self.pathFocus.texture = [Cell textureWithName:@"path2I"];
 		self.pathFocus.zRotation = M_PI/2;
-	} else if ((prevPos==0 && nextPos==1) || (prevPos==1 && nextPos==0)) {
+	} else if ((prevPos==CellPositionRight && nextPos==CellPositionAbove) || (prevPos==CellPositionAbove && nextPos==CellPositionRight)) {
 		// Curved path
 		self.pathFocus.texture = [Cell textureWithName:@"path2L"];
 		self.pathFocus.zRotation = 0;
-	} else if ((prevPos==1 && nextPos==2) || (prevPos==2 && nextPos==1)) {
+	} else if ((prevPos==CellPositionAbove && nextPos==CellPositionLeft) || (prevPos==CellPositionLeft && nextPos==CellPositionAbove)) {
 		// Curved path
 		self.pathFocus.texture = [Cell textureWithName:@"path2L"];
 		self.pathFocus.zRotation = M_PI/2;
-	} else if ((prevPos==2 && nextPos==3) || (prevPos==3 && nextPos==2)) {
+	} else if ((prevPos==CellPositionLeft && nextPos==CellPositionBellow) || (prevPos==CellPositionBellow && nextPos==CellPositionLeft)) {
 		// Curved path
 		self.pathFocus.texture = [Cell textureWithName:@"path2L"];
 		self.pathFocus.zRotation = M_PI;
-	} else if ((prevPos==3 && nextPos==0) || (prevPos==0 && nextPos==3)) {
+	} else if ((prevPos==CellPositionBellow && nextPos==CellPositionRight) || (prevPos==CellPositionRight && nextPos==CellPositionBellow)) {
 		// Curved path
 		self.pathFocus.texture = [Cell textureWithName:@"path2L"];
 		self.pathFocus.zRotation = 3*M_PI/2;
@@ -342,6 +334,20 @@
 	r = self.size.height/2;
 	a = arc4random_uniform(360)*M_PI/180;
 	return CGPointMake(x+r*sin(a), y+r*cos(a));
+}
+
+- (CellPosition)relativePositionToCell:(Cell*)cell {
+	if (cell.x == self.x)
+		return cell.y>self.y ? CellPositionAbove : CellPositionBellow;
+	else
+		return cell.x>self.x ? CellPositionRight : CellPositionLeft;
+}
+
+- (float)relativeAngleToCell:(Cell*)cell {
+	if (cell.x == self.x)
+		return cell.y>self.y ? M_PI/2 : 3*M_PI/2;
+	else
+		return cell.x>self.x ? 0 : M_PI;
 }
 
 @end

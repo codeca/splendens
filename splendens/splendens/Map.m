@@ -84,6 +84,8 @@
 	return [self cellAtX:x y:y];
 }
 
+#pragma mark - troops
+
 - (void)sendTroop:(NSArray *)path {
 	Cell* firstCell = path[0];
 	int amount = (firstCell.population+1)/2;
@@ -91,6 +93,10 @@
 	Troop* troop = [[Troop alloc] initWithPath:path amount:amount];
 	[self.troops addObject:troop];
 	[self addChild:troop.node];
+}
+
+- (void)updateTroops {
+	
 }
 
 @end
