@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Splendens - Map Editor</title>
+	<script src="js.js"></script>
+	<link href="css.css" rel="stylesheet" />
+</head>
+<body>
+	<div class="tools">
+		<h2>Map</h2>
+		<p>
+			<input type="button" value="Clear" onclick="clearMap();setMapSize(mapSize)" /><br />
+			<input type="button" value="Small" onclick="setMapSize(10)" />
+			<input type="button" value="Medium" onclick="setMapSize(15)" />
+			<input type="button" value="Large" onclick="setMapSize(20)" /><br />
+			Inital mana: <select id="mana">
+				<option value="0">0</option>
+				<option value="5">5</option>
+				<option value="10" selected>10</option>
+				<option value="15">15</option>
+				<option value="20">20</option>
+			       </select>
+		</p>
+		<h2>Cell types</h2>
+		<p>
+			<img src="empty.png" class="tool" id="emptyTool" title="Empty" />
+			<img src="wall.png" class="tool" id="wallTool" title="Wall" />
+			<img src="basic0.png" class="tool" id="basicTool" title="Basic" />
+			<img src="city0.png" class="tool" id="cityTool" title="City" />
+			<img src="tower0.png" class="tool" id="towerTool" title="Tower" />
+			<img src="lab0.png" class="tool" id="labTool" title="Lab" />
+		</p>
+		<h2>Properties</h2>
+		<p>
+			Owner: <select id="owner">
+				<option value="abandoned">abandoned</option>
+				<option value="red">red</option>
+				<option value="green">green</option>
+				<option value="blue">blue</option>
+				<option value="white">white</option>
+			       </select><br />
+			Population: <select id="population">
+				<option value="&empty;">empty</option>
+				<option value="&frac14;">a quarter</option>
+				<option value="&frac12;" selected>half</option>
+				<option value="&frac34;">three quarters</option>
+				<option value="1">full</option>
+			            </select><br />
+			Level: <select id="level">
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+			       </select>
+		</p>
+		<h2>Save</h2>
+		<p>
+			<input type="button" value="Save" onclick="save()"/>
+		</p>
+	</div>
+	<div class="map" id="map">
+		<h1>Splendens - Map Editor</h1>
+	</div>
+</body>
+</html>
