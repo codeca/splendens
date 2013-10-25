@@ -28,7 +28,7 @@
 @implementation Cell
 
 - (id)initWithX:(int)x y:(int)y size:(CGSize)size {
-	if (self = [super initWithTexture:Cell.emptyTexture color:[UIColor clearColor] size:size]) {
+	if (self = [super initWithTexture:[Cell textureWithName:@"empty"] color:[UIColor clearColor] size:size]) {
 		// Create subnode to render the cell type texture
 		self.typeOverlay = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:size];
 		[self addChild:self.typeOverlay];
@@ -54,13 +54,13 @@
 		[self addChild:self.populationLabel];
 		
 		// PathFocus
-		self.pathFocus = [SKSpriteNode spriteNodeWithTexture: Cell.path4Texture size:size];
+		self.pathFocus = [SKSpriteNode spriteNodeWithTexture: [Cell textureWithName:@"path4"] size:size];
 		self.pathFocus.colorBlendFactor = 1;
 		self.pathFocus.hidden = YES;
 		[self addChild:self.pathFocus];
 		
 		// selectedFocus
-		self.selectedFocus = [SKSpriteNode spriteNodeWithTexture: Cell.path4Texture size:size];
+		self.selectedFocus = [SKSpriteNode spriteNodeWithTexture: [Cell textureWithName:@"path4"] size:size];
 		self.selectedFocus.color = [UIColor greenColor];
 		self.selectedFocus.colorBlendFactor = 1;
 		self.selectedFocus.hidden = YES;
@@ -101,7 +101,7 @@
 	float iniX = -self.size.width/2;
 	float iniY = -self.size.height/2;
 	for (int i=0; i<level-1; i++) {
-		SKSpriteNode* star = [SKSpriteNode spriteNodeWithTexture:Cell.starTexture];
+		SKSpriteNode* star = [SKSpriteNode spriteNodeWithTexture:[Cell textureWithName:@"star"]];
 		float w = star.size.width;
 		float h = star.size.height;
 		star.position = CGPointMake(iniX+w*i+w/2, iniY+h/2);
@@ -118,11 +118,11 @@
 	// Set size and texture overlay
 	switch (self.type) {
 		case CellTypeEmpty: self.typeOverlay.texture = nil; break;
-		case CellTypeWall: self.typeOverlay.texture = Cell.wallTexture; break;
-		case CellTypeBasic: self.typeOverlay.texture = Cell.basicTexture; break;
-		case CellTypeCity: self.typeOverlay.texture = Cell.cityTexture; break;
-		case CellTypeTower: self.typeOverlay.texture = Cell.towerTexture; break;
-		case CellTypeLab: self.typeOverlay.texture = Cell.labTexture; break;
+		case CellTypeWall: self.typeOverlay.texture = [Cell textureWithName:@"wall4"]; break;
+		case CellTypeBasic: self.typeOverlay.texture = [Cell textureWithName:@"basic"]; break;
+		case CellTypeCity: self.typeOverlay.texture = [Cell textureWithName:@"city"]; break;
+		case CellTypeTower: self.typeOverlay.texture = [Cell textureWithName:@"tower"]; break;
+		case CellTypeLab: self.typeOverlay.texture = [Cell textureWithName:@"lab"]; break;
 	}
 	
 	// Update player color
@@ -135,10 +135,10 @@
 	// Update population mask and label
 	if (self.type != CellTypeEmpty && self.type != CellTypeWall) {
 		// Mask
-		if (self.type == CellTypeBasic) self.populationFull.texture = Cell.basicFullTexture;
-		else if (self.type == CellTypeCity) self.populationFull.texture = Cell.cityFullTexture;
-		else if (self.type == CellTypeTower) self.populationFull.texture = Cell.towerFullTexture;
-		else self.populationFull.texture = Cell.labFullTexture;
+		if (self.type == CellTypeBasic) self.populationFull.texture = [Cell textureWithName:@"basic2"];
+		else if (self.type == CellTypeCity) self.populationFull.texture = [Cell textureWithName:@"city2"];
+		else if (self.type == CellTypeTower) self.populationFull.texture = [Cell textureWithName:@"tower2"];
+		else self.populationFull.texture = [Cell textureWithName:@"lab2"];
 		self.populationOverlay.hidden = NO;
 		self.populationFull.color = self.owner ? self.owner.color : [UIColor grayColor];
 		int width = self.size.width;
@@ -157,54 +157,21 @@
 
 #pragma mark - cached textures
 
-+ (SKTexture*)emptyTexture {
-	static SKTexture* t = nil;
-	return t ? t : (t=[SKTexture textureWithImageNamed:@"empty"]);
-}
-+ (SKTexture*)wallTexture {
-	static SKTexture* t = nil;
-	return t ? t : (t=[SKTexture textureWithImageNamed:@"wall4"]);
-}
-+ (SKTexture*)basicTexture {
-	static SKTexture* t = nil;
-	return t ? t : (t=[SKTexture textureWithImageNamed:@"basic"]);
-}
-+ (SKTexture*)cityTexture {
-	static SKTexture* t = nil;
-	return t ? t : (t=[SKTexture textureWithImageNamed:@"city"]);
-}
-+ (SKTexture*)towerTexture {
-	static SKTexture* t = nil;
-	return t ? t : (t=[SKTexture textureWithImageNamed:@"tower"]);
-}
-+ (SKTexture*)labTexture {
-	static SKTexture* t = nil;
-	return t ? t : (t=[SKTexture textureWithImageNamed:@"lab"]);
-}
-+ (SKTexture*)starTexture {
-	static SKTexture* t = nil;
-	return t ? t : (t=[SKTexture textureWithImageNamed:@"star"]);
-}
-+ (SKTexture*)basicFullTexture {
-	static SKTexture* t = nil;
-	return t ? t : (t=[SKTexture textureWithImageNamed:@"basic2"]);
-}
-+ (SKTexture*)cityFullTexture {
-	static SKTexture* t = nil;
-	return t ? t : (t=[SKTexture textureWithImageNamed:@"city2"]);
-}
-+ (SKTexture*)towerFullTexture {
-	static SKTexture* t = nil;
-	return t ? t : (t=[SKTexture textureWithImageNamed:@"tower2"]);
-}
-+ (SKTexture*)labFullTexture {
-	static SKTexture* t = nil;
-	return t ? t : (t=[SKTexture textureWithImageNamed:@"lab2"]);
-}
-
-+ (SKTexture*) path4Texture{
-	static SKTexture* t = nil;
-	return t ? t : (t=[SKTexture textureWithImageNamed:@"path4"]);
++ (SKTexture*)textureWithName:(NSString*)name {
+	static NSMutableDictionary* cache = nil;
+	
+	// Initialize the cache if not done wet
+	if (!cache)
+		cache = [NSMutableDictionary dictionary];
+	
+	// Retrieve the texture
+	SKTexture* texture = [cache objectForKey:name];
+	if (!texture) {
+		// Not found, load it and save it in the cache
+		texture = [SKTexture textureWithImageNamed:name];
+		[cache setObject:texture forKey:name];
+	}
+	return texture;
 }
 
 #pragma mark - touchs
@@ -268,11 +235,13 @@
 }
 
 - (void)stopedDragToCell:(Cell*)cell {
-	// Clear the previou focused path
+	// Send troops if possible
 	Map* map = (Map*)self.parent;
-	for (Cell* i in map.lastPath) {
+	
+	
+	// Clear the previous focused path
+	for (Cell* i in map.lastPath)
 		i.pathFocus.hidden = YES;
-	}
 	map.lastPath = nil;
 }
 

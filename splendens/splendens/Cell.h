@@ -36,16 +36,6 @@ typedef enum {
 - (void) upgrade;
 
 // Cached textures
-+ (SKTexture*)emptyTexture;
-+ (SKTexture*)wallTexture;
-+ (SKTexture*)basicTexture;
-+ (SKTexture*)cityTexture;
-+ (SKTexture*)towerTexture;
-+ (SKTexture*)labTexture;
-+ (SKTexture*)starTexture;
-+ (SKTexture*)basicFullTexture;
-+ (SKTexture*)cityFullTexture;
-+ (SKTexture*)towerFullTexture;
-+ (SKTexture*)labFullTexture;
++ (SKTexture*)textureWithName:(NSString*)name;
 
 @end
