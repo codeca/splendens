@@ -20,6 +20,7 @@
 
 @property (nonatomic, weak) id<TextButtonDelegate> delegate;
 
-- (id)initWithTexture:(SKTexture*)texture label:(SKLabelNode*)label;
+- (id)initWithLabel:(SKLabelNode*)label;
+- (id)initWithLabel:(SKLabelNode*)label size:(CGSize)size;
 
 @end
