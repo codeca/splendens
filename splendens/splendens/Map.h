@@ -33,4 +33,8 @@
 // Return the cell at the given pixel position (relative to the map node)
 - (Cell*)cellAtPixelX:(float)x pixelY:(float)y;
 
+// Send a troop following the path
+// The path must be valid (from a user cell and to another valid cell)
+- (void)sendTroop:(NSArray*)path;
+
 @end

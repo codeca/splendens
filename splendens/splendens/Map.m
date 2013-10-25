@@ -7,6 +7,13 @@
 //
 
 #import "Map.h"
+#import "Troop.h"
+
+@interface Map()
+
+@property (nonatomic) NSMutableArray* troops;
+
+@end
 
 @implementation Map
 
@@ -27,6 +34,7 @@
 			[players addObject:player];
 		}
 		self.players = players;
+		self.thisPlayer = players[0];
 		
 		// Create root node
 		self.position = CGPointMake((768-MAP_SIZE)/2, (1024-MAP_SIZE)/2);
@@ -59,6 +67,8 @@
 					cell.owner = [players objectAtIndex:[owner integerValue]];
 			}
 		}
+		
+		self.troops = [NSMutableArray array];
 	}
 	return self;
 }
@@ -72,6 +82,13 @@
 	int x = pX/(MAP_SIZE/self.size);
 	int y = pY/(MAP_SIZE/self.size);
 	return [self cellAtX:x y:y];
+}
+
+- (void)sendTroop:(NSArray *)path {
+	Troop* troop = [[Troop alloc] initWithPath:path];
+	[self.troops addObject:troop];
+	[self addChild:troop];
+	[troop runAction:[SKAction moveByX:100 y:100 duration:3]];
 }
 
 @end

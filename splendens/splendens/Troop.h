@@ -7,7 +7,15 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+#import "Player.h"
 
 @interface Troop : SKSpriteNode
+
+@property (nonatomic) int speed;
+@property (nonatomic) NSArray* path;
+@property (nonatomic) int pos;
+@property (nonatomic) Player* owner;
+
+- (id)initWithPath:(NSArray*)path;
 
 @end
