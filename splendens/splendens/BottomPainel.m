@@ -27,8 +27,8 @@
 
 - (void) update: (Cell*)selectedCell{
 	Map* map = (Map*)[[self scene] childNodeWithName: @"map"];
-
-	if (selectedCell == nil) [self.table removeAllChildren];
+	[self.table removeAllChildren];
+	if (selectedCell == nil);
 	else{
 		int x = 76;
 		int y = 40;
@@ -93,8 +93,8 @@
 		[tableCell4 addChild:infoCell4];
 		
 		if (selectedCell.owner == map.thisPlayer){
+			UpgradeArrow* upgradeArrow = [[UpgradeArrow alloc]init: a];
 			if (selectedCell.level<4){
-				UpgradeArrow* upgradeArrow = [[UpgradeArrow alloc]init: a];
 				upgradeArrow.position = CGPointMake(2*x+dy1+2*dy2+upgradeArrow.size.width/2-self.size.width/2, 0);
 				[self.table addChild:upgradeArrow];
 			}
@@ -103,7 +103,60 @@
 			}
 			else{
 				
+				CGSize size = CGSizeMake(x,y);
+				SKSpriteNode* tableCell5 = [[SKSpriteNode alloc] initWithColor:[UIColor greenColor] size:size];
+				SKSpriteNode* tableCell6 = [[SKSpriteNode alloc] initWithColor:[UIColor greenColor] size:size];
+				SKSpriteNode* tableCell7 = [[SKSpriteNode alloc] initWithColor:[UIColor greenColor] size:size];
+				SKSpriteNode* tableCell8 = [[SKSpriteNode alloc] initWithColor:[UIColor greenColor] size:size];
+				[self.table addChild:tableCell5];
+				[self.table addChild:tableCell6];
+				[self.table addChild:tableCell7];
+				[self.table addChild:tableCell8];
+				tableCell5.size = size;
+				tableCell6.size = size;
+				tableCell7.size = size;
+				tableCell8.size = size;
+				tableCell5.position = CGPointMake(dy1+x/2-self.size.width/2+dy2+2*x+dy2+upgradeArrow.size.width+dy2, dy1+y+dy2+y/2-self.size.height/2);
+				tableCell6.position = CGPointMake(dy1+x+dy2+x/2-self.size.width/2+dy2+2*x+dy2+upgradeArrow.size.width+dy2, dy1+y+dy2+y/2-self.size.height/2);
+				tableCell7.position = CGPointMake(dy1+x/2-self.size.width/2+dy2+2*x+dy2+upgradeArrow.size.width+dy2, dy1+y/2-self.size.height/2);
+				tableCell8.position = CGPointMake(dy1+x+dy2+x/2-self.size.width/2+dy2+2*x+dy2+upgradeArrow.size.width+dy2, dy1+y/2-self.size.height/2);
 				
+				size = CGSizeMake(a,a);
+				SKSpriteNode* attributeCell5 = [SKSpriteNode spriteNodeWithColor:[UIColor yellowColor] size:size];
+				attributeCell5.position = CGPointMake(da+a/2-x/2, da+a/2-y/2);
+				SKSpriteNode* attributeCell6 = [SKSpriteNode spriteNodeWithColor:[UIColor yellowColor] size:size];
+				attributeCell6.position = CGPointMake(da+a/2-x/2, da+a/2-y/2);
+				SKSpriteNode* attributeCell7 = [SKSpriteNode spriteNodeWithColor:[UIColor yellowColor] size:size];
+				attributeCell7.position = CGPointMake(da+a/2-x/2, da+a/2-y/2);
+				SKSpriteNode* attributeCell8 = [SKSpriteNode spriteNodeWithColor:[UIColor yellowColor] size:size];
+				attributeCell8.position = CGPointMake(da+a/2-x/2, da+a/2-y/2);
+				[tableCell5 addChild:attributeCell5];
+				[tableCell6 addChild:attributeCell6];
+				[tableCell7 addChild:attributeCell7];
+				[tableCell8 addChild:attributeCell8];
+				
+				
+				SKLabelNode* infoCell5 = [[SKLabelNode alloc] initWithFontNamed:@"arial"];
+				infoCell5.position = CGPointMake(2*da+a+a/2-x/2, da+a/2-y/2);
+				infoCell5.text = @"1";
+				infoCell5.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
+				SKLabelNode* infoCell6 = [[SKLabelNode alloc] initWithFontNamed:@"arial"];
+				infoCell6.position = CGPointMake(2*da+a+a/2-x/2, da+a/2-y/2);
+				infoCell6.text = @"1";
+				infoCell6.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
+				SKLabelNode* infoCell7 = [[SKLabelNode alloc] initWithFontNamed:@"arial"];
+				infoCell7.position = CGPointMake(2*da+a+a/2-x/2, da+a/2-y/2);
+				infoCell7.text = @"1";
+				infoCell7.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
+				SKLabelNode* infoCell8 = [[SKLabelNode alloc] initWithFontNamed:@"arial"];
+				infoCell8.position = CGPointMake(2*da+a+a/2-x/2, da+a/2-y/2);
+				infoCell8.text = @"1";
+				infoCell8.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
+				
+				[tableCell5 addChild:infoCell5];
+				[tableCell6 addChild:infoCell6];
+				[tableCell7 addChild:infoCell7];
+				[tableCell8 addChild:infoCell8];
 				
 				
 			}
