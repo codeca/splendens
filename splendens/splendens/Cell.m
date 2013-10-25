@@ -251,24 +251,29 @@
 	map.selected.selectedFocus.hidden = YES;
 	map.selected = nil;
 	
-	for (Cell* i in map.cells)
+	// Clear previous focused path
+	for (Cell* i in map.lastPath)
 		i.pathFocus.hidden = YES;
+	map.lastPath = nil;
+	
+	// Paint the new path
 	if (self.isCenter == YES) {
-		NSArray* caminho = [PathFinder findPathwithStart:self andGoal:cell andMap:map];
-		for (Cell* i in caminho){
+		map.lastPath = [PathFinder findPathwithStart:self andGoal:cell andMap:map];
+		UIColor* color = [cell isCenter] ? [UIColor magentaColor] : [UIColor redColor];
+		for (Cell* i in map.lastPath) {
 			i.pathFocus.hidden = NO;
-			if (cell.isCenter == YES)i.pathFocus.color = [UIColor magentaColor];
-			else i.pathFocus.color = [UIColor redColor];
+			i.pathFocus.color = color;
 		}
 	}
 }
 
-- (void) stopedDragToCell: (Cell*)cell{
-	//Manda atacar@!!!@!@!@!@!@!@!#!@#!@#!@#!@#!@#!@##!@#!#!#!!@!#@#!@!#@!#@!#@
+- (void)stopedDragToCell:(Cell*)cell {
+	// Clear the previou focused path
 	Map* map = (Map*)self.parent;
-	for (Cell* i in map.cells){
+	for (Cell* i in map.lastPath) {
 		i.pathFocus.hidden = YES;
 	}
+	map.lastPath = nil;
 }
 
 - (void) upgradeTo: (CellType)type{
