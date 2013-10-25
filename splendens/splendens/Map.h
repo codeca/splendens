@@ -10,6 +10,7 @@
 #import <SpriteKit/SpriteKit.h>
 #import "Cell.h"
 #import "Player.h"
+#import "Troop.h"
 
 #define MAP_SIZE 700.0
 

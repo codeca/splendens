@@ -11,7 +11,7 @@
 
 @implementation Troop
 
-- (id)initWithPath:(NSArray *)path {
+- (id)initWithPath:(NSArray *)path amount:(int)amount {
 	if (self = [super initWithImageNamed:@"troop"]) {
 		Cell* cell = path[0];
 		self.path = path;
@@ -20,6 +20,13 @@
 		self.owner = cell.owner;
 		self.color = cell.owner.color;
 		self.colorBlendFactor = 1;
+		
+		// Set amount label
+		SKLabelNode* label = [SKLabelNode labelNodeWithFontNamed:@"arial"];
+		label.text = [NSString stringWithFormat:@"%d", amount];
+		label.fontSize = 16;
+		label.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
+		[self addChild:label];
 	}
 	return self;
 }

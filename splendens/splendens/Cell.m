@@ -278,7 +278,7 @@
 	map.lastPath = nil;
 	
 	// Paint the new path
-	if (self.isCenter && self.owner == map.thisPlayer) {
+	if (self.isCenter && self.owner == map.thisPlayer && self.population) {
 		map.lastPath = [PathFinder findPathwithStart:self andGoal:cell andMap:map];
 		UIColor* color = [cell isCenter] ? [UIColor magentaColor] : [UIColor redColor];
 		Cell* previous = nil;
@@ -296,7 +296,7 @@
 	Map* map = (Map*)self.parent;
 	
 	// Send troops if possible
-	if ([cell isCenter])
+	if ([cell isCenter] && cell.population)
 		[map sendTroop:map.lastPath];
 	
 	// Clear the previous focused path

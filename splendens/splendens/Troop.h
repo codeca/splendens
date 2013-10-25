@@ -15,7 +15,8 @@
 @property (nonatomic) NSArray* path;
 @property (nonatomic) int pos;
 @property (nonatomic) Player* owner;
+@property (nonatomic) int amount;
 
-- (id)initWithPath:(NSArray*)path;
+- (id)initWithPath:(NSArray*)path amount:(int)amount;
 
 @end

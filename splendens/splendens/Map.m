@@ -85,10 +85,12 @@
 }
 
 - (void)sendTroop:(NSArray *)path {
-	Troop* troop = [[Troop alloc] initWithPath:path];
+	Cell* firstCell = path[0];
+	int amount = (firstCell.population+1)/2;
+	firstCell.population -= amount;
+	Troop* troop = [[Troop alloc] initWithPath:path amount:amount];
 	[self.troops addObject:troop];
-	[self addChild:troop];
-	[troop runAction:[SKAction moveByX:100 y:100 duration:3]];
+	[firstCell addChild:troop];
 }
 
 @end
