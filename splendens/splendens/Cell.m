@@ -22,7 +22,6 @@
 @property (nonatomic) SKSpriteNode* pathFocus;
 @property (nonatomic) SKSpriteNode* selectedFocus;
 
-
 @end
 
 @implementation Cell
@@ -118,7 +117,7 @@
 	// Set size and texture overlay
 	switch (self.type) {
 		case CellTypeEmpty: self.typeOverlay.texture = nil; break;
-		case CellTypeWall: self.typeOverlay.texture = [Cell textureWithName:@"wall4"]; break;
+		case CellTypeWall: self.typeOverlay.texture = [Cell textureWithName:@"wall"]; break;
 		case CellTypeBasic: self.typeOverlay.texture = [Cell textureWithName:@"basic"]; break;
 		case CellTypeCity: self.typeOverlay.texture = [Cell textureWithName:@"city"]; break;
 		case CellTypeTower: self.typeOverlay.texture = [Cell textureWithName:@"tower"]; break;
@@ -153,6 +152,61 @@
 		self.populationOverlay.hidden = YES;
 		self.populationLabel.hidden = YES;
 	}
+}
+
+// Update the pathfocus texture to the best path sprite
+- (void)updatePathFocusWithPreviousCell:(Cell*)prev nextCell:(Cell*)next {
+	self.pathFocus.hidden = NO;
+	
+	// Check the relative position for each cell
+	int prevPos, nextPos;
+	if (prev) {
+		if (prev.x == self.x)
+			prevPos = prev.y>self.y ? 1 : 3;
+		else
+			prevPos = prev.x>self.x ? 0 : 2;
+	}
+	if (next) {
+		if (next.x == self.x)
+			nextPos = next.y>self.y ? 1 : 3;
+		else
+			nextPos = next.x>self.x ? 0 : 2;
+	}
+	
+	if (!prev) {
+		// Path start
+		self.pathFocus.texture = [Cell textureWithName:@"path3"];
+		self.pathFocus.zRotation = M_PI*(nextPos==0 ? 0 : (nextPos==1 ? .5 : (nextPos==2 ? 1 : 1.5)));
+	} else if (!next) {
+		// Path end
+		self.pathFocus.texture = [Cell textureWithName:@"path3"];
+		self.pathFocus.zRotation = M_PI*(prevPos==0 ? 0 : (prevPos==1 ? .5 : (prevPos==2 ? 1 : 1.5)));
+	} else if ((prevPos==0 && nextPos==2) || (prevPos==2 && nextPos==0)) {
+		// Horizontal path
+		self.pathFocus.texture = [Cell textureWithName:@"path2I"];
+		self.pathFocus.zRotation = 0;
+	} else if ((prevPos==1 && nextPos==3) || (prevPos==3 && nextPos==1)) {
+		// Vertical path
+		self.pathFocus.texture = [Cell textureWithName:@"path2I"];
+		self.pathFocus.zRotation = M_PI/2;
+	} else if ((prevPos==0 && nextPos==1) || (prevPos==1 && nextPos==0)) {
+		// Curved path
+		self.pathFocus.texture = [Cell textureWithName:@"path2L"];
+		self.pathFocus.zRotation = 0;
+	} else if ((prevPos==1 && nextPos==2) || (prevPos==2 && nextPos==1)) {
+		// Curved path
+		self.pathFocus.texture = [Cell textureWithName:@"path2L"];
+		self.pathFocus.zRotation = M_PI/2;
+	} else if ((prevPos==2 && nextPos==3) || (prevPos==3 && nextPos==2)) {
+		// Curved path
+		self.pathFocus.texture = [Cell textureWithName:@"path2L"];
+		self.pathFocus.zRotation = M_PI;
+	} else if ((prevPos==3 && nextPos==0) || (prevPos==0 && nextPos==3)) {
+		// Curved path
+		self.pathFocus.texture = [Cell textureWithName:@"path2L"];
+		self.pathFocus.zRotation = 3*M_PI/2;
+	} else
+		self.pathFocus.texture = [Cell textureWithName:@"path4"];
 }
 
 #pragma mark - cached textures
@@ -227,17 +281,20 @@
 	if (self.isCenter == YES) {
 		map.lastPath = [PathFinder findPathwithStart:self andGoal:cell andMap:map];
 		UIColor* color = [cell isCenter] ? [UIColor magentaColor] : [UIColor redColor];
-		for (Cell* i in map.lastPath) {
-			i.pathFocus.hidden = NO;
-			i.pathFocus.color = color;
+		Cell* previous = nil;
+		for (int i=0; i<map.lastPath.count; i++) {
+			Cell* now = map.lastPath[i];
+			Cell* next = i<map.lastPath.count-1 ? map.lastPath[i+1] : nil;
+			now.pathFocus.color = color;
+			[now updatePathFocusWithPreviousCell:previous nextCell:next];
+			previous = now;
 		}
 	}
 }
 
 - (void)stopedDragToCell:(Cell*)cell {
-	// Send troops if possible
+	// TODO: Send troops if possible
 	Map* map = (Map*)self.parent;
-	
 	
 	// Clear the previous focused path
 	for (Cell* i in map.lastPath)
