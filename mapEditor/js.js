@@ -290,10 +290,10 @@ function getPopulation(cell) {
 // Return the max population for the given cell object
 function getMaxPopulation(cell) {
 	var values = {
-		1: [10, 10, 10, 10],
-		2: [30, 45, 60, 75],
-		3: [20, 30, 40, 50],
-		4: [20, 30, 40, 50]
+		2: [10, 10, 10, 10],
+		3: [30, 45, 60, 75],
+		4: [20, 30, 40, 50],
+		5: [20, 30, 40, 50]
 	}
 	return values[cell.type][cell.level]
 }
