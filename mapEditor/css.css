@@ -45,13 +45,9 @@ html, body {
 	clear: left;
 }
 
-.cell-empty, .cell-wall,
-.cell-basic0, .cell-basic1, .cell-basic2, .cell-basic3, .cell-basic4,
-.cell-city0, .cell-city1, .cell-city2, .cell-city3, .cell-city4,
-.cell-tower0, .cell-tower1, .cell-tower2, .cell-tower3, .cell-tower4,
-.cell-lab0, .cell-lab1, .cell-lab2, .cell-lab3, .cell-lab4 {
-	width:50px;
-	height:50px;
+.cell {
+	width:40px;
+	height:40px;
 	float:left;
 	font-weight:bold;
 	padding:15px;
@@ -61,31 +57,8 @@ html, body {
 	cursor:cell;
 }
 
-.cell-empty {background:url(empty.png)}
-.cell-wall {background:url(wall.png)}
-.cell-basic0 {background:url(basic0.png)}
-.cell-basic1 {background:url(basic1.png)}
-.cell-basic2 {background:url(basic2.png)}
-.cell-basic3 {background:url(basic3.png)}
-.cell-basic4 {background:url(basic4.png)}
-.cell-city0 {background:url(city0.png)}
-.cell-city1 {background:url(city1.png)}
-.cell-city2 {background:url(city2.png)}
-.cell-city3 {background:url(city3.png)}
-.cell-city4 {background:url(city4.png)}
-.cell-tower0 {background:url(tower0.png)}
-.cell-tower1 {background:url(tower1.png)}
-.cell-tower2 {background:url(tower2.png)}
-.cell-tower3 {background:url(tower3.png)}
-.cell-tower4 {background:url(tower4.png)}
-.cell-lab0 {background:url(lab0.png)}
-.cell-lab1 {background:url(lab1.png)}
-.cell-lab2 {background:url(lab2.png)}
-.cell-lab3 {background:url(lab3.png)}
-.cell-lab4 {background:url(lab4.png)}
-
 .star {
-	background-image:url(star.png);
+	background-image:url(imgs/star.png);
 	width:16px;
 	height:16px;
 	position:absolute;

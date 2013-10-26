@@ -25,12 +25,13 @@ function setMapSize(size) {
 	for (y = 0; y < size; y++) {
 		for (x = 0; x < size; x++) {
 			div = document.createElement("div")
-			div.className = obj2class(map[x][y])
+			div.className = "cell"
 			div.onclick = cellOnClick
 			div.onmousedown = cellOnMouseDown
 			div.onmousemove = cellOnMouseMove
 			div.dataset.x = x
 			div.dataset.y = y
+			div.style.backgroundImage = cell2image(x, y)
 			if (map[x][y].type > 1)
 				div.innerHTML = map[x][y].population
 			if (map[x][y].type > 2)
@@ -39,6 +40,82 @@ function setMapSize(size) {
 		}
 	}
 	mapSize = size
+}
+
+// Return the right image name for the cell in the given position
+// stop indicate whether wall texture updates should not propagate (used by the recursion)
+function cell2image(x, y, stop) {
+	var cell, neighbourhood, masks, values, imageNames, i, angles, r
+	
+	// Look for neighbours
+	neighbourhood = 0
+	if (x < mapSize-1 && y < mapSize-1 && map[x+1][y+1].type == 1) {
+		neighbourhood += 1
+		if (!stop)
+			cell2image(x+1, y+1, true)
+	}
+	if (x > 0 && y < mapSize-1 && map[x-1][y+1].type == 1) {
+		neighbourhood += 2
+		if (!stop)
+			cell2image(x-1, y+1, true)
+	}
+	if (x > 0 && y > 0 && map[x-1][y-1].type == 1) {
+		neighbourhood += 4
+		if (!stop)
+			cell2image(x-1, y-1, true)
+	}
+	if (x < mapSize-1 && y > 0 && map[x+1][y-1].type == 1) {
+		neighbourhood += 8
+		if (!stop)
+			cell2image(x+1, y-1, true)
+	}
+	if (y < mapSize-1 && map[x][y+1].type == 1) {
+		neighbourhood += 16
+		if (!stop)
+			cell2image(x, y+1, true)
+	}
+	if (x > 0 && map[x-1][y].type == 1) {
+		neighbourhood += 32
+		if (!stop)
+			cell2image(x-1, y, true)
+	}
+	if (y > 0 && map[x][y-1].type == 1) {
+		neighbourhood += 64
+		if (!stop)
+			cell2image(x, y-1, true)
+	}
+	if (x < mapSize-1 && map[x+1][y].type == 1) {
+		neighbourhood += 128
+		if (!stop)
+			cell2image(x+1, y, true)
+	}
+	
+	cell = map[x][y]
+	if (cell.type == 0)
+		return "url(imgs/empty.png)"
+	if (cell.type == 1) {
+		// Pick the right image name and rotation
+		masks = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 6, 6, 6, 6, 12, 12, 12, 12, 9, 9, 9, 9, 7, 7, 15, 11, 11, 14, 14, 15, 13, 13, 15, 15, 15, 15, 15]
+		values = [255, 254, 253, 251, 247, 252, 250, 246, 249, 245, 243, 248, 244, 242, 241, 240, 239, 235, 231, 227, 223, 222, 215, 214, 191, 190, 189, 188, 127, 125, 123, 121, 199, 207, 175, 107, 111, 158, 159, 95, 61, 63, 143, 79, 47, 31, 15]
+		imageNames = ["0f", "0e", "0e", "0e", "0e", "0c", "0d", "0c", "0c", "0d", "0c", "0b", "0b", "0b", "0b", "0a", "1d", "1b", "1c", "1a", "1d", "1c", "1b", "1a", "1d", "1b", "1c", "1a", "1d", "1b", "1c", "1a", "2La", "2Lb", "2I", "2La", "2Lb", "2La", "2Lb", "2I", "2La", "2Lb", "3", "3", "3", "3", "4"]
+		angles = [0, 0, 3, 2, 1, 0, 0, 1, 3, 1, 2, 0, 1, 2, 3, 0, 2, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0, 0, 3, 3, 3, 3, 1, 1, 0, 2, 2, 0, 0, 1, 3, 3, 0, 1, 2, 3, 0]
+		
+		for (i=0; i<47; i++)
+			if ((neighbourhood | masks[i]) == values[i]) {
+				var r = "url(imgs/wall"+imageNames[i]+"-"+angles[i]+".png), url(imgs/empty.png)"
+				if (stop)
+					document.getElementsByClassName("cell")[y*mapSize+x].style.backgroundImage = r
+				return r
+			}
+	}
+	if (cell.type == 2)
+		return "url(imgs/basic"+cell.owner+".png)"
+	if (cell.type == 3)
+		return "url(imgs/city"+cell.owner+".png)"
+	if (cell.type == 4)
+		return "url(imgs/tower"+cell.owner+".png)"
+	if (cell.type == 5)
+		return "url(imgs/lab"+cell.owner+".png)"
 }
 
 // Change the active tool
@@ -88,15 +165,14 @@ function cellOnClick(event) {
 		population = document.getElementById("population").value
 		level = Number(document.getElementById("level").value)
 		if (type == "empty" || type == "wall") {
-			cell.className = "cell-" + type
 			cell.innerHTML = ""
 			setStars(cell, 0)
 		} else {
-			cell.className = "cell-" + type + owner
 			cell.innerHTML = population
 			setStars(cell, type == "basic" ? 0 : level - 1)
 		}
 		map[cell.dataset.x][cell.dataset.y] = { type: getTypeId(type), owner: owner, population: population, level: level }
+		cell.style.backgroundImage = cell2image(Number(cell.dataset.x), Number(cell.dataset.y))
 	}
 }
 
@@ -143,18 +219,6 @@ function getTypeId(type) {
 		case "city": return 3
 		case "tower": return 4
 		case "lab": return 5
-	}
-}
-
-// Return the right class name for the given cell object
-function obj2class(cell) {
-	switch (cell.type) {
-		case 0: return "cell-empty"
-		case 1: return "cell-wall"
-		case 2: return "cell-basic" + cell.owner
-		case 3: return "cell-city" + cell.owner
-		case 4: return "cell-tower" + cell.owner
-		case 5: return "cell-lab" + cell.owner
 	}
 }
 

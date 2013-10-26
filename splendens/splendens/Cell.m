@@ -379,16 +379,14 @@
 	
 	// Pick the right image name and rotation
 	int i;
-	int masks[47] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 6, 6, 6, 6, 12, 12, 12, 12, 9, 9, 9, 9, 7, 7, 15, 14, 14, 14, 14, 15, 13, 13, 15, 15, 15, 15, 15};
-	int values[47] = {255, 254, 253, 251, 247, 252, 250, 246, 249, 245, 243, 248, 244, 242, 241, 240, 239, 235, 231, 227, 223, 222, 215, 214, 191, 190, 189, 188, 127, 125, 123, 121, 199, 207, 175, 110, 111, 158, 159, 95, 61, 63, 143, 79, 47, 31, 15};
-	NSArray* imageNames = @[@"wall0f", @"wall0e", @"wall0e", @"wall0e", @"wall0e", @"wall0c", @"wall0d", @"wall0c", @"wall0c", @"wall0d", @"wall0c", @"wall0b", @"wall0b", @"wall0b", @"wall0b", @"wall0a", @"wall1d", @"wall1b", @"wall1c", @"wall1a", @"wall1d", @"wall1c", @"wall1b", @"wall1a", @"wall1d", @"wall1b", @"wall1c", @"wall1a", @"wall1d", @"wall1b", @"wall1c", @"wall1a", @"wall2La", @"wall2Lb", @"wall2LI", @"wall2La", @"wall2Lb", @"wall2La", @"wall2Lb", @"wall2I", @"wall2La", @"wall2Lb", @"wall3", @"wall3", @"wall3", @"wall3", @"wall4"];
-	int angles[47] = {0, 0, 3, 2, 1, 0, 0, 1, 3, 1, 2, 0, 1, 2, 3, 0, 2, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0, 0, 3, 3, 3, 3, 1, 1, 0, 0, 0, 0, 0, 1, 3, 3, 0, 1, 2, 3, 0};
+	int masks[47] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 6, 6, 6, 6, 12, 12, 12, 12, 9, 9, 9, 9, 7, 7, 15, 11, 11, 14, 14, 15, 13, 13, 15, 15, 15, 15, 15};
+	int values[47] = {255, 254, 253, 251, 247, 252, 250, 246, 249, 245, 243, 248, 244, 242, 241, 240, 239, 235, 231, 227, 223, 222, 215, 214, 191, 190, 189, 188, 127, 125, 123, 121, 199, 207, 175, 107, 111, 158, 159, 95, 61, 63, 143, 79, 47, 31, 15};
+	NSArray* imageNames = @[@"wall0f-0", @"wall0e-0", @"wall0e-3", @"wall0e-2", @"wall0e-1", @"wall0c-0", @"wall0d-0", @"wall0c-1", @"wall0c-3", @"wall0d-1", @"wall0c-2", @"wall0b-0", @"wall0b-1", @"wall0b-2", @"wall0b-3", @"wall0a-0", @"wall1d-2", @"wall1b-2", @"wall1c-2", @"wall1a-2", @"wall1d-1", @"wall1c-1", @"wall1b-1", @"wall1a-1", @"wall1d-0", @"wall1b-0", @"wall1c-0", @"wall1a-0", @"wall1d-3", @"wall1b-3", @"wall1c-3", @"wall1a-3", @"wall2La-1", @"wall2Lb-1", @"wall2I-0", @"wall2La-2", @"wall2Lb-2", @"wall2La-0", @"wall2Lb-0", @"wall2I-1", @"wall2La-3", @"wall2Lb-3", @"wall3-0", @"wall3-1", @"wall3-2", @"wall3-3", @"wall4-0"];
 	
 	for (i=0; i<47; i++)
 		if ((neighbourhood | masks[i]) == values[i]) {
 			NSString* imageName = imageNames[i];
 			self.typeOverlay.texture = [Cell textureWithName:imageName];
-			self.typeOverlay.zRotation = angles[i]*M_PI/2;
 			return;
 		}
 }
