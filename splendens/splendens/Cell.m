@@ -354,4 +354,44 @@
 		return cell.x>self.x ? 0 : M_PI;
 }
 
+/*
+- (void)textureForNeighbours {
+	Map* map = (Map*)self.parent;
+	
+	// Look for neighbours
+	int neighbourhood = 0;
+	if (self.x < map.size-1 && self.y > 0)
+		neighbourhood += 1;
+	if (self.x > 0 && self.y > 0)
+		neighbourhood += 2;
+	if (self.x > 0 && self.y < map.size-1)
+		neighbourhood += 4;
+	if (self.x < map.size-1 && self.y < map.size-1)
+		neighbourhood += 8;
+	if (self.y > 0)
+		neighbourhood += 16;
+	if (self.x > 0)
+		neighbourhood += 32;
+	if (self.y < map.size-1)
+		neighbourhood += 64;
+	if (self.x < map.size-1)
+		neighbourhood += 128;
+	
+	// Pick the right image name and rotation
+	int i;
+	int masks[47] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 6, 6, 6, 6, 12, 12, 12, 12, 9, 9, 9, 9, 7, 7, 15, 14, 14, 14, 14, 15, 13, 13, 15, 15, 15, 15, 15};
+	int values[47] = {255, 254, 253, 251, 247, 252, 250, 246, 249, 245, 243, 248, 244, 242, 241, 240, 239, 235, 231, 227, 223, 222, 215, 214, 191, 190, 189, 188, 127, 125, 123, 121, 199, 207, 175, 110, 111, 158, 159, 95, 61, 63, 143, 79, 47, 31, 15};
+	NSArray* imageNames = @[@"wall0f", @"wall0e", @"wall0e", @"wall0e", @"wall0e", @"wall0c", @"wall0d", @"wall0c", @"wall0c", @"wall0d", @"wall0c", @"wall0b", @"wall0b", @"wall0b", @"wall0b", @"wall0a", @"wall1d", @"wall1b", @"wall1c", @"wall1a", @"wall1d", @"wall1c", @"wall1b", @"wall1a", @"wall1d", @"wall1b", @"wall1c", @"wall1a", @"wall1d", @"wall1b", @"wall1c", @"wall1a", @"wall2La", @"wall2Lb", @"wall2LI", @"wall2La", @"wall2Lb", @"wall2La", @"wall2Lb", @"wall2I", @"wall2La", @"wall2Lb", @"wall3", @"wall3", @"wall3", @"wall3", @"wall4"];
+	int angles[47] = {0, 0, 3, 2, 1, 0, 0, 1, 3, 1, 2, 0, 1, 2, 3, 0, 2, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0, 0, 3, 3, 3, 3, 1, 1, 0, 0, 0, 0, 0, 1, 3, 3, 0, 1, 2, 3, 0};
+	
+	for (i=0; i<47; i++)
+		if ((neighbourhood | masks[i]) == values[i]) {
+			NSString* imageName = imageNames[i];
+			self.typeOverlay.texture = [Cell textureWithName:imageName];
+			self.typeOverlay.zRotation = angles[i]*M_PI/2;
+			return;
+		}
+}
+*/
+
 @end
