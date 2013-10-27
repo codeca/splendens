@@ -18,6 +18,7 @@ clearMap()
 // Create the divs for the given map size
 function setMapSize(size) {
 	var x, y, mapDiv, div, divs
+	mapSize = size
 	mapDiv = document.getElementById("map")
 	mapDiv.className = size == 10 ? "map-small" : (size == 15 ? "map-medium" : "map-large")
 	while (mapDiv.children.length > 1)
@@ -31,7 +32,7 @@ function setMapSize(size) {
 			div.onmousemove = cellOnMouseMove
 			div.dataset.x = x
 			div.dataset.y = y
-			div.style.backgroundImage = cell2image(x, y)
+			div.style.backgroundImage = cell2image(x, y, true)
 			if (map[x][y].type > 1)
 				div.innerHTML = map[x][y].population
 			if (map[x][y].type > 2)
@@ -39,7 +40,6 @@ function setMapSize(size) {
 			mapDiv.appendChild(div)
 		}
 	}
-	mapSize = size
 }
 
 // Return the right image name for the cell in the given position
@@ -52,42 +52,42 @@ function cell2image(x, y, stop) {
 	if (x < mapSize-1 && y < mapSize-1 && map[x+1][y+1].type == 1) {
 		neighbourhood += 1
 		if (!stop)
-			cell2image(x+1, y+1, true)
+			document.getElementsByClassName("cell")[(y+1)*mapSize+x+1].style.backgroundImage = cell2image(x+1, y+1, true)
 	}
 	if (x > 0 && y < mapSize-1 && map[x-1][y+1].type == 1) {
 		neighbourhood += 2
 		if (!stop)
-			cell2image(x-1, y+1, true)
+			document.getElementsByClassName("cell")[(y+1)*mapSize+x-1].style.backgroundImage = cell2image(x-1, y+1, true)
 	}
 	if (x > 0 && y > 0 && map[x-1][y-1].type == 1) {
 		neighbourhood += 4
 		if (!stop)
-			cell2image(x-1, y-1, true)
+			document.getElementsByClassName("cell")[(y-1)*mapSize+x-1].style.backgroundImage = cell2image(x-1, y-1, true)
 	}
 	if (x < mapSize-1 && y > 0 && map[x+1][y-1].type == 1) {
 		neighbourhood += 8
 		if (!stop)
-			cell2image(x+1, y-1, true)
+			document.getElementsByClassName("cell")[(y-1)*mapSize+x+1].style.backgroundImage = cell2image(x+1, y-1, true)
 	}
 	if (y < mapSize-1 && map[x][y+1].type == 1) {
 		neighbourhood += 16
 		if (!stop)
-			cell2image(x, y+1, true)
+			document.getElementsByClassName("cell")[(y+1)*mapSize+x].style.backgroundImage = cell2image(x, y+1, true)
 	}
 	if (x > 0 && map[x-1][y].type == 1) {
 		neighbourhood += 32
 		if (!stop)
-			cell2image(x-1, y, true)
+			document.getElementsByClassName("cell")[y*mapSize+x-1].style.backgroundImage = cell2image(x-1, y, true)
 	}
 	if (y > 0 && map[x][y-1].type == 1) {
 		neighbourhood += 64
 		if (!stop)
-			cell2image(x, y-1, true)
+			document.getElementsByClassName("cell")[(y-1)*mapSize+x].style.backgroundImage = cell2image(x, y-1, true)
 	}
 	if (x < mapSize-1 && map[x+1][y].type == 1) {
 		neighbourhood += 128
 		if (!stop)
-			cell2image(x+1, y, true)
+			document.getElementsByClassName("cell")[y*mapSize+x+1].style.backgroundImage = cell2image(x+1, y, true)
 	}
 	
 	cell = map[x][y]
@@ -102,10 +102,7 @@ function cell2image(x, y, stop) {
 		
 		for (i=0; i<47; i++)
 			if ((neighbourhood | masks[i]) == values[i]) {
-				var r = "url(imgs/wall"+imageNames[i]+"-"+angles[i]+".png), url(imgs/empty.png)"
-				if (stop)
-					document.getElementsByClassName("cell")[y*mapSize+x].style.backgroundImage = r
-				return r
+				return "url(imgs/wall"+imageNames[i]+"-"+angles[i]+".png), url(imgs/empty.png)"
 			}
 	}
 	if (cell.type == 2)
@@ -279,11 +276,11 @@ function save() {
 function getPopulation(cell) {
     var max = getMaxPopulation(cell)
     switch (cell.population) {
-        case "\u2205": return 0;
-        case "\u00BC": return Math.round(max/4);
-        case "\u00BD": return Math.round(max/2);
-        case "\u00BE": return Math.round(3*max/4);
-        case "1": return max;
+        case "\u2205": return 0
+        case "\u00BC": return Math.round(max/4)
+        case "\u00BD": return Math.round(max/2)
+        case "\u00BE": return Math.round(3*max/4)
+        case "1": return max
     }
 }
 
@@ -296,4 +293,47 @@ function getMaxPopulation(cell) {
 		5: [20, 30, 40, 50]
 	}
 	return values[cell.type][cell.level]
+}
+
+// Load a saved map
+function load() {
+	var input
+	input = document.createElement("input")
+	input.type = "file"
+	input.click()
+	
+	// Start reading the file
+	input.onchange = function () {
+		var file, fr
+		file = input.files[0]
+		fr = new FileReader
+		fr.readAsText(file)
+		fr.onload = function () {
+			// Extract the javascript object
+			var data, i, cell, mapCell, pop
+			data = JSON.parse(fr.result.substr(15).replace(/[a-z]+/g, "\"$&\""))
+			
+			// Import into the saved data
+			clearMap()
+			document.getElementById("mana").value = data.mana
+			for (i=0; i<data.cells.length; i++) {
+				cell = data.cells[i]
+				mapCell = map[cell.x][data.size-cell.y-1]
+				mapCell.type = cell.type
+				mapCell.owner = cell.owner=="null" ? 0 : cell.owner+1
+				if (cell.type > 1) {
+					pop = Math.round(4*cell.population/getMaxPopulation(cell))
+					if (pop == 0) mapCell.population = "\u2205"
+					else if (pop == 1) mapCell.population = "\u00BC"
+					else if (pop == 2) mapCell.population = "\u00BD"
+					else if (pop == 3) mapCell.population = "\u00BE"
+					else mapCell.population = "1"
+				}
+				mapCell.level = cell.level
+			}
+			
+			// Update the interface
+			setMapSize(data.size)
+		}
+	}
 }
