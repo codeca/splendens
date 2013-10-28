@@ -32,7 +32,7 @@
 
 - (void)textButtonClicked:(TextButton *)button {
 	Map* map = (Map*)[self.scene childNodeWithName:@"map"];
-	[map updateTroops];
+	[map processTurn];
 }
 
 - (void) update: (Cell*)selectedCell{
