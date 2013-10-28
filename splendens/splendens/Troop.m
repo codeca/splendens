@@ -31,7 +31,8 @@
 		self.node.colorBlendFactor = 1;
 		
 		// Set amount label
-		self.amount = amount;
+		_amount = amount;
+		self.newAmount = amount;
 		SKLabelNode* label = [SKLabelNode labelNodeWithFontNamed:@"arial"];
 		label.text = [NSString stringWithFormat:@"%d", amount];
 		label.fontSize = 16;
@@ -43,6 +44,12 @@
 
 - (Cell*)currentCell {
 	return self.path[self.pos];
+}
+
+- (void)setAmount:(int)amount {
+	_amount = amount;
+	SKLabelNode* label = (SKLabelNode*)self.node.children[0];
+	label.text = [NSString stringWithFormat:@"%d", amount];
 }
 
 @end

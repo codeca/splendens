@@ -170,12 +170,13 @@
 	for (int i=0; i<maxAttacks && i<troops.count; i++) {
 		Troop* troop = troops[i];
 		int damage = [Economy attackDamageForType:tower.type level:tower.level];
-		if (damage >= troop.amount) {
+		if (damage >= troop.newAmount) {
+			// Troop destroyed
 			[self.troops removeObject:troop];
 			[troop.node removeFromParent];
 		} else {
-			troop.amount -= damage;
-			((SKLabelNode*)troop.node.children[0]).text = [NSString stringWithFormat:@"%d", troop.amount];
+			troop.newAmount -= damage;
+			troop.amount = troop.newAmount;
 		}
 	}
 }
