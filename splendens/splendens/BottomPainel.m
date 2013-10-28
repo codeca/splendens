@@ -40,10 +40,10 @@
 	[self.table removeAllChildren];
 	if (selectedCell == nil);
 	else{
-		int x = 76;
-		int y = 40;
-		int dy2 = 10;
-		int dy1 = (116-dy2-2*y)/2;
+		int x = 76; // Width of each table cell
+		int y = 40; // Height of each table cell
+		int dy2 = 10; // Space between table cells
+		int dy1 = (self.size.height-dy2-2*y)/2; // Table cells margin
 		int fontSize = 28;
 		
 		CGSize size = CGSizeMake(x,y);
