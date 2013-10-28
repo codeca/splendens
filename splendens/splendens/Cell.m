@@ -78,7 +78,9 @@
 
 - (void)setType:(CellType)type {
 	_type = type;
-	[self updateOverlay];
+	if (type == CellTypeCity || type == CellTypeTower || type == CellTypeLab)
+		// Avoid recalculation of wall textures
+		[self updateOverlay];
 }
 
 - (void)setOwner:(Player *)owner {
@@ -111,14 +113,12 @@
 	[self updateOverlay];
 }
 
-#pragma mark - internal methods
-
 // Update the type overlay
 - (void)updateOverlay {
 	// Set size and texture overlay
 	switch (self.type) {
 		case CellTypeEmpty: self.typeOverlay.texture = nil; break;
-		case CellTypeWall: self.typeOverlay.texture = [Cell textureWithName:@"wall"]; break;
+		case CellTypeWall: [self updateTextureForWall]; break;
 		case CellTypeBasic: self.typeOverlay.texture = [Cell textureWithName:@"basic"]; break;
 		case CellTypeCity: self.typeOverlay.texture = [Cell textureWithName:@"city"]; break;
 		case CellTypeTower: self.typeOverlay.texture = [Cell textureWithName:@"tower"]; break;
@@ -154,6 +154,8 @@
 		self.populationLabel.hidden = YES;
 	}
 }
+
+#pragma mark - internal methods
 
 // Update the pathfocus texture to the best path sprite
 - (void)updatePathFocusWithPreviousCell:(Cell*)prev nextCell:(Cell*)next {
@@ -354,27 +356,27 @@
 		return cell.x>self.x ? 0 : M_PI;
 }
 
-/*
-- (void)textureForNeighbours {
+#pragma mark - wall logic
+- (void)updateTextureForWall {
 	Map* map = (Map*)self.parent;
 	
 	// Look for neighbours
 	int neighbourhood = 0;
-	if (self.x < map.size-1 && self.y > 0)
+	if (self.x < map.size-1 && self.y > 0 && [map cellAtX:self.x+1 y:self.y-1].type == CellTypeWall)
 		neighbourhood += 1;
-	if (self.x > 0 && self.y > 0)
+	if (self.x > 0 && self.y > 0 && [map cellAtX:self.x-1 y:self.y-1].type == CellTypeWall)
 		neighbourhood += 2;
-	if (self.x > 0 && self.y < map.size-1)
+	if (self.x > 0 && self.y < map.size-1 && [map cellAtX:self.x-1 y:self.y+1].type == CellTypeWall)
 		neighbourhood += 4;
-	if (self.x < map.size-1 && self.y < map.size-1)
+	if (self.x < map.size-1 && self.y < map.size-1 && [map cellAtX:self.x+1 y:self.y+1].type == CellTypeWall)
 		neighbourhood += 8;
-	if (self.y > 0)
+	if (self.y > 0 && [map cellAtX:self.x y:self.y-1].type == CellTypeWall)
 		neighbourhood += 16;
-	if (self.x > 0)
+	if (self.x > 0 && [map cellAtX:self.x-1 y:self.y].type == CellTypeWall)
 		neighbourhood += 32;
-	if (self.y < map.size-1)
+	if (self.y < map.size-1 && [map cellAtX:self.x y:self.y+1].type == CellTypeWall)
 		neighbourhood += 64;
-	if (self.x < map.size-1)
+	if (self.x < map.size-1 && [map cellAtX:self.x+1 y:self.y].type == CellTypeWall)
 		neighbourhood += 128;
 	
 	// Pick the right image name and rotation
@@ -390,6 +392,5 @@
 			return;
 		}
 }
-*/
 
 @end
