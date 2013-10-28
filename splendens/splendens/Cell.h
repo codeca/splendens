@@ -59,4 +59,5 @@ typedef enum {
 // ratio is a value between 0 (centered) and 1 (full random)
 - (CGPoint)randomPointNear:(float)ratio;
 
+
 @end

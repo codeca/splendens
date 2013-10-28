@@ -34,7 +34,6 @@
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-	NSLog(@"GUI");
 	[self.delegate textButtonClicked:self];
 }
 
