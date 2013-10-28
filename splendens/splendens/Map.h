@@ -38,6 +38,9 @@
 // The path must be valid (from a user cell and to another valid cell)
 - (void)sendTroop:(NSArray*)path;
 
+// Simulate each turn
+- (void)processTurn;
+
 // Move all troops towards their goal
 - (void)updateTroops;
 

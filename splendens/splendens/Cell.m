@@ -27,34 +27,6 @@
 
 @implementation Cell
 
-/*
-int dist = 3;
-NSMutableArray* visited = [NSMutableArray array];
-NSMutableArray* currentLevel = @[self];
-Map* map = (Map*)self.parent;
-int dx[] = {1, 0, 0, -1};
-int dy[] = {0, 1, 0, -1};
-
-// Start at the tower and expand up to max distance
-for (int i=0; i <= dist; i++) {
-	NSMutableArray* newLevel = [NSMutableArray array];
-	
-	// Pick-up a cell in the range to expand one further
-	for (Cell* cell in currentLevel) {
-		[visited addObject:cell];
-		for (int j=0; j<3; j++) {
-			// Test each neighbour
-			Cell* neighbour = [map cellAtX:self.x+dx[j] y:self.y+dy[j]];
-			if (neighbour && neighbour.type == CellTypeEmpty && ![visited containsObject:neighbour])
-				// A new empty and unvisited neighbour found
-				[newLevel addObject:neighbour];
-		}
-	}
-	
-	currentLevel = newLevel;
-}
-*/
-
 - (id)initWithX:(int)x y:(int)y size:(CGSize)size {
 	if (self = [super initWithTexture:[Cell textureWithName:@"empty"] color:[UIColor clearColor] size:size]) {
 		// Create subnode to render the cell type texture
@@ -89,7 +61,6 @@ for (int i=0; i <= dist; i++) {
 		
 		// selectedFocus
 		self.selectedFocus = [SKSpriteNode spriteNodeWithTexture: [Cell textureWithName:@"path4"] size:size];
-		self.selectedFocus.color = [UIColor greenColor];
 		self.selectedFocus.colorBlendFactor = 1;
 		self.selectedFocus.hidden = YES;
 		[self addChild:self.selectedFocus];
@@ -106,7 +77,10 @@ for (int i=0; i <= dist; i++) {
 
 - (void)setType:(CellType)type {
 	_type = type;
-	[self updateOverlay];
+	if (type == CellTypeCity || type == CellTypeTower || type == CellTypeLab)
+		// Avoid recalculation of wall textures
+		[self updateOverlay];
+	_cellsInRange = nil;
 }
 
 - (void)setOwner:(Player *)owner {
@@ -137,16 +111,15 @@ for (int i=0; i <= dist; i++) {
 	}
 	_level = level;
 	[self updateOverlay];
+	_cellsInRange = nil;
 }
-
-#pragma mark - internal methods
 
 // Update the type overlay
 - (void)updateOverlay {
 	// Set size and texture overlay
 	switch (self.type) {
 		case CellTypeEmpty: self.typeOverlay.texture = nil; break;
-		case CellTypeWall: self.typeOverlay.texture = [Cell textureWithName:@"wall"]; break;
+		case CellTypeWall: [self updateTextureForWall]; break;
 		case CellTypeBasic: self.typeOverlay.texture = [Cell textureWithName:@"basic"]; break;
 		case CellTypeCity: self.typeOverlay.texture = [Cell textureWithName:@"city"]; break;
 		case CellTypeTower: self.typeOverlay.texture = [Cell textureWithName:@"tower"]; break;
@@ -181,6 +154,47 @@ for (int i=0; i <= dist; i++) {
 		self.populationOverlay.hidden = YES;
 		self.populationLabel.hidden = YES;
 	}
+}
+
+#pragma mark - internal methods
+
+// Reconstruct the cellsInRange array
+- (NSArray*)cellsInRange {
+	if (_cellsInRange)
+		return _cellsInRange;
+	
+	if (self.type != CellTypeTower)
+		return nil;
+	
+	NSMutableArray* visited = [NSMutableArray array];
+	NSMutableArray* currentLevel = [NSMutableArray array];
+	[currentLevel addObject:self];
+	Map* map = (Map*)self.parent;
+	int dist = [Economy attackRangeForType:self.type level:self.level];
+	int dx[] = {1, 0, -1, 0};
+	int dy[] = {0, 1, 0, -1};
+	
+	// Start at the tower and expand up to max distance
+	for (int i=0; i <= dist; i++) {
+		NSMutableArray* newLevel = [NSMutableArray array];
+		
+		// Pick-up a cell in the range to expand one further
+		for (Cell* cell in currentLevel) {
+			[visited addObject:cell];
+			for (int j=0; j<4; j++) {
+				// Test each neighbour
+				Cell* neighbour = [map cellAtX:cell.x+dx[j] y:cell.y+dy[j]];
+				if (neighbour && neighbour.type == CellTypeEmpty && ![visited containsObject:neighbour])
+					// A new empty and unvisited neighbour found
+					[newLevel addObject:neighbour];
+			}
+		}
+		
+		currentLevel = newLevel;
+	}
+	
+	// Save
+	return _cellsInRange = visited;
 }
 
 // Update the pathfocus texture to the best path sprite
@@ -279,21 +293,39 @@ for (int i=0; i <= dist; i++) {
 - (void)cellClicked {
 	Map* map = (Map*)self.parent;
 	
-	map.selected.selectedFocus.hidden = YES;
+	// Clear focused cells
+	for (Cell* cell in map.cells)
+		cell.selectedFocus.hidden = YES;
 	
+	// Show focus square
 	if (self.type != CellTypeWall && self.type != CellTypeEmpty && map.selected != self) {
 		map.selected = self;
-		map.selected.selectedFocus.hidden = NO;
+		self.selectedFocus.color = [UIColor greenColor];
+		self.selectedFocus.hidden = NO;
 	} else
 		map.selected = nil;
+	
+	// Show info about the clicked cell
 	BottomPainel* bottomPainel = (BottomPainel*)[[self scene] childNodeWithName: @"bottomPainel"];
 	[bottomPainel update: map.selected];
 	
+	// Show the range for a tower
+	if (self.type == CellTypeTower) {
+		for (Cell* cell in self.cellsInRange) {
+			if (cell != self) {
+				cell.selectedFocus.color = [UIColor yellowColor];
+				cell.selectedFocus.hidden = NO;
+			}
+		}
+	}
 }
 
 - (void)draggedToCell:(Cell*)cell {
 	Map* map = (Map*)self.parent;
-	map.selected.selectedFocus.hidden = YES;
+	
+	// Clear focused cells
+	for (Cell* cell in map.cells)
+		cell.selectedFocus.hidden = YES;
 	map.selected = nil;
 	
 	// Clear previous focused path
@@ -380,6 +412,43 @@ for (int i=0; i <= dist; i++) {
 		return cell.y>self.y ? M_PI/2 : 3*M_PI/2;
 	else
 		return cell.x>self.x ? 0 : M_PI;
+}
+
+#pragma mark - wall logic
+- (void)updateTextureForWall {
+	Map* map = (Map*)self.parent;
+	
+	// Look for neighbours
+	int neighbourhood = 0;
+	if (self.x < map.size-1 && self.y > 0 && [map cellAtX:self.x+1 y:self.y-1].type == CellTypeWall)
+		neighbourhood += 1;
+	if (self.x > 0 && self.y > 0 && [map cellAtX:self.x-1 y:self.y-1].type == CellTypeWall)
+		neighbourhood += 2;
+	if (self.x > 0 && self.y < map.size-1 && [map cellAtX:self.x-1 y:self.y+1].type == CellTypeWall)
+		neighbourhood += 4;
+	if (self.x < map.size-1 && self.y < map.size-1 && [map cellAtX:self.x+1 y:self.y+1].type == CellTypeWall)
+		neighbourhood += 8;
+	if (self.y > 0 && [map cellAtX:self.x y:self.y-1].type == CellTypeWall)
+		neighbourhood += 16;
+	if (self.x > 0 && [map cellAtX:self.x-1 y:self.y].type == CellTypeWall)
+		neighbourhood += 32;
+	if (self.y < map.size-1 && [map cellAtX:self.x y:self.y+1].type == CellTypeWall)
+		neighbourhood += 64;
+	if (self.x < map.size-1 && [map cellAtX:self.x+1 y:self.y].type == CellTypeWall)
+		neighbourhood += 128;
+	
+	// Pick the right image name and rotation
+	int i;
+	int masks[47] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 6, 6, 6, 6, 12, 12, 12, 12, 9, 9, 9, 9, 7, 7, 15, 11, 11, 14, 14, 15, 13, 13, 15, 15, 15, 15, 15};
+	int values[47] = {255, 254, 253, 251, 247, 252, 250, 246, 249, 245, 243, 248, 244, 242, 241, 240, 239, 235, 231, 227, 223, 222, 215, 214, 191, 190, 189, 188, 127, 125, 123, 121, 199, 207, 175, 107, 111, 158, 159, 95, 61, 63, 143, 79, 47, 31, 15};
+	NSArray* imageNames = @[@"wall0f-0", @"wall0e-0", @"wall0e-3", @"wall0e-2", @"wall0e-1", @"wall0c-0", @"wall0d-0", @"wall0c-1", @"wall0c-3", @"wall0d-1", @"wall0c-2", @"wall0b-0", @"wall0b-1", @"wall0b-2", @"wall0b-3", @"wall0a-0", @"wall1d-2", @"wall1b-2", @"wall1c-2", @"wall1a-2", @"wall1d-1", @"wall1c-1", @"wall1b-1", @"wall1a-1", @"wall1d-0", @"wall1b-0", @"wall1c-0", @"wall1a-0", @"wall1d-3", @"wall1b-3", @"wall1c-3", @"wall1a-3", @"wall2La-1", @"wall2Lb-1", @"wall2I-0", @"wall2La-2", @"wall2Lb-2", @"wall2La-0", @"wall2Lb-0", @"wall2I-1", @"wall2La-3", @"wall2Lb-3", @"wall3-0", @"wall3-1", @"wall3-2", @"wall3-3", @"wall4-0"];
+	
+	for (i=0; i<47; i++)
+		if ((neighbourhood | masks[i]) == values[i]) {
+			NSString* imageName = imageNames[i];
+			self.typeOverlay.texture = [Cell textureWithName:imageName];
+			return;
+		}
 }
 
 @end

@@ -8,6 +8,7 @@
 
 #import "Map.h"
 #import "Troop.h"
+#import "Economy.h"
 
 @interface Map()
 
@@ -22,6 +23,7 @@
 		// Extract the size
 		self.size = [[def objectForKey:@"size"] integerValue];
 		self.name = @"map";
+		
 		// Extract all players
 		int numPlayers = [[def objectForKey:@"players"] integerValue];
 		int mana = [[def objectForKey:@"mana"] integerValue];
@@ -58,15 +60,19 @@
 			int x = [[savedCell objectForKey:@"x"] integerValue];
 			int y = [[savedCell objectForKey:@"y"] integerValue];
 			Cell* cell = [self cellAtX:x y:y];
+			cell.level = [[savedCell objectForKey:@"level"] integerValue];
 			cell.type = [[savedCell objectForKey:@"type"] integerValue];
 			cell.population = [[savedCell objectForKey:@"population"] integerValue];
-			cell.level = [[savedCell objectForKey:@"level"] integerValue];
 			if (cell.type != CellTypeEmpty && cell.type != CellTypeWall) {
 				id owner = [savedCell objectForKey:@"owner"];
 				if (owner != [NSNull null])
 					cell.owner = [players objectAtIndex:[owner integerValue]];
 			}
 		}
+		
+		// Update all cells sprites
+		for (Cell* cell in self.cells)
+			[cell updateOverlay];
 		
 		self.troops = [NSMutableArray array];
 	}
@@ -82,6 +88,24 @@
 	int x = pX/(MAP_SIZE/self.size);
 	int y = pY/(MAP_SIZE/self.size);
 	return [self cellAtX:x y:y];
+}
+
+#pragma mark - main turn logic
+- (void)processTurn {
+	for (Cell* cell in self.cells) {
+		if (cell.type == CellTypeBasic || cell.type == CellTypeCity) {
+			int maxPop = [Economy maxPopulationForType:cell.type level:cell.level];
+			if (cell.population >= maxPop)
+				cell.population -= (cell.population-maxPop+1)/2;
+			else {
+				int newPop = cell.population + [Economy productionForType:cell.type level:cell.level];
+				newPop = newPop>maxPop ? maxPop : newPop;
+				cell.population = newPop;
+			}
+		} else if (cell.type == CellTypeLab && cell.owner)
+			cell.owner.mana += [Economy productionForType:cell.type level:cell.level];
+	}
+	[self updateTroops];
 }
 
 #pragma mark - troops

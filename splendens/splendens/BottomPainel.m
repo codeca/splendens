@@ -46,7 +46,7 @@
 	else
 		if(button == self.nextTurn){
 			Map* map = (Map*)[self.scene childNodeWithName:@"map"];
-			[map updateTroops];
+			[map processTurn];
 		}
 }
 

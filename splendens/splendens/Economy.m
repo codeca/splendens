@@ -79,7 +79,6 @@
 }
 
 + (int)attackSpeedForType:(CellType)type level:(int)level {
-	
 	if (type == CellTypeTower && level == 1) return 1;
 	if (type == CellTypeTower && level == 2) return 1;
 	if (type == CellTypeTower && level == 3) return 2;
