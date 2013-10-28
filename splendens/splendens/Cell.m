@@ -27,6 +27,34 @@
 
 @implementation Cell
 
+/*
+int dist = 3;
+NSMutableArray* visited = [NSMutableArray array];
+NSMutableArray* currentLevel = @[self];
+Map* map = (Map*)self.parent;
+int dx[] = {1, 0, 0, -1};
+int dy[] = {0, 1, 0, -1};
+
+// Start at the tower and expand up to max distance
+for (int i=0; i <= dist; i++) {
+	NSMutableArray* newLevel = [NSMutableArray array];
+	
+	// Pick-up a cell in the range to expand one further
+	for (Cell* cell in currentLevel) {
+		[visited addObject:cell];
+		for (int j=0; j<3; j++) {
+			// Test each neighbour
+			Cell* neighbour = [map cellAtX:self.x+dx[j] y:self.y+dy[j]];
+			if (neighbour && neighbour.type == CellTypeEmpty && ![visited containsObject:neighbour])
+				// A new empty and unvisited neighbour found
+				[newLevel addObject:neighbour];
+		}
+	}
+	
+	currentLevel = newLevel;
+}
+*/
+
 - (id)initWithX:(int)x y:(int)y size:(CGSize)size {
 	if (self = [super initWithTexture:[Cell textureWithName:@"empty"] color:[UIColor clearColor] size:size]) {
 		// Create subnode to render the cell type texture
