@@ -169,7 +169,7 @@
 	int maxAttacks = [Economy attackSpeedForType:tower.type level:tower.level];
 	for (int i=0; i<maxAttacks && i<troops.count; i++) {
 		Troop* troop = troops[i];
-		int damage = [Economy attackDamageForType:tower.type level:tower.level];
+		int damage = [Economy attackDamageForTowerLevel:tower.level];
 		if (damage >= troop.newAmount) {
 			// Troop destroyed
 			[self.troops removeObject:troop];
@@ -178,6 +178,25 @@
 			troop.newAmount -= damage;
 			troop.amount = troop.newAmount;
 		}
+		
+		// Create the bullet
+		Cell* finalCell = [troop currentCell];
+		SKSpriteNode* bullet = [SKSpriteNode spriteNodeWithImageNamed:@"beta"];
+		bullet.colorBlendFactor = 1;
+		bullet.color = tower.owner ? tower.owner.color : [UIColor grayColor];
+		bullet.xScale = bullet.yScale = 0;
+		bullet.zRotation = atan2(finalCell.position.y-tower.position.y, finalCell.position.x-tower.position.x);
+		bullet.position = tower.position;
+		[self addChild:bullet];
+		
+		// Create the bullet animation
+		SKAction* delay = [SKAction waitForDuration:TOTAL_MOV_TIME];
+		SKAction* move = [SKAction moveTo:finalCell.position duration:.5];
+		SKAction* grow = [SKAction scaleTo:1 duration:.25];
+		SKAction* shrink = [SKAction scaleTo:0 duration:.25];
+		SKAction* remove = [SKAction removeFromParent];
+		SKAction* shoot = [SKAction group:@[[SKAction sequence:@[grow, shrink], move]]];
+		[bullet runAction:[SKAction sequence:@[delay, shoot]]];
 	}
 }
 

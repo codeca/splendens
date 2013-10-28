@@ -170,7 +170,7 @@
 	NSMutableArray* currentLevel = [NSMutableArray array];
 	[currentLevel addObject:self];
 	Map* map = (Map*)self.parent;
-	int dist = [Economy attackRangeForType:self.type level:self.level];
+	int dist = [Economy attackRangeForTowerLevel:self.level];
 	int dx[] = {1, 0, -1, 0};
 	int dy[] = {0, 1, 0, -1};
 	

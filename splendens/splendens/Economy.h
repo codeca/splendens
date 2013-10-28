@@ -17,10 +17,10 @@
 + (int)maxPopulationForType:(CellType)type level:(int)level;
 + (int)speedForType:(CellType)type level:(int)level;
 + (int)armorForType:(CellType)type level:(int)level;
-+ (int)attackSpeedForType:(CellType)type level:(int)level;
-+ (int)attackDamageForType:(CellType)type level:(int)level;
-+ (int)attackRangeForType:(CellType)type level:(int)level;
-+ (int)bonusMaxManaForType:(CellType)type level:(int)level;
++ (int)attackSpeedForTowerLevel:(int)level;
++ (int)attackDamageForTowerLevel:(int)level;
++ (int)attackRangeForTowerLevel:(int)level;
++ (int)bonusMaxManaForLabLevel:(int)level;
 + (int)upgradePopulationCostForType:(CellType)type level:(int)level;
 + (int)upgradeManaCostForType:(CellType)type level:(int)level;
 
