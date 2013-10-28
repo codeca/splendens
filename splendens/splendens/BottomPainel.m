@@ -76,7 +76,7 @@
 		self.selected = self.tower;
 		[self update:cell];
 	}
-	else if(button == self.tower){
+	else if(button == self.lab){
 		NSLog(@"Lab");
 		self.selected = self.lab;
 		[self update:cell];
@@ -95,7 +95,10 @@
 		int dy1 = (self.size.height-dy2-2*y)/2; // Table cells margin
 		int fontSize = 28;
 		self.upgradeButton.position = CGPointMake(2*x+dy1+2*dy2+self.upgradeButton.size.width/2-self.size.width/2, 0);
-
+		if (self.selected == self.city) NSLog(@"Cidade");
+		if (self.selected == self.tower) NSLog(@"Torre");
+		if (self.selected == self.lab) NSLog(@"Lab");
+		NSLog(@"%@ %d",self.selected,selectedCell.type);
 		CGSize size = CGSizeMake(x,y);
 		SKSpriteNode* tableCell1 = [[SKSpriteNode alloc] initWithColor:[UIColor blueColor] size:size];
 		SKSpriteNode* tableCell2 = [[SKSpriteNode alloc] initWithColor:[UIColor blueColor] size:size];
@@ -224,6 +227,11 @@
 					if ([Economy upgradePopulationCostForType:CellTypeLab level:1] > selectedCell.population) popCost.fontColor = [UIColor redColor];
 					if ([Economy upgradeManaCostForType:CellTypeLab level:1] > map.thisPlayer.mana) manaCost.fontColor = [UIColor redColor];
 				}
+				
+				if (self.selected == self.city) NSLog(@"Cidade");
+				if (self.selected == self.tower) NSLog(@"Torre");
+				if (self.selected == self.lab) NSLog(@"Lab");
+				NSLog(@"%@ %@ vAARRGG",temp,temp2);
 				
 				popCost.text = temp;
 				manaCost.text = temp2;
