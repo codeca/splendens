@@ -27,34 +27,6 @@
 
 @implementation Cell
 
-/*
-int dist = 3;
-NSMutableArray* visited = [NSMutableArray array];
-NSMutableArray* currentLevel = @[self];
-Map* map = (Map*)self.parent;
-int dx[] = {1, 0, 0, -1};
-int dy[] = {0, 1, 0, -1};
-
-// Start at the tower and expand up to max distance
-for (int i=0; i <= dist; i++) {
-	NSMutableArray* newLevel = [NSMutableArray array];
-	
-	// Pick-up a cell in the range to expand one further
-	for (Cell* cell in currentLevel) {
-		[visited addObject:cell];
-		for (int j=0; j<3; j++) {
-			// Test each neighbour
-			Cell* neighbour = [map cellAtX:self.x+dx[j] y:self.y+dy[j]];
-			if (neighbour && neighbour.type == CellTypeEmpty && ![visited containsObject:neighbour])
-				// A new empty and unvisited neighbour found
-				[newLevel addObject:neighbour];
-		}
-	}
-	
-	currentLevel = newLevel;
-}
-*/
-
 - (id)initWithX:(int)x y:(int)y size:(CGSize)size {
 	if (self = [super initWithTexture:[Cell textureWithName:@"empty"] color:[UIColor clearColor] size:size]) {
 		// Create subnode to render the cell type texture
@@ -89,7 +61,6 @@ for (int i=0; i <= dist; i++) {
 		
 		// selectedFocus
 		self.selectedFocus = [SKSpriteNode spriteNodeWithTexture: [Cell textureWithName:@"path4"] size:size];
-		self.selectedFocus.color = [UIColor greenColor];
 		self.selectedFocus.colorBlendFactor = 1;
 		self.selectedFocus.hidden = YES;
 		[self addChild:self.selectedFocus];
@@ -109,6 +80,7 @@ for (int i=0; i <= dist; i++) {
 	if (type == CellTypeCity || type == CellTypeTower || type == CellTypeLab)
 		// Avoid recalculation of wall textures
 		[self updateOverlay];
+	_cellsInRange = nil;
 }
 
 - (void)setOwner:(Player *)owner {
@@ -139,6 +111,7 @@ for (int i=0; i <= dist; i++) {
 	}
 	_level = level;
 	[self updateOverlay];
+	_cellsInRange = nil;
 }
 
 // Update the type overlay
@@ -184,6 +157,45 @@ for (int i=0; i <= dist; i++) {
 }
 
 #pragma mark - internal methods
+
+// Reconstruct the cellsInRange array
+- (NSArray*)cellsInRange {
+	if (_cellsInRange)
+		return _cellsInRange;
+	
+	if (self.type != CellTypeTower)
+		return nil;
+	
+	NSMutableArray* visited = [NSMutableArray array];
+	NSMutableArray* currentLevel = [NSMutableArray array];
+	[currentLevel addObject:self];
+	Map* map = (Map*)self.parent;
+	int dist = [Economy attackRangeForType:self.type level:self.level];
+	int dx[] = {1, 0, -1, 0};
+	int dy[] = {0, 1, 0, -1};
+	
+	// Start at the tower and expand up to max distance
+	for (int i=0; i <= dist; i++) {
+		NSMutableArray* newLevel = [NSMutableArray array];
+		
+		// Pick-up a cell in the range to expand one further
+		for (Cell* cell in currentLevel) {
+			[visited addObject:cell];
+			for (int j=0; j<4; j++) {
+				// Test each neighbour
+				Cell* neighbour = [map cellAtX:cell.x+dx[j] y:cell.y+dy[j]];
+				if (neighbour && neighbour.type == CellTypeEmpty && ![visited containsObject:neighbour])
+					// A new empty and unvisited neighbour found
+					[newLevel addObject:neighbour];
+			}
+		}
+		
+		currentLevel = newLevel;
+	}
+	
+	// Save
+	return _cellsInRange = visited;
+}
 
 // Update the pathfocus texture to the best path sprite
 - (void)updatePathFocusWithPreviousCell:(Cell*)prev nextCell:(Cell*)next {
@@ -281,21 +293,39 @@ for (int i=0; i <= dist; i++) {
 - (void)cellClicked {
 	Map* map = (Map*)self.parent;
 	
-	map.selected.selectedFocus.hidden = YES;
+	// Clear focused cells
+	for (Cell* cell in map.cells)
+		cell.selectedFocus.hidden = YES;
 	
+	// Show focus square
 	if (self.type != CellTypeWall && self.type != CellTypeEmpty && map.selected != self) {
 		map.selected = self;
-		map.selected.selectedFocus.hidden = NO;
+		self.selectedFocus.color = [UIColor greenColor];
+		self.selectedFocus.hidden = NO;
 	} else
 		map.selected = nil;
+	
+	// Show info about the clicked cell
 	BottomPainel* bottomPainel = (BottomPainel*)[[self scene] childNodeWithName: @"bottomPainel"];
 	[bottomPainel update: map.selected];
 	
+	// Show the range for a tower
+	if (self.type == CellTypeTower) {
+		for (Cell* cell in self.cellsInRange) {
+			if (cell != self) {
+				cell.selectedFocus.color = [UIColor yellowColor];
+				cell.selectedFocus.hidden = NO;
+			}
+		}
+	}
 }
 
 - (void)draggedToCell:(Cell*)cell {
 	Map* map = (Map*)self.parent;
-	map.selected.selectedFocus.hidden = YES;
+	
+	// Clear focused cells
+	for (Cell* cell in map.cells)
+		cell.selectedFocus.hidden = YES;
 	map.selected = nil;
 	
 	// Clear previous focused path

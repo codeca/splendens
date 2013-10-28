@@ -59,9 +59,9 @@
 			int x = [[savedCell objectForKey:@"x"] integerValue];
 			int y = [[savedCell objectForKey:@"y"] integerValue];
 			Cell* cell = [self cellAtX:x y:y];
+			cell.level = [[savedCell objectForKey:@"level"] integerValue];
 			cell.type = [[savedCell objectForKey:@"type"] integerValue];
 			cell.population = [[savedCell objectForKey:@"population"] integerValue];
-			cell.level = [[savedCell objectForKey:@"level"] integerValue];
 			if (cell.type != CellTypeEmpty && cell.type != CellTypeWall) {
 				id owner = [savedCell objectForKey:@"owner"];
 				if (owner != [NSNull null])
@@ -71,7 +71,7 @@
 		
 		// Update all cells sprites
 		for (Cell* cell in self.cells)
-			 [cell updateOverlay];
+			[cell updateOverlay];
 		
 		self.troops = [NSMutableArray array];
 	}

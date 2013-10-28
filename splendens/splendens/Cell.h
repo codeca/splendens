@@ -36,6 +36,7 @@ typedef enum {
 @property (nonatomic) int population; // not used for empty and wall cells
 @property (nonatomic) int level; // not used for empty, wall and basic cells
 @property (nonatomic) Player* owner; // not used for empty and wall cells. nil means abandoned cell
+@property (nonatomic) NSArray* cellsInRange; // Store all cells in the tower range (nil if the cell is not a range)
 
 
 // Create a new empty cell with the given position
