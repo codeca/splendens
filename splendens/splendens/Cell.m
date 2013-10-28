@@ -391,11 +391,11 @@
 	return self.type != CellTypeEmpty && self.type != CellTypeWall;
 }
 
-- (CGPoint)randomPointNear:(float)ratio {
+- (CGPoint)randomPointNear {
 	float x, y, a, r;
 	x = self.position.x;
 	y = self.position.y;
-	r = self.size.height*ratio;
+	r = self.size.height/2;
 	a = arc4random_uniform(360)*M_PI/180;
 	return CGPointMake(x+r*sin(a), y+r*cos(a));
 }

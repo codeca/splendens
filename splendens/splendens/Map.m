@@ -194,36 +194,46 @@
 
 // Move each troop and return all troops that got delivered in this turn
 - (NSArray*)moveTroops {
+	// Divide current troops into two arrays (delivered and non-delivered)
 	NSMutableArray* deliveredTroops = [NSMutableArray array];
-	NSMutableArray* newTroops = [NSMutableArray array];
+	NSMutableArray* walkingTroops = [NSMutableArray array];
 	
 	// Process each troop, collect all delivered ones
 	for (Troop* troop in self.troops) {
 		NSMutableArray* animations = [[NSMutableArray alloc] initWithCapacity:troop.speed];
-		
-		for (int i=1; i<=troop.speed && troop.pos+i<troop.path.count-1; i++) {
-			// Move for each cell
-			Cell* cell = troop.path[troop.pos+i];
-			SKAction* action = [SKAction moveTo:[cell randomPointNear:.25] duration:.25];
-			[animations addObject:action];
+		BOOL willArrive = NO;
+		int steps = troop.speed;
+		if (troop.path.count-troop.pos-1 <= troop.speed) {
+			// The troop will be delivered
+			[deliveredTroops addObject:troop];
+			willArrive = YES;
+			steps = troop.path.count-troop.pos-1;
+		} else {
+			// The troop will just move
+			[walkingTroops addObject:troop];
 		}
 		
-		troop.pos += troop.speed;
+		// Move to each cell in the path
+		for (int i=1; i<=steps; i++) {
+			Cell* cell = troop.path[troop.pos+i];
+			
+			if (i == steps) {
+				if (willArrive) {
+					// Arrive animation
+					SKAction* lastMove = [SKAction moveTo:cell.position duration:TOTAL_MOV_TIME/steps];
+					SKAction* vanish = [SKAction scaleTo:0 duration:TOTAL_MOV_TIME/steps];
+					[animations addObject:[SKAction group:@[lastMove, vanish]]];
+					[animations addObject:[SKAction removeFromParent]];
+				} else
+					[animations addObject:[SKAction moveTo:[cell randomPointNear] duration:TOTAL_MOV_TIME/steps]];
+			} else
+				[animations addObject:[SKAction moveTo:cell.position duration:TOTAL_MOV_TIME/steps]];
+		}
 		
-		if (troop.pos >= troop.path.count-1) {
-			// Reached the final destinations
-			Cell* cell = troop.path.lastObject;
-			SKAction* lastMove = [SKAction moveTo:cell.position duration:.25];
-			SKAction* vanish = [SKAction scaleTo:0 duration:.5];
-			SKAction* remove = [SKAction removeFromParent];
-			[animations addObject:[SKAction group:@[lastMove, vanish, remove]]];
-			[deliveredTroops addObject:troop];
-		} else
-			[newTroops addObject:troop];
-		
+		troop.pos += steps;
 		[troop.node runAction:[SKAction sequence:animations]];
 	}
-	self.troops = newTroops;
+	self.troops = walkingTroops;
 	
 	return deliveredTroops;
 }

@@ -12,7 +12,11 @@
 #import "Player.h"
 #import "Troop.h"
 
+// The map size in points
 #define MAP_SIZE 700.0
+
+// The total animation time for troops movements
+#define TOTAL_MOV_TIME 2.0
 
 // Represent the whole map, with all cells and troops
 @interface Map : SKNode
