@@ -8,6 +8,7 @@
 
 #import <SpriteKit/SpriteKit.h>
 #import "Player.h"
+#import "Cell.h"
 
 @interface Troop : NSObject 
 
@@ -19,5 +20,8 @@
 @property (nonatomic) SKSpriteNode* node;
 
 - (id)initWithPath:(NSArray*)path amount:(int)amount;
+
+// Return the cell the troop is currently in
+- (Cell*)currentCell;
 
 @end

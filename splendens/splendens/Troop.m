@@ -20,7 +20,7 @@
 		self.node = [SKSpriteNode spriteNodeWithImageNamed:@"troop"];
 		self.node.size = CGSizeMake(size/2, size/2);
 		self.node.xScale = self.node.yScale = 0;
-		self.node.position = [firstCell randomPointNear];
+		self.node.position = [firstCell randomPointNear:.5];
 		[self.node runAction:[SKAction scaleTo:1 duration:.5]];
 		
 		self.path = path;
@@ -31,6 +31,7 @@
 		self.node.colorBlendFactor = 1;
 		
 		// Set amount label
+		self.amount = amount;
 		SKLabelNode* label = [SKLabelNode labelNodeWithFontNamed:@"arial"];
 		label.text = [NSString stringWithFormat:@"%d", amount];
 		label.fontSize = 16;
@@ -38,6 +39,10 @@
 		[self.node addChild:label];
 	}
 	return self;
+}
+
+- (Cell*)currentCell {
+	return self.path[self.pos];
 }
 
 @end
