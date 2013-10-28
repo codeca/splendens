@@ -20,6 +20,7 @@
 
 @property (nonatomic, weak) id<TextButtonDelegate> delegate;
 
-- (id)initWithFontNamed:(NSString*)fontName text:(NSString*)text;
+- (id)initWithText:(NSString*)text;
+- (id)initWithImage:(NSString*)image;
 
 @end

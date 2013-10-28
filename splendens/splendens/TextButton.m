@@ -10,10 +10,10 @@
 
 @implementation TextButton
 
-- (id)initWithFontNamed:(NSString *)fontName text:(NSString *)text {
+- (id)initWithText:(NSString *)text {
 	if (self = [super initWithImageNamed:@"greenButton"]) {
 		// Create the text label
-		SKLabelNode* label = [SKLabelNode labelNodeWithFontNamed:fontName];
+		SKLabelNode* label = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
 		label.text = text;
 		label.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
 		
@@ -25,7 +25,16 @@
 	return self;
 }
 
+
+- (id)initWithImage:(NSString*)image{
+	if (self = [super initWithImageNamed:image]){
+		self.userInteractionEnabled = YES;
+	}
+	return self;
+}
+
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+	NSLog(@"GUI");
 	[self.delegate textButtonClicked:self];
 }
 

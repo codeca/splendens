@@ -13,8 +13,10 @@
 @interface BottomPainel : SKSpriteNode<TextButtonDelegate>
 
 @property (nonatomic) SKNode* table;
-
+@property (nonatomic) TextButton* upgradeButton;
+@property (nonatomic) TextButton* nextTurn;
 
 - (void) update: (Cell*)selectedCell;
+- (void)textButtonClicked:(TextButton *)button;
 
 @end

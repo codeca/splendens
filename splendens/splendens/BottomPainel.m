@@ -10,6 +10,7 @@
 #import "Map.h"
 #import "UpgradeArrow.h"
 #import "Economy.h"
+#import "TextButton.h"
 
 
 @implementation BottomPainel
@@ -22,17 +23,31 @@
 		self.table = [[SKNode alloc]init];
 		[self addChild:self.table];
 		
-		TextButton* tb = [[TextButton alloc] initWithFontNamed:@"arial" text:@"Next turn"];
-		tb.position = CGPointMake(self.size.width/2-100, 0);
-		[self addChild:tb];
-		tb.delegate = self;
+		self.nextTurn = [[TextButton alloc] initWithText:@"Next turn"];
+		self.nextTurn.position = CGPointMake(self.size.width/2-100, 0);
+		[self addChild:self.nextTurn];
+		self.nextTurn.delegate = self;
+		
+		self.upgradeButton = [[TextButton alloc] initWithImage:@"beta"];
+		self.upgradeButton.delegate = self;
+		
+
 	}
 	return self;
 }
 
 - (void)textButtonClicked:(TextButton *)button {
-	Map* map = (Map*)[self.scene childNodeWithName:@"map"];
-	[map updateTroops];
+	if (button == self.upgradeButton){
+		Map* map = (Map*)[[self scene] childNodeWithName:@"map"];
+		[map.selected upgrade];
+		[self update: map.selected];
+		NSLog(@"Upgrade!!!!");
+	}
+	else
+		if(button == self.nextTurn){
+			Map* map = (Map*)[self.scene childNodeWithName:@"map"];
+			[map updateTroops];
+		}
 }
 
 - (void) update: (Cell*)selectedCell{
@@ -45,7 +60,8 @@
 		int dy2 = 10; // Space between table cells
 		int dy1 = (self.size.height-dy2-2*y)/2; // Table cells margin
 		int fontSize = 28;
-		
+		self.upgradeButton.position = CGPointMake(2*x+dy1+2*dy2+self.upgradeButton.size.width/2-self.size.width/2, 0);
+
 		CGSize size = CGSizeMake(x,y);
 		SKSpriteNode* tableCell1 = [[SKSpriteNode alloc] initWithColor:[UIColor blueColor] size:size];
 		SKSpriteNode* tableCell2 = [[SKSpriteNode alloc] initWithColor:[UIColor blueColor] size:size];
@@ -109,10 +125,29 @@
 		[tableCell4 addChild:infoCell4];
 		
 		if (selectedCell.owner == map.thisPlayer){
-			UpgradeArrow* upgradeArrow = [[UpgradeArrow alloc]init: a];
 			if (selectedCell.level<4){
-				upgradeArrow.position = CGPointMake(2*x+dy1+2*dy2+upgradeArrow.size.width/2-self.size.width/2, 0);
-				[self.table addChild:upgradeArrow];
+				[self.table addChild: self.upgradeButton];
+				NSString* temp;
+				temp = [NSString stringWithFormat:@"%d",[Economy upgradePopulationCostForType:selectedCell.type level:selectedCell.level+1]];
+				SKLabelNode* popCost = [[SKLabelNode alloc] initWithFontNamed:@"Arial"];
+				popCost.text = temp;
+				popCost.fontSize = fontSize;
+				popCost.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
+				popCost.fontColor = [UIColor greenColor];
+				if ([Economy upgradePopulationCostForType:selectedCell.type level:selectedCell.level+1] > selectedCell.population) popCost.fontColor = [UIColor redColor];
+				[self.upgradeButton addChild:popCost];
+				popCost.position = CGPointMake(0, self.upgradeButton.size.height/2+dy2+popCost.frame.size.height/2);
+				if ([Economy upgradeManaCostForType:selectedCell.type level:selectedCell.level+1] > 0){
+					temp = [NSString stringWithFormat:@"%d",[Economy upgradeManaCostForType:selectedCell.type level:selectedCell.level+1]];
+					SKLabelNode* manaCost = [[SKLabelNode alloc] initWithFontNamed:@"Arial"];
+					manaCost.text = temp;
+					manaCost.fontSize = fontSize;
+					manaCost.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
+					manaCost.fontColor = [UIColor blueColor];
+					if ([Economy upgradeManaCostForType:selectedCell.type level:selectedCell.level+1] > map.thisPlayer.mana) manaCost.fontColor = [UIColor redColor];
+					[self.upgradeButton addChild:manaCost];
+					manaCost.position = CGPointMake(0, - self.upgradeButton.size.height/2-dy2-manaCost.frame.size.height/2);
+				}
 			}
 			if (selectedCell.type == CellTypeBasic){
 				//mostra opcoes
@@ -132,10 +167,10 @@
 				tableCell6.size = size;
 				tableCell7.size = size;
 				tableCell8.size = size;
-				tableCell5.position = CGPointMake(dy1+x/2-self.size.width/2+dy2+2*x+dy2+upgradeArrow.size.width+dy2, dy1+y+dy2+y/2-self.size.height/2);
-				tableCell6.position = CGPointMake(dy1+x+dy2+x/2-self.size.width/2+dy2+2*x+dy2+upgradeArrow.size.width+dy2, dy1+y+dy2+y/2-self.size.height/2);
-				tableCell7.position = CGPointMake(dy1+x/2-self.size.width/2+dy2+2*x+dy2+upgradeArrow.size.width+dy2, dy1+y/2-self.size.height/2);
-				tableCell8.position = CGPointMake(dy1+x+dy2+x/2-self.size.width/2+dy2+2*x+dy2+upgradeArrow.size.width+dy2, dy1+y/2-self.size.height/2);
+				tableCell5.position = CGPointMake(dy1+x/2-self.size.width/2+dy2+2*x+dy2+self.upgradeButton.size.width+dy2, dy1+y+dy2+y/2-self.size.height/2);
+				tableCell6.position = CGPointMake(dy1+x+dy2+x/2-self.size.width/2+dy2+2*x+dy2+self.upgradeButton.size.width+dy2, dy1+y+dy2+y/2-self.size.height/2);
+				tableCell7.position = CGPointMake(dy1+x/2-self.size.width/2+dy2+2*x+dy2+self.upgradeButton.size.width+dy2, dy1+y/2-self.size.height/2);
+				tableCell8.position = CGPointMake(dy1+x+dy2+x/2-self.size.width/2+dy2+2*x+dy2+self.upgradeButton.size.width+dy2, dy1+y/2-self.size.height/2);
 				
 				size = CGSizeMake(a,a);
 				SKSpriteNode* attributeCell5 = [SKSpriteNode spriteNodeWithColor:[UIColor yellowColor] size:size];
@@ -184,5 +219,6 @@
 		
 	}
 }
+
 
 @end

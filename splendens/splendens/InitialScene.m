@@ -17,13 +17,13 @@
 		int y = CGRectGetMidY(self.frame);
 		
 		// Add the multiplayer button
-		self.multiplayerButton = [[TextButton alloc] initWithFontNamed:@"arial" text:@"Multiplayer"];
+		self.multiplayerButton = [[TextButton alloc] initWithText:@"Multiplayer"];
 		self.multiplayerButton.position = CGPointMake(x, y+30);
 		self.multiplayerButton.delegate = self;
 		[self addChild:self.multiplayerButton];
 		
 		// Add the debug button
-		self.debugButton = [[TextButton alloc] initWithFontNamed:@"arial" text:@"Debug"];
+		self.debugButton = [[TextButton alloc] initWithText:@"Debug"];
 		self.debugButton.position = CGPointMake(x, y-30);
 		self.debugButton.delegate = self;
 		[self addChild:self.debugButton];
