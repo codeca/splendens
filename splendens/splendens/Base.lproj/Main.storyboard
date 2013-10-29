@@ -131,7 +131,7 @@
                         <outletCollection property="playersSwitch" destination="2Pt-fG-mtc" id="iIw-wH-XdK"/>
                         <outletCollection property="playersSwitch" destination="ufk-ID-8ah" id="bHX-Fq-0Hk"/>
                         <outletCollection property="playersSwitch" destination="zse-sG-DXi" id="l3f-f5-G1f"/>
-                        <segue destination="BV1-FR-VrT" kind="push" identifier="startGame" id="CzY-4S-7ZZ"/>
+                        <segue destination="BV1-FR-VrT" kind="modal" identifier="startGame" id="CzY-4S-7ZZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nd6-WA-yrO" userLabel="First Responder" sceneMemberID="firstResponder"/>
