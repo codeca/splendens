@@ -1,4 +1,4 @@
-﻿// Module to handle simple matching
+// Module to handle simple matching
 
 var Game = require("./Game.js")
 var getRandomMap = require("./maps.js").getRandomMap

@@ -21,6 +21,7 @@
 
 - (id)initWithDefinition:(id)def {
 	if (self = [super init]) {
+		def = def[@"map"];
 		// Extract the size
 		self.size = [[def objectForKey:@"size"] integerValue];
 		self.name = @"map";

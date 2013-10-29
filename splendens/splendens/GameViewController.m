@@ -6,11 +6,10 @@
 //  Copyright (c) 2013 Codeca. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "GameViewController.h"
 #import "GameScene.h"
-#import "InitialScene.h"
 
-@implementation ViewController
+@implementation GameViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -20,7 +19,8 @@
     skView.showsFPS = YES;
     skView.showsNodeCount = YES;
     
-    SKScene* scene = [InitialScene sceneWithSize:skView.bounds.size];
+    GameScene* scene = [GameScene sceneWithSize:skView.bounds.size];
+	scene.gameStructure = self.gameStructure;
     [skView presentScene:scene];
 }
 

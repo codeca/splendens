@@ -23,6 +23,6 @@ loadMaps(4)
 
 // Get a random map with the given number of players
 module.exports.getRandomMap = function (players) {
-	var maps = g_maps[2] // Debug: (force 2 players)
+	var maps = g_maps[players]
 	return maps[Math.floor(Math.random()*maps.length)]
 }

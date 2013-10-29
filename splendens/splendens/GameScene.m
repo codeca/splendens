@@ -24,7 +24,6 @@
 	BottomPainel* bottomPainel = [[BottomPainel alloc]init];
 	[self addChild:map];
 	[self addChild:bottomPainel];
-	
 }
 
 - (void)textButtonClicked:(TextButton*)button {

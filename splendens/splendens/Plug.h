@@ -50,6 +50,9 @@ typedef enum {
 @property (nonatomic) PlugState readyState;
 @property (nonatomic, weak) id<PlugDelegate> delegate;
 
+// Return a new plug and start connecting
++ (instancetype)plug;
+
 // Create a new Plug and start connecting
 - (id)init;
 

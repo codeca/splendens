@@ -21,6 +21,10 @@
 
 @implementation Plug
 
++ (instancetype)plug {
+	return [[Plug alloc] init];
+}
+
 - (id)init {
 	if (self = [super init]) {
 		NSURLRequest* req = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://sitegui.com.br/splendens/ip.txt"]];

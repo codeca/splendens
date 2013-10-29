@@ -30,7 +30,7 @@ function broadcast(players, type, data, ignoreThis) {
 
 // Treat each new message from a device
 function onmessage(type, data) {
-    if (MSG_DEBUG) {
+    if (type == MSG_DEBUG) {
         // Debug
         this.sendMessage(MSG_DEBUG, getRandomMap(Math.floor(Math.random()*3)+2))
     } else if (this.game) {

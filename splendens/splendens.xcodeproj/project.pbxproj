@@ -15,7 +15,7 @@
 		98DF30A718181E620092E8A7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 98DF30A618181E620092E8A7 /* main.m */; };
 		98DF30AB18181E620092E8A7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 98DF30AA18181E620092E8A7 /* AppDelegate.m */; };
 		98DF30AE18181E620092E8A7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98DF30AC18181E620092E8A7 /* Main.storyboard */; };
-		98DF30B118181E620092E8A7 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98DF30B018181E620092E8A7 /* ViewController.m */; };
+		98DF30B118181E620092E8A7 /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98DF30B018181E620092E8A7 /* GameViewController.m */; };
 		98DF30B418181E620092E8A7 /* GameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 98DF30B318181E620092E8A7 /* GameScene.m */; };
 		98DF30B818181E620092E8A7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98DF30B718181E620092E8A7 /* Images.xcassets */; };
 		98DF30BF18181E620092E8A7 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98DF30BE18181E620092E8A7 /* XCTest.framework */; };
@@ -43,7 +43,6 @@
 		98DF3121181937570092E8A7 /* troop@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 98DF3111181937570092E8A7 /* troop@2X.png */; };
 		98DF312818195A780092E8A7 /* Economy.m in Sources */ = {isa = PBXBuildFile; fileRef = 98DF312718195A780092E8A7 /* Economy.m */; };
 		98DF31301819907C0092E8A7 /* Plug.m in Sources */ = {isa = PBXBuildFile; fileRef = 98DF312F1819907C0092E8A7 /* Plug.m */; };
-		98DF3133181992B20092E8A7 /* InitialScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 98DF3132181992B20092E8A7 /* InitialScene.m */; };
 		98DF3137181994760092E8A7 /* TextButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 98DF3136181994760092E8A7 /* TextButton.m */; };
 		98DF3139181A95D90092E8A7 /* greenButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98DF3138181A95D90092E8A7 /* greenButton@2x.png */; };
 		98DF313C181AC1950092E8A7 /* Troop.m in Sources */ = {isa = PBXBuildFile; fileRef = 98DF313B181AC1950092E8A7 /* Troop.m */; };
@@ -94,6 +93,7 @@
 		98DF3198181EBC310092E8A7 /* wall3-2@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 98DF3169181EBC310092E8A7 /* wall3-2@2X.png */; };
 		98DF3199181EBC310092E8A7 /* wall3-3@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 98DF316A181EBC310092E8A7 /* wall3-3@2X.png */; };
 		98DF319A181EBC310092E8A7 /* wall4-0@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 98DF316B181EBC310092E8A7 /* wall4-0@2X.png */; };
+		98DF319D181FD3800092E8A7 /* InitialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98DF319C181FD3800092E8A7 /* InitialViewController.m */; };
 		D00114B1181AC576002ED389 /* BottomPainel.m in Sources */ = {isa = PBXBuildFile; fileRef = D00114B0181AC576002ED389 /* BottomPainel.m */; };
 		D05CE05718193C2500827611 /* PathFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = D05CE05618193C2500827611 /* PathFinder.m */; };
 		D05CE05918198F6400827611 /* path2I@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = D05CE05818198F6400827611 /* path2I@2X.png */; };
@@ -123,8 +123,8 @@
 		98DF30A918181E620092E8A7 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		98DF30AA18181E620092E8A7 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		98DF30AD18181E620092E8A7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		98DF30AF18181E620092E8A7 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		98DF30B018181E620092E8A7 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		98DF30AF18181E620092E8A7 /* GameViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
+		98DF30B018181E620092E8A7 /* GameViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
 		98DF30B218181E620092E8A7 /* GameScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameScene.h; sourceTree = "<group>"; };
 		98DF30B318181E620092E8A7 /* GameScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameScene.m; sourceTree = "<group>"; };
 		98DF30B718181E620092E8A7 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -158,8 +158,6 @@
 		98DF312718195A780092E8A7 /* Economy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Economy.m; sourceTree = "<group>"; };
 		98DF312E1819907C0092E8A7 /* Plug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Plug.h; sourceTree = "<group>"; };
 		98DF312F1819907C0092E8A7 /* Plug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Plug.m; sourceTree = "<group>"; };
-		98DF3131181992B20092E8A7 /* InitialScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitialScene.h; sourceTree = "<group>"; };
-		98DF3132181992B20092E8A7 /* InitialScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InitialScene.m; sourceTree = "<group>"; };
 		98DF3135181994760092E8A7 /* TextButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextButton.h; sourceTree = "<group>"; };
 		98DF3136181994760092E8A7 /* TextButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextButton.m; sourceTree = "<group>"; };
 		98DF3138181A95D90092E8A7 /* greenButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "greenButton@2x.png"; sourceTree = "<group>"; };
@@ -212,6 +210,8 @@
 		98DF3169181EBC310092E8A7 /* wall3-2@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wall3-2@2X.png"; sourceTree = "<group>"; };
 		98DF316A181EBC310092E8A7 /* wall3-3@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wall3-3@2X.png"; sourceTree = "<group>"; };
 		98DF316B181EBC310092E8A7 /* wall4-0@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wall4-0@2X.png"; sourceTree = "<group>"; };
+		98DF319B181FD3800092E8A7 /* InitialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitialViewController.h; sourceTree = "<group>"; };
+		98DF319C181FD3800092E8A7 /* InitialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InitialViewController.m; sourceTree = "<group>"; };
 		D00114AF181AC576002ED389 /* BottomPainel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BottomPainel.h; sourceTree = "<group>"; };
 		D00114B0181AC576002ED389 /* BottomPainel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BottomPainel.m; sourceTree = "<group>"; };
 		D05CE05518193C2500827611 /* PathFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathFinder.h; sourceTree = "<group>"; };
@@ -285,8 +285,6 @@
 				98DF30A918181E620092E8A7 /* AppDelegate.h */,
 				98DF30AA18181E620092E8A7 /* AppDelegate.m */,
 				98DF30AC18181E620092E8A7 /* Main.storyboard */,
-				98DF30AF18181E620092E8A7 /* ViewController.h */,
-				98DF30B018181E620092E8A7 /* ViewController.m */,
 				98DF30B718181E620092E8A7 /* Images.xcassets */,
 				98DF30A118181E620092E8A7 /* Supporting Files */,
 				98DF30D4181825820092E8A7 /* Cell.h */,
@@ -416,10 +414,12 @@
 		98DF3134181992BC0092E8A7 /* scenes */ = {
 			isa = PBXGroup;
 			children = (
+				98DF30AF18181E620092E8A7 /* GameViewController.h */,
+				98DF30B018181E620092E8A7 /* GameViewController.m */,
+				98DF319B181FD3800092E8A7 /* InitialViewController.h */,
+				98DF319C181FD3800092E8A7 /* InitialViewController.m */,
 				98DF30B218181E620092E8A7 /* GameScene.h */,
 				98DF30B318181E620092E8A7 /* GameScene.m */,
-				98DF3131181992B20092E8A7 /* InitialScene.h */,
-				98DF3132181992B20092E8A7 /* InitialScene.m */,
 			);
 			name = scenes;
 			sourceTree = "<group>";
@@ -587,15 +587,15 @@
 			files = (
 				98DF30D91818258F0092E8A7 /* Map.m in Sources */,
 				98DF30B418181E620092E8A7 /* GameScene.m in Sources */,
-				98DF30B118181E620092E8A7 /* ViewController.m in Sources */,
+				98DF30B118181E620092E8A7 /* GameViewController.m in Sources */,
 				D00114B1181AC576002ED389 /* BottomPainel.m in Sources */,
 				98DF312818195A780092E8A7 /* Economy.m in Sources */,
-				98DF3133181992B20092E8A7 /* InitialScene.m in Sources */,
 				98DF30AB18181E620092E8A7 /* AppDelegate.m in Sources */,
 				98DF31301819907C0092E8A7 /* Plug.m in Sources */,
 				D05CE05718193C2500827611 /* PathFinder.m in Sources */,
 				98DF3137181994760092E8A7 /* TextButton.m in Sources */,
 				98DF30D6181825820092E8A7 /* Cell.m in Sources */,
+				98DF319D181FD3800092E8A7 /* InitialViewController.m in Sources */,
 				98DF313C181AC1950092E8A7 /* Troop.m in Sources */,
 				98DF30DC18182C9E0092E8A7 /* Player.m in Sources */,
 				D05CE05C1819957600827611 /* UpgradeArrow.m in Sources */,
