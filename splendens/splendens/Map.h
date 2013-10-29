@@ -16,7 +16,7 @@
 #define MAP_SIZE 700.0
 
 // The total animation time for troops movements
-#define TOTAL_MOV_TIME 2.0
+#define TOTAL_MOV_TIME 1.5
 
 // Represent the whole map, with all cells and troops
 @interface Map : SKNode

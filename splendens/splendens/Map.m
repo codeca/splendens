@@ -166,7 +166,7 @@
 	}];
 	
 	// Attack troops
-	int maxAttacks = [Economy attackSpeedForType:tower.type level:tower.level];
+	int maxAttacks = [Economy attackSpeedForTowerLevel:tower.level];
 	for (int i=0; i<maxAttacks && i<troops.count; i++) {
 		Troop* troop = troops[i];
 		int damage = [Economy attackDamageForTowerLevel:tower.level];
@@ -180,23 +180,23 @@
 		}
 		
 		// Create the bullet
-		Cell* finalCell = [troop currentCell];
 		SKSpriteNode* bullet = [SKSpriteNode spriteNodeWithImageNamed:@"beta"];
 		bullet.colorBlendFactor = 1;
 		bullet.color = tower.owner ? tower.owner.color : [UIColor grayColor];
 		bullet.xScale = bullet.yScale = 0;
-		bullet.zRotation = atan2(finalCell.position.y-tower.position.y, finalCell.position.x-tower.position.x);
+		bullet.zRotation = atan2(troop.finalPosition.y-tower.position.y, troop.finalPosition.x-tower.position.x);
 		bullet.position = tower.position;
 		[self addChild:bullet];
 		
 		// Create the bullet animation
 		SKAction* delay = [SKAction waitForDuration:TOTAL_MOV_TIME];
-		SKAction* move = [SKAction moveTo:finalCell.position duration:.5];
-		SKAction* grow = [SKAction scaleTo:1 duration:.25];
-		SKAction* shrink = [SKAction scaleTo:0 duration:.25];
+		SKAction* move = [SKAction moveTo:troop.finalPosition duration:1];
+		SKAction* grow = [SKAction scaleTo:1 duration:.3];
+		SKAction* delay2 = [SKAction scaleTo:1 duration:.4];
+		SKAction* shrink = [SKAction scaleTo:0 duration:.3];
 		SKAction* remove = [SKAction removeFromParent];
-		SKAction* shoot = [SKAction group:@[[SKAction sequence:@[grow, shrink], move]]];
-		[bullet runAction:[SKAction sequence:@[delay, shoot]]];
+		SKAction* shoot = [SKAction group:@[[SKAction sequence:@[grow, delay2, shrink]], move]];
+		[bullet runAction:[SKAction sequence:@[delay, shoot, remove]]];
 	}
 }
 
@@ -237,14 +237,15 @@
 			Cell* cell = troop.path[troop.pos+i];
 			
 			if (i == steps) {
+				troop.finalPosition = willArrive ? cell.position : [cell randomPointNear];
+				SKAction* lastMove = [SKAction moveTo:troop.finalPosition duration:TOTAL_MOV_TIME/steps];
 				if (willArrive) {
 					// Arrive animation
-					SKAction* lastMove = [SKAction moveTo:cell.position duration:TOTAL_MOV_TIME/steps];
 					SKAction* vanish = [SKAction scaleTo:0 duration:TOTAL_MOV_TIME/steps];
 					[animations addObject:[SKAction group:@[lastMove, vanish]]];
 					[animations addObject:[SKAction removeFromParent]];
 				} else
-					[animations addObject:[SKAction moveTo:[cell randomPointNear] duration:TOTAL_MOV_TIME/steps]];
+					[animations addObject:lastMove];
 			} else
 				[animations addObject:[SKAction moveTo:cell.position duration:TOTAL_MOV_TIME/steps]];
 		}
@@ -258,7 +259,7 @@
 }
 
 - (void)processDeliveredTroops:(NSArray*)troops {
-	NSLog(@"delivered!");
+	NSLog(@"delivered %d", troops.count);
 }
 
 @end

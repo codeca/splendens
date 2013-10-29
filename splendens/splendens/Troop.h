@@ -19,6 +19,7 @@
 @property (nonatomic) int amount; // The current amount (displayed in the label)
 @property (nonatomic) int newAmount; // The calculated final amount for this turn (decreases when attacked by towers)
 @property (nonatomic) SKSpriteNode* node;
+@property (nonatomic) CGPoint finalPosition; // The position at the end of this turn movement
 
 - (id)initWithPath:(NSArray*)path amount:(int)amount;
 
