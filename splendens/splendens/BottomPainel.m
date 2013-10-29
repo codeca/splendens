@@ -67,17 +67,17 @@
 		[self update:cell];
 	}
 	else if(button == self.city){
-		NSLog(@"City");
+		NSLog(@"virei City");
 		self.selected = self.city;
 		[self update:cell];
 	}
 	else if(button == self.tower){
-		NSLog(@"Tower");
+		NSLog(@"virei Tower");
 		self.selected = self.tower;
 		[self update:cell];
 	}
 	else if(button == self.lab){
-		NSLog(@"Lab");
+		NSLog(@"virei Lab");
 		self.selected = self.lab;
 		[self update:cell];
 	}
@@ -93,6 +93,7 @@
 		int y = 40; // Height of each table cell
 		int dy2 = 10; // Space between table cells
 		int dy1 = (self.size.height-dy2-2*y)/2; // Table cells margin
+		int dx3 = 0;
 		int fontSize = 28;
 		self.upgradeButton.position = CGPointMake(2*x+dy1+2*dy2+self.upgradeButton.size.width/2-self.size.width/2, 0);
 		if (self.selected == self.city) NSLog(@"Cidade");
@@ -187,20 +188,56 @@
 				}
 			}
 			if (selectedCell.type == CellTypeBasic){
-				self.city = [[TextButton alloc] initWithImage:@"City"];
-				self.tower = [[TextButton alloc] initWithImage:@"Tower"];
-				self.lab = [[TextButton alloc] initWithImage:@"Lab"];
-				if (self.selected == nil) self.selected = self.city;
-				self.city.delegate = self;
-				self.tower.delegate = self;
-				self.lab.delegate = self;
 				
-				self.city.position = CGPointMake(dy1+self.city.size.width/2-self.size.width/2+dy2+2*x+dy2+self.upgradeButton.size.width+dy2, 0);
-				self.tower.position = CGPointMake(dy1+self.tower.size.width/2+self.city.size.width-self.size.width/2+dy2+dy2+2*x+dy2+self.upgradeButton.size.width+dy2, 0);
-				self.lab.position = CGPointMake(dy1+self.lab.size.width/2+self.tower.size.width+self.city.size.width-self.size.width/2+3*dy2+2*x+dy2+self.upgradeButton.size.width+dy2, 0);
+				if (self.city == nil){
+					self.city = [[TextButton alloc] initWithImage:@"City"];
+					self.city.xScale = self.city.yScale = 0.5;
+					self.city.delegate = self;
+					self.city.color = map.thisPlayer.color;
+				}
 				[self.table addChild:self.city];
+				self.city.colorBlendFactor = 0;
+				self.city.hidden = NO;
+				
+				if (self.tower == nil){
+					self.tower = [[TextButton alloc] initWithImage:@"Tower"];
+					self.tower.xScale = self.tower.yScale = 0.5;
+					self.tower.delegate = self;
+					self.tower.color = map.thisPlayer.color;
+				}
 				[self.table addChild:self.tower];
+				self.tower.colorBlendFactor = 0;
+				self.tower.hidden = NO;
+				
+				if (self.lab == nil){
+					self.lab = [[TextButton alloc] initWithImage:@"Lab"];
+					self.lab.xScale = self.lab.yScale = 0.5;
+					self.lab.delegate = self;
+					self.lab.color = map.thisPlayer.color;
+				}
 				[self.table addChild:self.lab];
+				self.lab.colorBlendFactor = 0;
+				self.lab.hidden = NO;
+				
+				self.city.position = CGPointMake(dy1+self.city.frame.size.width/2-self.size.width/2+dy2+2*x+dy2+self.upgradeButton.size.width+dy2, self.tower.frame.size.height/2 + dy2 -5 + self.city.frame.size.height/2);
+				self.tower.position = CGPointMake(dy1+self.tower.frame.size.width/2-self.size.width/2+dy2+2*x+dy2+self.upgradeButton.size.width+dy2, 0);
+				self.lab.position = CGPointMake(dy1+self.lab.frame.size.width/2-self.size.width/2+dy2+2*x+dy2+self.upgradeButton.size.width+dy2,  -self.tower.frame.size.height/2 - dy2 + 5 - self.lab.frame.size.height/2);
+				
+				
+				dx3 = 2*dy2+self.city.frame.size.width;
+				
+				if (self.selected == nil) self.selected = self.city;
+				
+				if (self.selected == self.city){
+					self.city.colorBlendFactor = 1;
+				}
+				else if (self.selected == self.tower){
+					self.tower.colorBlendFactor = 1;
+				}
+				else if (self.selected == self.lab){
+					self.lab.colorBlendFactor = 1;
+				}
+				
 				
 				NSString* temp,*temp2;
 				
@@ -221,7 +258,7 @@
 					if ([Economy upgradePopulationCostForType:CellTypeTower level:1] > selectedCell.population) popCost.fontColor = [UIColor redColor];
 					if ([Economy upgradeManaCostForType:CellTypeTower level:1] > map.thisPlayer.mana) manaCost.fontColor = [UIColor redColor];
 				}
-				else if (self.selected == self.city){
+				else if (self.selected == self.lab){
 					temp = [NSString stringWithFormat:@"%d",[Economy upgradePopulationCostForType:CellTypeLab level:1]];
 					temp2 =[NSString stringWithFormat:@"%d",[Economy upgradePopulationCostForType:CellTypeLab level:1]];
 					if ([Economy upgradePopulationCostForType:CellTypeLab level:1] > selectedCell.population) popCost.fontColor = [UIColor redColor];
@@ -237,72 +274,68 @@
 				manaCost.text = temp2;
 				
 			}
-			else{
-				self.selected = nil;
-				if (selectedCell.level<4){
-	
-					CGSize size = CGSizeMake(x,y);
-					SKSpriteNode* tableCell5 = [[SKSpriteNode alloc] initWithColor:[UIColor greenColor] size:size];
-					SKSpriteNode* tableCell6 = [[SKSpriteNode alloc] initWithColor:[UIColor greenColor] size:size];
-					SKSpriteNode* tableCell7 = [[SKSpriteNode alloc] initWithColor:[UIColor greenColor] size:size];
-					SKSpriteNode* tableCell8 = [[SKSpriteNode alloc] initWithColor:[UIColor greenColor] size:size];
-					[self.table addChild:tableCell5];
-					[self.table addChild:tableCell6];
-					[self.table addChild:tableCell7];
-					[self.table addChild:tableCell8];
-					tableCell5.size = size;
-					tableCell6.size = size;
-					tableCell7.size = size;
-					tableCell8.size = size;
-					tableCell5.position = CGPointMake(dy1+x/2-self.size.width/2+dy2+2*x+dy2+self.upgradeButton.size.width+dy2, dy1+y+dy2+y/2-self.size.height/2);
-					tableCell6.position = CGPointMake(dy1+x+dy2+x/2-self.size.width/2+dy2+2*x+dy2+self.upgradeButton.size.width+dy2, dy1+y+dy2+y/2-self.size.height/2);
-					tableCell7.position = CGPointMake(dy1+x/2-self.size.width/2+dy2+2*x+dy2+self.upgradeButton.size.width+dy2, dy1+y/2-self.size.height/2);
-					tableCell8.position = CGPointMake(dy1+x+dy2+x/2-self.size.width/2+dy2+2*x+dy2+self.upgradeButton.size.width+dy2, dy1+y/2-self.size.height/2);
+			else self.selected = nil;
+			if (selectedCell.level<4){
+				CGSize size = CGSizeMake(x,y);
+				SKSpriteNode* tableCell5 = [[SKSpriteNode alloc] initWithColor:[UIColor greenColor] size:size];
+				SKSpriteNode* tableCell6 = [[SKSpriteNode alloc] initWithColor:[UIColor greenColor] size:size];
+				SKSpriteNode* tableCell7 = [[SKSpriteNode alloc] initWithColor:[UIColor greenColor] size:size];
+				SKSpriteNode* tableCell8 = [[SKSpriteNode alloc] initWithColor:[UIColor greenColor] size:size];
+				[self.table addChild:tableCell5];
+				[self.table addChild:tableCell6];
+				[self.table addChild:tableCell7];
+				[self.table addChild:tableCell8];
+				tableCell5.size = size;
+				tableCell6.size = size;
+				tableCell7.size = size;
+				tableCell8.size = size;
+				tableCell5.position = CGPointMake(dx3+dy1+x/2-self.size.width/2+dy2+2*x+dy2+self.upgradeButton.size.width+dy2, dy1+y+dy2+y/2-self.size.height/2);
+				tableCell6.position = CGPointMake(dx3+dy1+x+dy2+x/2-self.size.width/2+dy2+2*x+dy2+self.upgradeButton.size.width+dy2, dy1+y+dy2+y/2-self.size.height/2);
+				tableCell7.position = CGPointMake(dx3+dy1+x/2-self.size.width/2+dy2+2*x+dy2+self.upgradeButton.size.width+dy2, dy1+y/2-self.size.height/2);
+				tableCell8.position = CGPointMake(dx3+dy1+x+dy2+x/2-self.size.width/2+dy2+2*x+dy2+self.upgradeButton.size.width+dy2, dy1+y/2-self.size.height/2);
 				
-					size = CGSizeMake(a,a);
-					SKSpriteNode* attributeCell5 = [SKSpriteNode spriteNodeWithColor:[UIColor yellowColor] size:size];
-					attributeCell5.position = CGPointMake(da+a/2-x/2, da+a/2-y/2);
-					SKSpriteNode* attributeCell6 = [SKSpriteNode spriteNodeWithColor:[UIColor yellowColor] size:size];
-					attributeCell6.position = CGPointMake(da+a/2-x/2, da+a/2-y/2);
-					SKSpriteNode* attributeCell7 = [SKSpriteNode spriteNodeWithColor:[UIColor yellowColor] size:size];
-					attributeCell7.position = CGPointMake(da+a/2-x/2, da+a/2-y/2);
-					SKSpriteNode* attributeCell8 = [SKSpriteNode spriteNodeWithColor:[UIColor yellowColor] size:size];
-					attributeCell8.position = CGPointMake(da+a/2-x/2, da+a/2-y/2);
-					[tableCell5 addChild:attributeCell5];
-					[tableCell6 addChild:attributeCell6];
-					[tableCell7 addChild:attributeCell7];
-					[tableCell8 addChild:attributeCell8];
+				size = CGSizeMake(a,a);
+				SKSpriteNode* attributeCell5 = [SKSpriteNode spriteNodeWithColor:[UIColor yellowColor] size:size];
+				attributeCell5.position = CGPointMake(da+a/2-x/2, da+a/2-y/2);
+				SKSpriteNode* attributeCell6 = [SKSpriteNode spriteNodeWithColor:[UIColor yellowColor] size:size];
+				attributeCell6.position = CGPointMake(da+a/2-x/2, da+a/2-y/2);
+				SKSpriteNode* attributeCell7 = [SKSpriteNode spriteNodeWithColor:[UIColor yellowColor] size:size];
+				attributeCell7.position = CGPointMake(da+a/2-x/2, da+a/2-y/2);
+				SKSpriteNode* attributeCell8 = [SKSpriteNode spriteNodeWithColor:[UIColor yellowColor] size:size];
+				attributeCell8.position = CGPointMake(da+a/2-x/2, da+a/2-y/2);
+				[tableCell5 addChild:attributeCell5];
+				[tableCell6 addChild:attributeCell6];
+				[tableCell7 addChild:attributeCell7];
+				[tableCell8 addChild:attributeCell8];
 				
 				
-					SKLabelNode* infoCell5 = [[SKLabelNode alloc] initWithFontNamed:@"arial"];
-					infoCell5.fontSize = fontSize;
-					infoCell5.position = CGPointMake(2*da+a+a/2-x/2, da+a/2-y/2);
-					infoCell5.text = [NSString stringWithFormat:@"%d",[Economy productionForType:selectedCell.type level:selectedCell.level+1]];
-					infoCell5.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
-					SKLabelNode* infoCell6 = [[SKLabelNode alloc] initWithFontNamed:@"arial"];
-					infoCell6.fontSize = fontSize;
-					infoCell6.position = CGPointMake(2*da+a+a/2-x/2, da+a/2-y/2);
-					infoCell6.text = [NSString stringWithFormat:@"%d",[Economy armorForType:selectedCell.type level:selectedCell.level+1]];
-					infoCell6.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
-					SKLabelNode* infoCell7 = [[SKLabelNode alloc] initWithFontNamed:@"arial"];
-					infoCell7.fontSize = fontSize;
-					infoCell7.position = CGPointMake(2*da+a+a/2-x/2, da+a/2-y/2);
-					infoCell7.text = [NSString stringWithFormat:@"%d",[Economy maxPopulationForType:selectedCell.type level:selectedCell.level+1]];
-					infoCell7.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
-					SKLabelNode* infoCell8 = [[SKLabelNode alloc] initWithFontNamed:@"arial"];
-					infoCell8.fontSize = fontSize;
-					infoCell8.position = CGPointMake(2*da+a+a/2-x/2, da+a/2-y/2);
-					infoCell8.text = [NSString stringWithFormat:@"%d",[Economy speedForType:selectedCell.type level:selectedCell.level+1]];
-					infoCell8.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
+				SKLabelNode* infoCell5 = [[SKLabelNode alloc] initWithFontNamed:@"arial"];
+				infoCell5.fontSize = fontSize;
+				infoCell5.position = CGPointMake(2*da+a+a/2-x/2, da+a/2-y/2);
+				infoCell5.text = [NSString stringWithFormat:@"%d",[Economy productionForType:selectedCell.type level:selectedCell.level+1]];
+				infoCell5.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
+				SKLabelNode* infoCell6 = [[SKLabelNode alloc] initWithFontNamed:@"arial"];
+				infoCell6.fontSize = fontSize;
+				infoCell6.position = CGPointMake(2*da+a+a/2-x/2, da+a/2-y/2);
+				infoCell6.text = [NSString stringWithFormat:@"%d",[Economy armorForType:selectedCell.type level:selectedCell.level+1]];
+				infoCell6.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
+				SKLabelNode* infoCell7 = [[SKLabelNode alloc] initWithFontNamed:@"arial"];
+				infoCell7.fontSize = fontSize;
+				infoCell7.position = CGPointMake(2*da+a+a/2-x/2, da+a/2-y/2);
+				infoCell7.text = [NSString stringWithFormat:@"%d",[Economy maxPopulationForType:selectedCell.type level:selectedCell.level+1]];
+				infoCell7.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
+				SKLabelNode* infoCell8 = [[SKLabelNode alloc] initWithFontNamed:@"arial"];
+				infoCell8.fontSize = fontSize;
+				infoCell8.position = CGPointMake(2*da+a+a/2-x/2, da+a/2-y/2);
+				infoCell8.text = [NSString stringWithFormat:@"%d",[Economy speedForType:selectedCell.type level:selectedCell.level+1]];
+				infoCell8.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
 				
-					[tableCell5 addChild:infoCell5];
-					[tableCell6 addChild:infoCell6];
-					[tableCell7 addChild:infoCell7];
-					[tableCell8 addChild:infoCell8];
-				}
+				[tableCell5 addChild:infoCell5];
+				[tableCell6 addChild:infoCell6];
+				[tableCell7 addChild:infoCell7];
+				[tableCell8 addChild:infoCell8];
 			}
 		}
-		
 	}
 }
 
