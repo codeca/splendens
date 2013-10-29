@@ -12,5 +12,6 @@
 @interface GameViewController : UIViewController
 
 @property (nonatomic) id gameStructure;
+@property (nonatomic) NSString* myId;
 
 @end

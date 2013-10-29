@@ -21,6 +21,7 @@
     
     GameScene* scene = [GameScene sceneWithSize:skView.bounds.size];
 	scene.gameStructure = self.gameStructure;
+	scene.myId = self.myId;
     [skView presentScene:scene];
 }
 

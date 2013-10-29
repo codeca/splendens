@@ -11,6 +11,8 @@
 @interface Player : NSObject
 
 @property (nonatomic) int mana;
+@property (nonatomic) NSString* name;
+@property (nonatomic) NSString* playerId;
 @property (nonatomic) UIColor* color;
 
 @end

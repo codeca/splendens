@@ -33,7 +33,7 @@
 
 
 // Create a new map from a JSON string (see the structure in the project wiki)
-- (id)initWithDefinition:(id)def;
+- (id)initWithDefinition:(id)def myId:(NSString*)myId;
 
 // Return the cell at the given position
 - (Cell*)cellAtX:(int)x y:(int)y;

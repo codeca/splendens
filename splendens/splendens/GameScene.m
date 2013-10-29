@@ -20,7 +20,7 @@
 }
 
 - (void)didMoveToView:(SKView *)view {
-	Map* map = [[Map alloc] initWithDefinition:self.gameStructure];
+	Map* map = [[Map alloc] initWithDefinition:self.gameStructure myId:self.myId];
 	BottomPainel* bottomPainel = [[BottomPainel alloc]init];
 	[self addChild:map];
 	[self addChild:bottomPainel];

@@ -19,26 +19,34 @@
 
 @implementation Map
 
-- (id)initWithDefinition:(id)def {
+- (id)initWithDefinition:(id)def myId:(NSString *)myId {
 	if (self = [super init]) {
-		def = def[@"map"];
+		NSDictionary* mapDef = def[@"map"];
+		NSArray* playerDef = def[@"players"];
+		
 		// Extract the size
-		self.size = [[def objectForKey:@"size"] integerValue];
+		self.size = [[mapDef objectForKey:@"size"] integerValue];
 		self.name = @"map";
 		
 		// Extract all players
-		int numPlayers = [[def objectForKey:@"players"] integerValue];
-		int mana = [[def objectForKey:@"mana"] integerValue];
+		int numPlayers = [[mapDef objectForKey:@"players"] integerValue];
+		int mana = [[mapDef objectForKey:@"mana"] integerValue];
 		NSMutableArray* players = [[NSMutableArray alloc] initWithCapacity:numPlayers];
 		NSArray* colors = @[[UIColor redColor], [UIColor greenColor], [UIColor blueColor], [UIColor whiteColor]];
+		int me = 0;
 		for (int i=0; i<numPlayers; i++) {
 			Player* player = [[Player alloc] init];
+			NSString* playerId = playerDef[i][@"id"];
 			player.mana = mana;
 			player.color = colors[i];
+			player.name = playerDef[i][@"name"];
+			player.playerId = playerId;
 			[players addObject:player];
+			if ([playerId isEqualToString:myId])
+				me = i;
 		}
 		self.players = players;
-		self.thisPlayer = players[0];
+		self.thisPlayer = players[me];
 		
 		// Create root node
 		self.position = CGPointMake((768-MAP_SIZE)/2, (1024-MAP_SIZE)/2);
@@ -57,7 +65,7 @@
 		self.cells = cells;
 		
 		// Update each cell to the saved type
-		NSArray* savedCells = [def objectForKey:@"cells"];
+		NSArray* savedCells = [mapDef objectForKey:@"cells"];
 		for (NSDictionary* savedCell in savedCells) {
 			int x = [[savedCell objectForKey:@"x"] integerValue];
 			int y = [[savedCell objectForKey:@"y"] integerValue];

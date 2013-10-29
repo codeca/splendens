@@ -12,7 +12,7 @@
 @interface InitialViewController ()
 
 @property (nonatomic) NSString* name;
-@property (nonatomic) NSString* playerId;
+@property (nonatomic) NSString* myId;
 @property (nonatomic) BOOL want2;
 @property (nonatomic) BOOL want3;
 @property (nonatomic) BOOL want4;
@@ -36,7 +36,7 @@
 
 - (IBAction)continueMatching:(id)sender {
 	self.name = self.nameInput.text;
-	self.playerId = [[NSUUID UUID] UUIDString];
+	self.myId = [[NSUUID UUID] UUIDString];
 	NSLog(@"Choose number of players and press start");
 }
 
@@ -48,7 +48,7 @@
 						   @"want3": [NSNumber numberWithBool:self.want3],
 						   @"want4": [NSNumber numberWithBool:self.want4],
 						   @"name": self.name,
-						   @"id": self.playerId};
+						   @"id": self.myId};
 	[self.plug sendMessage:MSG_SIMPLE_MATCH data:data];
 	NSLog(@"Wait");
 }
@@ -56,6 +56,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 	GameViewController* destination = segue.destinationViewController;
 	destination.gameStructure = sender;
+	destination.myId = self.myId;
 }
 
 - (void)plug:(Plug *)plug hasClosedWithError:(BOOL)error {

@@ -16,5 +16,6 @@
 
 @property (nonatomic) id gameStructure;
 @property (nonatomic) Plug* plug;
+@property (nonatomic) NSString* myId;
 
 @end
