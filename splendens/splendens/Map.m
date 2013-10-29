@@ -107,17 +107,17 @@
 	for (Cell* cell in self.cells) {
 		if (!cell.owner)
 			continue;
+			
 		int maxPop = [Economy maxPopulationForType:cell.type level:cell.level];
+		
 		if (cell.population >= maxPop)
+			// Overcrowded -> lose half of the exceeding population
 			cell.population -= (cell.population-maxPop+1)/2;
+		
 		if (cell.type == CellTypeBasic || cell.type == CellTypeCity) {
-		//	int maxPop = [Economy maxPopulationForType:cell.type level:cell.level];
-			if (cell.population >= maxPop);
-		//		cell.population -= (cell.population-maxPop+1)/2;
-			else {
+			if (cell.population < maxPop) {
 				int newPop = cell.population + [Economy productionForType:cell.type level:cell.level];
-				newPop = newPop>maxPop ? maxPop : newPop;
-				cell.population = newPop;
+				cell.population = newPop>maxPop ? maxPop : newPop;
 			}
 		} else if (cell.type == CellTypeLab)
 			cell.owner.mana += [Economy productionForType:cell.type level:cell.level];
@@ -131,6 +131,7 @@
 }
 
 // Process all attacks after a while
+// timer.userInfo carries all delivered troops in this turn
 - (void)processTowerAttacksAndTroopsDelivery:(NSTimer*)timer {
 	for (Cell* cell in self.cells)
 		if (cell.type == CellTypeTower)
@@ -281,7 +282,7 @@
 				} else
 					[animations addObject:lastMove];
 			} else
-				[animations addObject:[SKAction moveTo:[cell randomPointNear:0.75] duration:TOTAL_MOV_TIME/steps]];
+				[animations addObject:[SKAction moveTo:[cell randomPointNear:0.5] duration:TOTAL_MOV_TIME/steps]];
 		}
 		
 		if (!willArrive) troop.pos += steps;
@@ -293,22 +294,11 @@
 }
 
 - (void)processDeliveredTroops:(NSArray*)troops {
-	// Get all attackable troops
-	NSMutableArray* troops2 = [NSMutableArray array];
-	for (Troop* troop in self.troops)
-			[troops2 addObject:troop];
-	
-	// Order troops with this criteria
-	[troops2 sortUsingComparator:^(Troop* a, Troop* b) {
-		
-		Cell* finalA = [a.path lastObject];
-		Cell* posA = a.path[a.pos];
-		Cell* finalB = [b.path lastObject];
-		Cell* posB = b.path[b.pos];
-		
+	// Order troops (criteria defined in the project wiki)
+	troops = [troops sortedArrayUsingComparator:^(Troop* a, Troop* b) {
 		// Nearest
-		float timeA = (abs(finalA.x - posA.x)+abs(finalA.y-posA.y))/a.speed;
-		float timeB = (abs(finalB.x-posB.x)+abs(finalB.y-posB.y))/b.speed;
+		float timeA = (float)(a.path.count-a.pos)/a.speed;
+		float timeB = (float)(b.path.count-b.pos)/b.speed;
 		if (timeA < timeB) return NSOrderedAscending;
 		else if (timeA > timeB) return NSOrderedDescending;
 		
@@ -332,23 +322,29 @@
 		
 		return NSOrderedSame;
 	}];
-
-	for (Troop* i in troops) {
-		Cell* destiny = [i.path lastObject];
+	
+	// Process each troop in order
+	for (Troop* troop in troops) {
+		Cell* destiny = [troop.path lastObject];
 		int destinyArmor = [Economy armorForType:destiny.type level:destiny.level];
-		if (i.owner == self.thisPlayer && destiny.owner == self.thisPlayer){
-			destiny.population += i.newAmount;
-		}
-		else if (i.owner != destiny.owner && i.newAmount > destiny.population*destinyArmor){
-			destiny.population = i.newAmount - destiny.population*destinyArmor;
-			destiny.owner = i.owner;
-		}
-		else{
-			destiny.population -= i.newAmount/destinyArmor;
+		
+		if (troop.owner == destiny.owner) {
+			// Reinforcement
+			destiny.population += troop.amount;
+		} else if (troop.amount > destiny.population*destinyArmor){
+			// Attack resulted in conquest
+			destiny.population = troop.amount - destiny.population*destinyArmor;
+			destiny.owner = troop.owner;
+		} else {
+			// Attack failed (just reduce the cell population)
+			destiny.population -= troop.amount/destinyArmor;
 		}
 		
-		BottomPainel* bottomPainel = (BottomPainel*)[[self scene] childNodeWithName:@"bottomPainel"];
-		if (self.selected == destiny) [bottomPainel update:destiny];
+		if (self.selected == destiny) {
+			// Update the info about the cell displayed in the interface
+			BottomPainel* bottomPainel = (BottomPainel*)[[self scene] childNodeWithName:@"bottomPainel"];
+			[bottomPainel update:destiny];
+		}
 	}
 }
 
