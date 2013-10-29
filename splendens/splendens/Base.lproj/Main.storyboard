@@ -61,6 +61,9 @@
                                 <state key="normal" title="Debug">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="startDebug:" destination="rYn-3r-ret" eventType="touchUpInside" id="hvf-8U-ew4"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OuK-fj-JE6">
                                 <rect key="frame" x="258" y="275" width="33" height="30"/>

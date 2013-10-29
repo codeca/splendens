@@ -16,6 +16,7 @@
 @property (nonatomic) BOOL want2;
 @property (nonatomic) BOOL want3;
 @property (nonatomic) BOOL want4;
+@property (nonatomic) BOOL debug;
 
 @end
 
@@ -53,14 +54,24 @@
 	NSLog(@"Wait");
 }
 
+- (IBAction)startDebug:(id)sender {
+	self.debug = YES;
+	if (!self.plug) {
+		self.plug = [Plug plug];
+		self.plug.delegate = self;
+	}
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 	GameViewController* destination = segue.destinationViewController;
 	destination.gameStructure = sender;
 	destination.myId = self.myId;
+	destination.plug = self.plug;
 }
 
 - (void)plug:(Plug *)plug hasClosedWithError:(BOOL)error {
 	NSLog(@"Server runned away :(");
+	self.plug = nil;
 }
 
 - (void)plug:(Plug *)plug receivedMessage:(PlugMsgType)type data:(id)data {
@@ -78,11 +89,22 @@
 		self.matchProgress.progress = maxProgress;
 	} else if (type == MSG_SIMPLE_MATCH_DONE) {
 		[self performSegueWithIdentifier:@"startGame" sender:data];
+	} else if (type == MSG_DEBUG) {
+		NSMutableArray* players = [NSMutableArray array];
+		int numPlayers = [data[@"players"] integerValue];
+		self.myId = [[NSUUID UUID] UUIDString];
+		for (int i=0; i<numPlayers; i++)
+			[players addObject:@{@"name": @"sitegui", @"id": i ? [[NSUUID UUID] UUIDString] : self.myId}];
+		NSDictionary* data2 = @{@"map": data, @"players": players};
+		[self performSegueWithIdentifier:@"startGame" sender:data2];
 	}
 }
 
 - (void)plugHasConnected:(Plug *)plug {
 	NSLog(@"Input your name and press continue");
+	
+	if (self.debug)
+		[self.plug sendMessage:MSG_DEBUG data:[NSNull null]];
 }
 
 @end

@@ -293,10 +293,6 @@
 }
 
 - (void)processDeliveredTroops:(NSArray*)troops {
-	NSLog(@"delivered %d", troops.count);
-	
-	
-	
 	// Get all attackable troops
 	NSMutableArray* troops2 = [NSMutableArray array];
 	for (Troop* troop in self.troops)
@@ -337,13 +333,7 @@
 		return NSOrderedSame;
 	}];
 
-	
-	
 	for (Troop* i in troops) {
-		//Largest
-		//Farthest from origin
-		//Player with more mana
-		//Player order in the map.players arrayProcess troops following the same criteria for tower attacks from 3 to 6
 		Cell* destiny = [i.path lastObject];
 		int destinyArmor = [Economy armorForType:destiny.type level:destiny.level];
 		if (i.owner == self.thisPlayer && destiny.owner == self.thisPlayer){
@@ -359,11 +349,6 @@
 		
 		BottomPainel* bottomPainel = (BottomPainel*)[[self scene] childNodeWithName:@"bottomPainel"];
 		if (self.selected == destiny) [bottomPainel update:destiny];
-		
-		
-		//If the troop's owner is the cell's owner, let them in (population += troopSize)
-		//If not, but troopSize > population*defense, then the cell is conquered and the new population will be troopSize-population*defense.
-		//If not both, the cell isn't conquered, but the population will be decreased (population -= troopSize/defense).
 	}
 }
 
