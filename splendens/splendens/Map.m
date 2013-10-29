@@ -113,13 +113,17 @@
 	// Move troops
 	NSArray* deliveredTroops = [self moveTroops];
 	
-	// Tower attacks
+	// Wait for the movement animation
+	[NSTimer scheduledTimerWithTimeInterval:TOTAL_MOV_TIME target:self selector:@selector(processTowerAttacksAndTroopsDelivery:) userInfo:deliveredTroops repeats:NO];
+}
+
+// Process all attacks after a while
+- (void)processTowerAttacksAndTroopsDelivery:(NSTimer*)timer {
 	for (Cell* cell in self.cells)
 		if (cell.type == CellTypeTower)
 			[self processTowerAttack:cell];
-	
-	// Delivered troops
-	[self processDeliveredTroops:deliveredTroops];
+	[self processDeliveredTroops:timer.userInfo];
+	[NSTimer scheduledTimerWithTimeInterval:TOTAL_ATTACK_TIME target:self selector:@selector(updateTroopsAmount) userInfo:nil repeats:NO];
 }
 
 // Process the attacks made by the given tower
@@ -172,12 +176,17 @@
 		int damage = [Economy attackDamageForTowerLevel:tower.level];
 		if (damage >= troop.newAmount) {
 			// Troop destroyed
-			[self.troops removeObject:troop];
-			[troop.node removeFromParent];
-		} else {
+			troop.newAmount = 0;
+			
+			// Create the "pop" animation
+			SKAction* wait = [SKAction waitForDuration:TOTAL_ATTACK_TIME];
+			SKAction* grow = [SKAction scaleTo:1.5 duration:TOTAL_ATTACK_TIME/2];
+			SKAction* fade = [SKAction fadeOutWithDuration:TOTAL_ATTACK_TIME/2];
+			SKAction* pop = [SKAction group:@[grow, fade]];
+			SKAction* remove = [SKAction removeFromParent];
+			[troop.node runAction:[SKAction sequence:@[wait, pop, remove]]];
+		} else
 			troop.newAmount -= damage;
-			troop.amount = troop.newAmount;
-		}
 		
 		// Create the bullet
 		SKSpriteNode* bullet = [SKSpriteNode spriteNodeWithImageNamed:@"beta"];
@@ -189,15 +198,27 @@
 		[self addChild:bullet];
 		
 		// Create the bullet animation
-		SKAction* delay = [SKAction waitForDuration:TOTAL_MOV_TIME];
-		SKAction* move = [SKAction moveTo:troop.finalPosition duration:1];
-		SKAction* grow = [SKAction scaleTo:1 duration:.3];
-		SKAction* delay2 = [SKAction scaleTo:1 duration:.4];
-		SKAction* shrink = [SKAction scaleTo:0 duration:.3];
+		SKAction* move = [SKAction moveTo:troop.finalPosition duration:TOTAL_ATTACK_TIME];
+		SKAction* grow = [SKAction scaleTo:1 duration:TOTAL_ATTACK_TIME/3];
+		SKAction* delay = [SKAction scaleTo:1 duration:TOTAL_ATTACK_TIME/3];
+		SKAction* shrink = [SKAction scaleTo:0 duration:TOTAL_ATTACK_TIME/3];
 		SKAction* remove = [SKAction removeFromParent];
-		SKAction* shoot = [SKAction group:@[[SKAction sequence:@[grow, delay2, shrink]], move]];
-		[bullet runAction:[SKAction sequence:@[delay, shoot, remove]]];
+		SKAction* shoot = [SKAction group:@[[SKAction sequence:@[grow, delay, shrink]], move]];
+		[bullet runAction:[SKAction sequence:@[shoot, remove]]];
 	}
+}
+
+// Update all the displayed troop amount to the calculated amount
+// Called after all tower attack animations end
+- (void)updateTroopsAmount {
+	NSMutableArray* newTroops = [NSMutableArray array];
+	for (Troop* troop in self.troops) {
+		if (troop.amount != troop.newAmount)
+			troop.amount = troop.newAmount;
+		if (troop.amount)
+			[newTroops addObject:troop];
+	}
+	self.troops = newTroops;
 }
 
 #pragma mark - troops
