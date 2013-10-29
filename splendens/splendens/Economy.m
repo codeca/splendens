@@ -20,10 +20,8 @@
 	if (type == CellTypeLab && level == 2) return 2;
 	if (type == CellTypeLab && level == 3) return 3;
 	if (type == CellTypeLab && level == 4) return 4;
-	if (type == CellTypeTower && level == 1) return 1*2; //attack * damage, to make easier for showing.
-	if (type == CellTypeTower && level == 2) return 1*3;
-	if (type == CellTypeTower && level == 3) return 2*3;
-	if (type == CellTypeTower && level == 4) return 2*4;
+	// "Production" for towers are attackSpeed*damage to make easier to show in the upgrade interface
+	if (type == CellTypeTower) return [Economy attackSpeedForTowerLevel:level]*[Economy attackDamageForTowerLevel:level];
 	return -1;
 }
 
@@ -78,35 +76,35 @@
 	return -1;
 }
 
-+ (int)attackSpeedForType:(CellType)type level:(int)level {
-	if (type == CellTypeTower && level == 1) return 1;
-	if (type == CellTypeTower && level == 2) return 1;
-	if (type == CellTypeTower && level == 3) return 2;
-	if (type == CellTypeTower && level == 4) return 2;
++ (int)attackSpeedForTowerLevel:(int)level {
+	if (level == 1) return 1;
+	if (level == 2) return 1;
+	if (level == 3) return 2;
+	if (level == 4) return 2;
 	return -1;
 }
 
-+ (int)attackDamageForType:(CellType)type level:(int)level {
-	if (type == CellTypeTower && level == 1) return 2;
-	if (type == CellTypeTower && level == 2) return 3;
-	if (type == CellTypeTower && level == 3) return 3;
-	if (type == CellTypeTower && level == 4) return 4;
++ (int)attackDamageForTowerLevel:(int)level {
+	if (level == 1) return 2;
+	if (level == 2) return 3;
+	if (level == 3) return 3;
+	if (level == 4) return 4;
 	return -1;
 }
 
-+ (int)attackRangeForType:(CellType)type level:(int)level {
-	if (type == CellTypeTower && level == 1) return 2;
-	if (type == CellTypeTower && level == 2) return 3;
-	if (type == CellTypeTower && level == 3) return 3;
-	if (type == CellTypeTower && level == 4) return 4;
++ (int)attackRangeForTowerLevel:(int)level {
+	if (level == 1) return 2;
+	if (level == 2) return 3;
+	if (level == 3) return 3;
+	if (level == 4) return 4;
 	return -1;
 }
 
-+ (int)bonusMaxManaForType:(CellType)type level:(int)level {
-	if (type == CellTypeLab && level == 1) return 5;
-	if (type == CellTypeLab && level == 2) return 10;
-	if (type == CellTypeLab && level == 3) return 15;
-	if (type == CellTypeLab && level == 4) return 20;
++ (int)bonusMaxManaForLabLevel:(int)level {
+	if (level == 1) return 5;
+	if (level == 2) return 10;
+	if (level == 3) return 15;
+	if (level == 4) return 20;
 	return -1;
 }
 

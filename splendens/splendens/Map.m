@@ -113,13 +113,17 @@
 	// Move troops
 	NSArray* deliveredTroops = [self moveTroops];
 	
-	// Tower attacks
+	// Wait for the movement animation
+	[NSTimer scheduledTimerWithTimeInterval:TOTAL_MOV_TIME target:self selector:@selector(processTowerAttacksAndTroopsDelivery:) userInfo:deliveredTroops repeats:NO];
+}
+
+// Process all attacks after a while
+- (void)processTowerAttacksAndTroopsDelivery:(NSTimer*)timer {
 	for (Cell* cell in self.cells)
 		if (cell.type == CellTypeTower)
 			[self processTowerAttack:cell];
-	
-	// Delivered troops
-	[self processDeliveredTroops:deliveredTroops];
+	[self processDeliveredTroops:timer.userInfo];
+	[NSTimer scheduledTimerWithTimeInterval:TOTAL_ATTACK_TIME target:self selector:@selector(updateTroopsAmount) userInfo:nil repeats:NO];
 }
 
 // Process the attacks made by the given tower
@@ -166,19 +170,55 @@
 	}];
 	
 	// Attack troops
-	int maxAttacks = [Economy attackSpeedForType:tower.type level:tower.level];
+	int maxAttacks = [Economy attackSpeedForTowerLevel:tower.level];
 	for (int i=0; i<maxAttacks && i<troops.count; i++) {
 		Troop* troop = troops[i];
-		int damage = [Economy attackDamageForType:tower.type level:tower.level];
+		int damage = [Economy attackDamageForTowerLevel:tower.level];
 		if (damage >= troop.newAmount) {
 			// Troop destroyed
-			[self.troops removeObject:troop];
-			[troop.node removeFromParent];
-		} else {
+			troop.newAmount = 0;
+			
+			// Create the "pop" animation
+			SKAction* wait = [SKAction waitForDuration:TOTAL_ATTACK_TIME];
+			SKAction* grow = [SKAction scaleTo:1.5 duration:TOTAL_ATTACK_TIME/2];
+			SKAction* fade = [SKAction fadeOutWithDuration:TOTAL_ATTACK_TIME/2];
+			SKAction* pop = [SKAction group:@[grow, fade]];
+			SKAction* remove = [SKAction removeFromParent];
+			[troop.node runAction:[SKAction sequence:@[wait, pop, remove]]];
+		} else
 			troop.newAmount -= damage;
-			troop.amount = troop.newAmount;
-		}
+		
+		// Create the bullet
+		SKSpriteNode* bullet = [SKSpriteNode spriteNodeWithImageNamed:@"beta"];
+		bullet.colorBlendFactor = 1;
+		bullet.color = tower.owner ? tower.owner.color : [UIColor grayColor];
+		bullet.xScale = bullet.yScale = 0;
+		bullet.zRotation = atan2(troop.finalPosition.y-tower.position.y, troop.finalPosition.x-tower.position.x);
+		bullet.position = tower.position;
+		[self addChild:bullet];
+		
+		// Create the bullet animation
+		SKAction* move = [SKAction moveTo:troop.finalPosition duration:TOTAL_ATTACK_TIME];
+		SKAction* grow = [SKAction scaleTo:1 duration:TOTAL_ATTACK_TIME/3];
+		SKAction* delay = [SKAction scaleTo:1 duration:TOTAL_ATTACK_TIME/3];
+		SKAction* shrink = [SKAction scaleTo:0 duration:TOTAL_ATTACK_TIME/3];
+		SKAction* remove = [SKAction removeFromParent];
+		SKAction* shoot = [SKAction group:@[[SKAction sequence:@[grow, delay, shrink]], move]];
+		[bullet runAction:[SKAction sequence:@[shoot, remove]]];
 	}
+}
+
+// Update all the displayed troop amount to the calculated amount
+// Called after all tower attack animations end
+- (void)updateTroopsAmount {
+	NSMutableArray* newTroops = [NSMutableArray array];
+	for (Troop* troop in self.troops) {
+		if (troop.amount != troop.newAmount)
+			troop.amount = troop.newAmount;
+		if (troop.amount)
+			[newTroops addObject:troop];
+	}
+	self.troops = newTroops;
 }
 
 #pragma mark - troops
@@ -194,42 +234,53 @@
 
 // Move each troop and return all troops that got delivered in this turn
 - (NSArray*)moveTroops {
+	// Divide current troops into two arrays (delivered and non-delivered)
 	NSMutableArray* deliveredTroops = [NSMutableArray array];
-	NSMutableArray* newTroops = [NSMutableArray array];
+	NSMutableArray* walkingTroops = [NSMutableArray array];
 	
 	// Process each troop, collect all delivered ones
 	for (Troop* troop in self.troops) {
 		NSMutableArray* animations = [[NSMutableArray alloc] initWithCapacity:troop.speed];
-		
-		for (int i=1; i<=troop.speed && troop.pos+i<troop.path.count-1; i++) {
-			// Move for each cell
-			Cell* cell = troop.path[troop.pos+i];
-			SKAction* action = [SKAction moveTo:[cell randomPointNear:.25] duration:.25];
-			[animations addObject:action];
+		BOOL willArrive = NO;
+		int steps = troop.speed;
+		if (troop.path.count-troop.pos-1 <= troop.speed) {
+			// The troop will be delivered
+			[deliveredTroops addObject:troop];
+			willArrive = YES;
+			steps = troop.path.count-troop.pos-1;
+		} else {
+			// The troop will just move
+			[walkingTroops addObject:troop];
 		}
 		
-		troop.pos += troop.speed;
+		// Move to each cell in the path
+		for (int i=1; i<=steps; i++) {
+			Cell* cell = troop.path[troop.pos+i];
+			
+			if (i == steps) {
+				troop.finalPosition = willArrive ? cell.position : [cell randomPointNear];
+				SKAction* lastMove = [SKAction moveTo:troop.finalPosition duration:TOTAL_MOV_TIME/steps];
+				if (willArrive) {
+					// Arrive animation
+					SKAction* vanish = [SKAction scaleTo:0 duration:TOTAL_MOV_TIME/steps];
+					[animations addObject:[SKAction group:@[lastMove, vanish]]];
+					[animations addObject:[SKAction removeFromParent]];
+				} else
+					[animations addObject:lastMove];
+			} else
+				[animations addObject:[SKAction moveTo:cell.position duration:TOTAL_MOV_TIME/steps]];
+		}
 		
-		if (troop.pos >= troop.path.count-1) {
-			// Reached the final destinations
-			Cell* cell = troop.path.lastObject;
-			SKAction* lastMove = [SKAction moveTo:cell.position duration:.25];
-			SKAction* vanish = [SKAction scaleTo:0 duration:.5];
-			SKAction* remove = [SKAction removeFromParent];
-			[animations addObject:[SKAction group:@[lastMove, vanish, remove]]];
-			[deliveredTroops addObject:troop];
-		} else
-			[newTroops addObject:troop];
-		
+		troop.pos += steps;
 		[troop.node runAction:[SKAction sequence:animations]];
 	}
-	self.troops = newTroops;
+	self.troops = walkingTroops;
 	
 	return deliveredTroops;
 }
 
 - (void)processDeliveredTroops:(NSArray*)troops {
-	NSLog(@"delivered!");
+	NSLog(@"delivered %d", troops.count);
 }
 
 @end
