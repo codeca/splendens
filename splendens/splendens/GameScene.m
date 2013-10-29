@@ -7,35 +7,30 @@
 //
 
 #import "GameScene.h"
-#import "UpgradeArrow.h"
 #import "BottomPainel.h"
 
 @implementation GameScene
 
--(id)initWithSize:(CGSize)size {    
-    if (self = [super initWithSize:size]) {
-
-    }
-    return self;
-}
-
-- (void)didMoveToView:(SKView *)view {
-	Map* map = [[Map alloc] initWithDefinition:self.gameStructure myId:self.myId];
-	BottomPainel* bottomPainel = [[BottomPainel alloc]init];
-	[self addChild:map];
+- (void)loadGame:(id)game myId:(NSString*)myId plug:(Plug*)plug {
+	self.map = [[Map alloc] initWithDefinition:game myId:myId];
+	[self addChild:self.map];
+	
+	self.plug = plug;
+	plug.delegate = self;
+	
+	BottomPainel* bottomPainel = [[BottomPainel alloc] init];
 	[self addChild:bottomPainel];
 }
 
-- (void)textButtonClicked:(TextButton*)button {
-	NSLog(@"U clicked me!");
+- (void)plug:(Plug*)plug hasClosedWithError:(BOOL)error {
+	
 }
 
-- (void)UpgradeArrowClicked:(TextButton*)button {
-	NSLog(@"U clicked me2!");
+- (void)plug:(Plug*)plug receivedMessage:(PlugMsgType)type data:(id)data {
+	
 }
 
-
--(void)update:(CFTimeInterval)currentTime {
+- (void)plugHasConnected:(Plug*)plug {
 	
 }
 

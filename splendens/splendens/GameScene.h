@@ -8,14 +8,20 @@
 
 #import <SpriteKit/SpriteKit.h>
 #import "Map.h"
-#import "TextButton.h"
 #import "Plug.h"
 
 // The main scene, for the game itself
-@interface GameScene : SKScene <TextButtonDelegate>
+@interface GameScene : SKScene <PlugDelegate>
 
-@property (nonatomic) id gameStructure;
 @property (nonatomic) Plug* plug;
-@property (nonatomic) NSString* myId;
+@property (nonatomic) Map* map;
+
+- (void)loadGame:(id)game myId:(NSString*)myId plug:(Plug*)plug;
+
+- (void)plug:(Plug*)plug hasClosedWithError:(BOOL)error;
+
+- (void)plug:(Plug*)plug receivedMessage:(PlugMsgType)type data:(id)data;
+
+- (void)plugHasConnected:(Plug*)plug;
 
 @end
