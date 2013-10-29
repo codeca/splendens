@@ -9,6 +9,7 @@
 #import "Map.h"
 #import "Troop.h"
 #import "Economy.h"
+#import "BottomPainel.h"
 
 @interface Map()
 
@@ -97,10 +98,13 @@
 	for (Cell* cell in self.cells) {
 		if (!cell.owner)
 			continue;
+		int maxPop = [Economy maxPopulationForType:cell.type level:cell.level];
+		if (cell.population >= maxPop)
+			cell.population -= (cell.population-maxPop+1)/2;
 		if (cell.type == CellTypeBasic || cell.type == CellTypeCity) {
-			int maxPop = [Economy maxPopulationForType:cell.type level:cell.level];
-			if (cell.population >= maxPop)
-				cell.population -= (cell.population-maxPop+1)/2;
+		//	int maxPop = [Economy maxPopulationForType:cell.type level:cell.level];
+			if (cell.population >= maxPop);
+		//		cell.population -= (cell.population-maxPop+1)/2;
 			else {
 				int newPop = cell.population + [Economy productionForType:cell.type level:cell.level];
 				newPop = newPop>maxPop ? maxPop : newPop;
@@ -131,7 +135,7 @@
 	// Get all attackable troops
 	NSMutableArray* troops = [NSMutableArray array];
 	for (Troop* troop in self.troops)
-		if ([tower.cellsInRange containsObject:[troop currentCell]])
+		if ([tower.cellsInRange containsObject:[troop currentCell]] && troop.owner != tower.owner)
 			[troops addObject:troop];
 	
 	// Order troops with this criteria
@@ -258,7 +262,7 @@
 			Cell* cell = troop.path[troop.pos+i];
 			
 			if (i == steps) {
-				troop.finalPosition = willArrive ? cell.position : [cell randomPointNear];
+				troop.finalPosition = willArrive ? cell.position : [cell randomPointNear: 0.75];
 				SKAction* lastMove = [SKAction moveTo:troop.finalPosition duration:TOTAL_MOV_TIME/steps];
 				if (willArrive) {
 					// Arrive animation
@@ -268,10 +272,10 @@
 				} else
 					[animations addObject:lastMove];
 			} else
-				[animations addObject:[SKAction moveTo:cell.position duration:TOTAL_MOV_TIME/steps]];
+				[animations addObject:[SKAction moveTo:[cell randomPointNear:0.75] duration:TOTAL_MOV_TIME/steps]];
 		}
 		
-		troop.pos += steps;
+		if (!willArrive) troop.pos += steps;
 		[troop.node runAction:[SKAction sequence:animations]];
 	}
 	self.troops = walkingTroops;
@@ -281,6 +285,77 @@
 
 - (void)processDeliveredTroops:(NSArray*)troops {
 	NSLog(@"delivered %d", troops.count);
+	
+	
+	
+	// Get all attackable troops
+	NSMutableArray* troops2 = [NSMutableArray array];
+	for (Troop* troop in self.troops)
+			[troops2 addObject:troop];
+	
+	// Order troops with this criteria
+	[troops2 sortUsingComparator:^(Troop* a, Troop* b) {
+		
+		Cell* finalA = [a.path lastObject];
+		Cell* posA = a.path[a.pos];
+		Cell* finalB = [b.path lastObject];
+		Cell* posB = b.path[b.pos];
+		
+		// Nearest
+		float timeA = (abs(finalA.x - posA.x)+abs(finalA.y-posA.y))/a.speed;
+		float timeB = (abs(finalB.x-posB.x)+abs(finalB.y-posB.y))/b.speed;
+		if (timeA < timeB) return NSOrderedAscending;
+		else if (timeA > timeB) return NSOrderedDescending;
+		
+		// Largest
+		if (a.amount > b.amount) return NSOrderedAscending;
+		else if (a.amount < b.amount) return NSOrderedDescending;
+		
+		// Farthest from origin
+		if (a.pos > b.pos) return NSOrderedAscending;
+		else if (a.pos < b.pos) return NSOrderedDescending;
+		
+		// Player with more mana
+		if (a.owner.mana > b.owner.mana) return NSOrderedAscending;
+		else if (a.owner.mana < b.owner.mana) return NSOrderedDescending;
+		
+		// Player order in the map.players array
+		int iA = [self.players indexOfObject:a.owner];
+		int iB = [self.players indexOfObject:b.owner];
+		if (iA > iB) return NSOrderedAscending;
+		else if (iA < iB) return NSOrderedDescending;
+		
+		return NSOrderedSame;
+	}];
+
+	
+	
+	for (Troop* i in troops) {
+		//Largest
+		//Farthest from origin
+		//Player with more mana
+		//Player order in the map.players arrayProcess troops following the same criteria for tower attacks from 3 to 6
+		Cell* destiny = [i.path lastObject];
+		int destinyArmor = [Economy armorForType:destiny.type level:destiny.level];
+		if (i.owner == self.thisPlayer && destiny.owner == self.thisPlayer){
+			destiny.population += i.newAmount;
+		}
+		else if (i.owner != destiny.owner && i.newAmount > destiny.population*destinyArmor){
+			destiny.population = i.newAmount - destiny.population*destinyArmor;
+			destiny.owner = i.owner;
+		}
+		else{
+			destiny.population -= i.newAmount/destinyArmor;
+		}
+		
+		BottomPainel* bottomPainel = (BottomPainel*)[[self scene] childNodeWithName:@"bottomPainel"];
+		if (self.selected == destiny) [bottomPainel update:destiny];
+		
+		
+		//If the troop's owner is the cell's owner, let them in (population += troopSize)
+		//If not, but troopSize > population*defense, then the cell is conquered and the new population will be troopSize-population*defense.
+		//If not both, the cell isn't conquered, but the population will be decreased (population -= troopSize/defense).
+	}
 }
 
 @end

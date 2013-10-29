@@ -20,7 +20,7 @@
 		self.node = [SKSpriteNode spriteNodeWithImageNamed:@"troop"];
 		self.node.size = CGSizeMake(size/2, size/2);
 		self.node.xScale = self.node.yScale = 0;
-		self.node.position = [firstCell randomPointNear];
+		self.node.position = [firstCell randomPointNear: 1];
 		[self.node runAction:[SKAction scaleTo:1 duration:.5]];
 		
 		self.path = path;

@@ -56,7 +56,7 @@ typedef enum {
 - (float)relativeAngleToCell:(Cell*)cell;
 
 // Return a random point near the center of this cell (used to place troops)
-- (CGPoint)randomPointNear;
+- (CGPoint)randomPointNear: (float) ratio;
 
 
 @end

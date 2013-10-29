@@ -352,7 +352,7 @@
 	Map* map = (Map*)self.parent;
 	
 	// Send troops if possible
-	if ([cell isCenter] && cell.population)
+	if ([cell isCenter] && self.population)
 		[map sendTroop:map.lastPath];
 	
 	// Clear the previous focused path
@@ -391,11 +391,11 @@
 	return self.type != CellTypeEmpty && self.type != CellTypeWall;
 }
 
-- (CGPoint)randomPointNear {
+- (CGPoint)randomPointNear: (float) ratio {
 	float x, y, a, r;
 	x = self.position.x;
 	y = self.position.y;
-	r = self.size.height/2;
+	r = self.size.height*ratio/2;
 	a = arc4random_uniform(360)*M_PI/180;
 	return CGPointMake(x+r*sin(a), y+r*cos(a));
 }
