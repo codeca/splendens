@@ -26,22 +26,26 @@
     [super viewDidLoad];
 	self.matchProgress.progress = 0;
 	self.nameInput.text = @"sitegui";
-	NSLog(@"Press multiplayer");
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+	self.prepareMatchView.hidden = YES;
+	self.waitMatchView.hidden = YES;
 }
 
 - (IBAction)startMultiplay:(id)sender {
 	// Start the connection
 	self.plug = [Plug plug];
 	self.plug.delegate = self;
-}
-
-- (IBAction)continueMatching:(id)sender {
-	self.name = self.nameInput.text;
-	self.myId = [[NSUUID UUID] UUIDString];
-	NSLog(@"Choose number of players and press start");
+	self.prepareMatchView.hidden = NO;
 }
 
 - (IBAction)startMatching:(id)sender {
+	self.prepareMatchView.hidden = YES;
+	self.waitMatchView.hidden = NO;
+	self.name = self.nameInput.text;
+	self.myId = [[NSUUID UUID] UUIDString];
 	self.want2 = ((UISwitch*)self.playersSwitch[0]).on;
 	self.want3 = ((UISwitch*)self.playersSwitch[1]).on;
 	self.want4 = ((UISwitch*)self.playersSwitch[2]).on;
@@ -62,6 +66,20 @@
 	}
 }
 
+- (IBAction)cancelPrepation:(id)sender {
+	if (self.plug.readyState == PLUGSTATE_OPEN)
+		[self.plug close];
+	self.plug = nil;
+	self.prepareMatchView.hidden = YES;
+}
+
+- (IBAction)cancelWait:(id)sender {
+	if (self.plug.readyState == PLUGSTATE_OPEN)
+		[self.plug close];
+	self.plug = nil;
+	self.waitMatchView.hidden = YES;
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 	GameViewController* destination = segue.destinationViewController;
 	destination.gameStructure = sender;
@@ -70,8 +88,9 @@
 }
 
 - (void)plug:(Plug *)plug hasClosedWithError:(BOOL)error {
-	NSLog(@"Server runned away :(");
 	self.plug = nil;
+	self.prepareMatchView.hidden = YES;
+	self.waitMatchView.hidden = YES;
 }
 
 - (void)plug:(Plug *)plug receivedMessage:(PlugMsgType)type data:(id)data {
@@ -101,8 +120,6 @@
 }
 
 - (void)plugHasConnected:(Plug *)plug {
-	NSLog(@"Input your name and press continue");
-	
 	if (self.debug)
 		[self.plug sendMessage:MSG_DEBUG data:[NSNull null]];
 }

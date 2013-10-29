@@ -11,9 +11,10 @@
 
 @interface InitialViewController : UIViewController<PlugDelegate>
 
+@property (weak, nonatomic) IBOutlet UIView *prepareMatchView;
+@property (weak, nonatomic) IBOutlet UIView *waitMatchView;
 @property (weak, nonatomic) IBOutlet UIButton *multiplayButton;
 @property (weak, nonatomic) IBOutlet UITextField *nameInput;
-@property (weak, nonatomic) IBOutlet UIButton *continueButton;
 @property (strong, nonatomic) IBOutletCollection(UISwitch) NSArray *playersSwitch;
 @property (weak, nonatomic) IBOutlet UIButton *startButton;
 @property (weak, nonatomic) IBOutlet UIProgressView *matchProgress;

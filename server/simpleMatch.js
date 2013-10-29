@@ -47,6 +47,7 @@ module.exports.handleMessage = function handleMessage(player, type, data) {
 
 // Remove a given player from the matching system
 module.exports.removePlayer = function (p) {
+    console.log("Removing")
 	var pos = g_room.indexOf(p)
 	if (pos != -1) {
 		g_room.splice(pos, 1)
