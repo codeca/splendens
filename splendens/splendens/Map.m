@@ -99,6 +99,7 @@
 		} else if (cell.type == CellTypeLab)
 			cell.owner.mana += [Economy productionForType:cell.type level:cell.level];
 	}
+	[((GameScene*)self.parent).topPanel update];
 	
 	// Move troops
 	NSArray* deliveredTroops = [self moveTroops];

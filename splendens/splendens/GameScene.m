@@ -16,7 +16,7 @@
 	
 	int mana = [[game[@"map"] objectForKey:@"mana"] integerValue];
 	NSMutableArray* players = [NSMutableArray array];
-	NSArray* colors = @[[UIColor redColor], [UIColor greenColor], [UIColor blueColor], [UIColor whiteColor]];
+	NSArray* colors = @[[UIColor redColor], [UIColor greenColor], [UIColor blueColor], [UIColor orangeColor]];
 	int me = 0;
 	for (int i=0; i<gamePlayers.count; i++) {
 		Player* player = [[Player alloc] init];
@@ -133,7 +133,7 @@
 	}
 	self.othersTurnActions = [NSMutableArray array];
 	self.userTurn = YES;
-	[self.topPanel update];
+	[self.map processTurn];
 }
 
 - (void)plug:(Plug*)plug hasClosedWithError:(BOOL)error {

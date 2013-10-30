@@ -55,7 +55,6 @@
 						   @"name": self.name,
 						   @"id": self.myId};
 	[self.plug sendMessage:MSG_SIMPLE_MATCH data:data];
-	NSLog(@"Wait");
 }
 
 - (IBAction)startDebug:(id)sender {

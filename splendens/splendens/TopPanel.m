@@ -25,11 +25,11 @@
 		dx = 10;
 		x = (MAP_SIZE-3*dx)/2;
 		y = 40;
-		by = 155 - 4*dx - 2*y;
+		by = 115 - 4*dx - 2*y;
 		dxx = 5;
 		SKSpriteNode* populationBar;
-		populationBar = [SKSpriteNode spriteNodeWithColor:[UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:0.5] size:CGSizeMake(MAP_SIZE-2*dx, 155 - 4*dx - 2*y)];
-		populationBar.position = CGPointMake(0, 155/2 - dx-by/2);
+		populationBar = [SKSpriteNode spriteNodeWithColor:[UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:0.5] size:CGSizeMake(MAP_SIZE-2*dx, 115 - 4*dx - 2*y)];
+		populationBar.position = CGPointMake(0, 115/2 - dx-by/2);
 		
 		
 		for (Player* i in game.players) {
@@ -40,7 +40,7 @@
 			
 			
 			cell = [SKSpriteNode spriteNodeWithColor:i.color size:CGSizeMake(x,y)];
-			cell.position = CGPointMake(-x/2-dx/2 + ((int)index/2)*(x+dx), 155/2-dx*2-by-y/2 - index%2*(y+dx));
+			cell.position = CGPointMake(-x/2-dx/2 + ((int)index/2)*(x+dx), 115/2-dx*2-by-y/2 - index%2*(y+dx));
 			cell.name = [NSString stringWithFormat:@"celula%d",index];
 			[self addChild:cell];
 			
