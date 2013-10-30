@@ -24,11 +24,11 @@
 		int x,y,dx,by,dxx;
 		dx = 10;
 		x = (MAP_SIZE-3*dx)/2;
-		y = 40;
+		y = 30;
 		by = 115 - 4*dx - 2*y;
 		dxx = 5;
 		SKSpriteNode* populationBar;
-		populationBar = [SKSpriteNode spriteNodeWithColor:[UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:0.5] size:CGSizeMake(MAP_SIZE-2*dx, 115 - 4*dx - 2*y)];
+		populationBar = [SKSpriteNode spriteNodeWithColor:[UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:0.5] size:CGSizeMake(MAP_SIZE-2*dx, by)];
 		populationBar.position = CGPointMake(0, 115/2 - dx-by/2);
 		
 		
@@ -49,11 +49,13 @@
 			name.text = i.name;
 			name.position = CGPointMake(0, cell.size.height/2-dxx-name.frame.size.height/2);
 			name.name = @"name";
+			name.fontSize = 20;
 			[cell addChild:name];
 			
 			mana = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
 			mana.text = [NSString stringWithFormat:@"Mana %d/%d",i.mana,i.maxMana];
 			mana.name = @"mana";
+			mana.fontSize = 20;
 			mana.position = CGPointMake(0, -cell.size.height/2+dxx+mana.frame.size.height/2);
 			[cell addChild:mana];
 		}
