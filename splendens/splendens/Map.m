@@ -77,6 +77,12 @@
 	return [self cellAtX:x y:y];
 }
 
+- (void)setSelected:(Cell *)selected {
+	GameScene* game = (GameScene*)self.parent;
+	_selected = selected;
+	[game.bottomPanel update];
+}
+
 #pragma mark - main turn logic
 
 - (void)processTurn {
@@ -99,7 +105,9 @@
 		} else if (cell.type == CellTypeLab)
 			cell.owner.mana += [Economy productionForType:cell.type level:cell.level];
 	}
-	[((GameScene*)self.parent).topPanel update];
+	GameScene* game = (GameScene*)self.parent;
+	[game.topPanel update];
+	[game.bottomPanel update];
 	
 	// Move troops
 	NSArray* deliveredTroops = [self moveTroops];
@@ -322,8 +330,9 @@
 		
 		if (self.selected == destiny) {
 			// Update the info about the cell displayed in the interface
+
 			BottomPanel* bottomPanel = (BottomPanel*)[[self scene] childNodeWithName:@"bottomPanel"];
-			[bottomPanel update:destiny];
+			[bottomPanel update];
 		}
 	}
 }

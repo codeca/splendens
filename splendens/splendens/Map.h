@@ -51,4 +51,7 @@
 // update maximun mana for each player
 - (void) updateMana;
 
+// Update the bottom panel
+- (void)setSelected:(Cell *)selected;
+
 @end

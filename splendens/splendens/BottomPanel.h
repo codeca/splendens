@@ -17,9 +17,10 @@
 @property (nonatomic) TextButton* nextTurn;
 @property (nonatomic) BOOL nextTurnDisabled;
 
-- (void) update: (Cell*)selectedCell;
+- (void)update;
+
 - (void)textButtonClicked:(TextButton *)button;
 
-- (void) setNextTurnDisabled: (BOOL) state;
+- (void)setNextTurnDisabled:(BOOL)nextTurnDisabled;
 
 @end
