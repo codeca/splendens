@@ -48,4 +48,7 @@
 // Simulate each turn
 - (void)processTurn;
 
+// update maximun mana for each player
+- (void) updateMana;
+
 @end

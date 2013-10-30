@@ -11,6 +11,7 @@
 #import "Economy.h"
 #import "TextButton.h"
 #import "GameScene.h"
+#import "TopPanel.h"
 
 @interface BottomPanel()
 @property TextButton* city;
@@ -24,7 +25,7 @@
 - (id)init{
 	if (self = [super initWithImageNamed:@"bottomPanel"]) {
 		self.position = CGPointMake(768/2, (1024-self.size.height-MAP_SIZE-25)/2);
-		self.name = @"bottomPainel";
+		self.name = @"bottomPanel";
 		self.table = [[SKNode alloc]init];
 		[self addChild:self.table];
 		
@@ -71,6 +72,10 @@
 				[game upgradeCell:cell toType:CellTypeLab];
 			self.selected = nil;
 		}
+		
+		TopPanel* topPanel = (TopPanel*) [game childNodeWithName:@"topPanel"];
+		[topPanel update];
+		
 		
 		[self update:cell];
 	}

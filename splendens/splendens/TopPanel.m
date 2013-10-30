@@ -18,7 +18,7 @@
 - (id) initWithGame:(GameScene *)game {
 	if (self = [super initWithImageNamed:@"topPanel"]){
 		self.position = CGPointMake(768/2, (1024+self.size.height+MAP_SIZE+25)/2);
-		self.name = @"topPainel";
+		self.name = @"topPanel";
 		
 		
 		int x,y,dx,by,dxx;

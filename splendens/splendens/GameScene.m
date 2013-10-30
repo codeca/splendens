@@ -22,6 +22,7 @@
 		Player* player = [[Player alloc] init];
 		NSString* playerId = gamePlayers[i][@"id"];
 		player.mana = mana;
+		player.maxMana = 10;
 		player.color = colors[i];
 		player.name = gamePlayers[i][@"name"];
 		player.playerId = playerId;

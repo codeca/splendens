@@ -322,8 +322,20 @@
 		
 		if (self.selected == destiny) {
 			// Update the info about the cell displayed in the interface
-			BottomPanel* bottomPainel = (BottomPanel*)[[self scene] childNodeWithName:@"bottomPainel"];
-			[bottomPainel update:destiny];
+			BottomPanel* bottomPanel = (BottomPanel*)[[self scene] childNodeWithName:@"bottomPanel"];
+			[bottomPanel update:destiny];
+		}
+	}
+}
+
+- (void) updateMana{
+	GameScene* game = (GameScene*)self.parent;
+	for (Player* i in game.players){
+		i.maxMana = 10;
+	}
+	for (Cell* i in self.cells) {
+		if (i.type == CellTypeLab && i.owner != nil){
+			i.owner.maxMana += [Economy bonusMaxManaForLabLevel:i.level];
 		}
 	}
 }

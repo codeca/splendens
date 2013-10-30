@@ -307,8 +307,8 @@
 		map.selected = nil;
 	
 	// Show info about the clicked cell
-	BottomPanel* bottomPainel = (BottomPanel*)[[self scene] childNodeWithName: @"bottomPainel"];
-	[bottomPainel update: map.selected];
+	BottomPanel* bottomPanel = (BottomPanel*)[[self scene] childNodeWithName: @"bottomPanel"];
+	[bottomPanel update: map.selected];
 	
 	// Show the range for a tower
 	if (self.type == CellTypeTower) {
