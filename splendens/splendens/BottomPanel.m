@@ -43,14 +43,9 @@
 	return self;
 }
 
-- (void) setNextTurnDisabled: (BOOL) state{
-	if (state == YES || state == true){
-		self.nextTurn.userInteractionEnabled = NO;
-	}
-	else if (state == NO || state == false){
-		self.nextTurn.userInteractionEnabled = YES;
-	}
-	_nextTurnDisabled = state;
+- (void) setNextTurnDisabled:(BOOL)nextTurnDisabled{
+	self.nextTurn.hidden = nextTurnDisabled;
+	_nextTurnDisabled = nextTurnDisabled;
 }
 
 - (void)textButtonClicked:(TextButton *)button {
@@ -71,25 +66,22 @@
 				[game upgradeCell:cell toType:CellTypeLab];
 			self.selected = nil;
 		}
-		
-		[self update:cell];
 	}
 	else if(button == self.nextTurn) {
 		[game endMyTurn];
 	} else if(button == self.city) {
 		self.selected = self.city;
-		[self update:cell];
 	} else if(button == self.tower) {
 		self.selected = self.tower;
-		[self update:cell];
 	} else if(button == self.lab) {
 		self.selected = self.lab;
-		[self update:cell];
 	}
+	[self update];
 }
 
-- (void) update: (Cell*)selectedCell{
+- (void)update {
 	GameScene* game = (GameScene*)self.parent;
+	Cell* selectedCell = game.map.selected;
 	[self.table removeAllChildren];
 	[self.upgradeButton removeAllChildren];
 	if (selectedCell == nil);

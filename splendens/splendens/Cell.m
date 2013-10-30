@@ -303,22 +303,18 @@
 		map.selected = self;
 		self.selectedFocus.color = [UIColor greenColor];
 		self.selectedFocus.hidden = NO;
-	} else
-		map.selected = nil;
-	
-	// Show info about the clicked cell
-	BottomPanel* bottomPainel = (BottomPanel*)[[self scene] childNodeWithName: @"bottomPainel"];
-	[bottomPainel update: map.selected];
-	
-	// Show the range for a tower
-	if (self.type == CellTypeTower) {
-		for (Cell* cell in self.cellsInRange) {
-			if (cell != self) {
-				cell.selectedFocus.color = [UIColor yellowColor];
-				cell.selectedFocus.hidden = NO;
+		
+		// Show the range for a tower
+		if (self.type == CellTypeTower) {
+			for (Cell* cell in self.cellsInRange) {
+				if (cell != self) {
+					cell.selectedFocus.color = [UIColor yellowColor];
+					cell.selectedFocus.hidden = NO;
+				}
 			}
 		}
-	}
+	} else
+		map.selected = nil;
 }
 
 - (void)draggedToCell:(Cell*)cell {

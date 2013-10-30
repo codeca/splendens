@@ -48,4 +48,7 @@
 // Simulate each turn
 - (void)processTurn;
 
+// Update the bottom panel
+- (void)setSelected:(Cell *)selected;
+
 @end
