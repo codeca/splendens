@@ -82,9 +82,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 	GameViewController* destination = segue.destinationViewController;
-	destination.gameStructure = sender;
-	destination.myId = self.myId;
-	destination.plug = self.plug;
+	[destination loadGame:sender myId:self.myId plug:self.plug];
 }
 
 - (void)plug:(Plug *)plug hasClosedWithError:(BOOL)error {

@@ -11,18 +11,14 @@
 
 @implementation GameViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-
+- (void)loadGame:(id)game myId:(NSString*)myId plug:(Plug*)plug {
     // Configure the game view
-    SKView* skView = (SKView *)self.view;
-    skView.showsFPS = YES;
-    skView.showsNodeCount = YES;
+    SKView* view = (SKView*)self.view;
+    view.showsFPS = YES;
     
-    GameScene* scene = [GameScene sceneWithSize:skView.bounds.size];
-	scene.gameStructure = self.gameStructure;
-	scene.myId = self.myId;
-    [skView presentScene:scene];
+    GameScene* scene = [GameScene sceneWithSize:view.bounds.size];
+    [scene loadGame:game myId:myId plug:plug];
+    [view presentScene:scene];
 }
 
 @end

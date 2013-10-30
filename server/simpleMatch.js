@@ -47,13 +47,12 @@ module.exports.handleMessage = function handleMessage(player, type, data) {
 
 // Remove a given player from the matching system
 module.exports.removePlayer = function (p) {
-    console.log("Removing")
 	var pos = g_room.indexOf(p)
 	if (pos != -1) {
 		g_room.splice(pos, 1)
-		if (p.waitingFor2) g_n2--
-		if (p.waitingFor3) g_n3--
-		if (p.waitingFor4) g_n4--
+		if (p.want2) g_n2--
+		if (p.want3) g_n3--
+		if (p.want4) g_n4--
 		informProgress()
 	}
 }

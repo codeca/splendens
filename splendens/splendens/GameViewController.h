@@ -12,8 +12,7 @@
 
 @interface GameViewController : UIViewController
 
-@property (nonatomic) id gameStructure;
-@property (nonatomic) NSString* myId;
-@property (nonatomic) Plug* plug;
+// Create the game scene from the given game structure (return from the server), player id and server connection
+- (void)loadGame:(id)game myId:(NSString*)myId plug:(Plug*)plug;
 
 @end
