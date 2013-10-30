@@ -11,7 +11,7 @@
 #import <SpriteKit/SpriteKit.h>
 #import "Map.h"
 #import "Plug.h"
-#import "BottomPainel.h"
+#import "BottomPanel.h"
 #import "Player.h"
 
 typedef enum {
@@ -29,7 +29,7 @@ typedef enum {
 @property (nonatomic) Map* map;
 @property (nonatomic) NSArray* players;
 @property (nonatomic) Player* thisPlayer;
-@property (nonatomic) BottomPainel* bottomPanel;
+@property (nonatomic) BottomPanel* bottomPanel;
 
 // Indicate whether the game is ready and waiting for user movements
 @property (nonatomic) BOOL userTurn;
@@ -46,8 +46,14 @@ typedef enum {
 - (void)endMyTurn;
 
 // Send the user troop
+// The action MUST be valid
 // Save the action in turnActions and call sendTroop in the map
 - (void)sendUserTroop:(NSArray*)path;
+
+// Upgrade the given user cell to given type (ignore if the cell is not a basic cell)
+// The action MUST be valid
+// Save the action in turnActiond and call upgrade in the cell
+- (void)upgradeCell:(Cell*)cell toType:(CellType)type;
 
 - (void)setUserTurn:(BOOL)userTurn;
 

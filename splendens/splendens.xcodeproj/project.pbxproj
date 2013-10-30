@@ -94,7 +94,7 @@
 		98DF3199181EBC310092E8A7 /* wall3-3@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 98DF316A181EBC310092E8A7 /* wall3-3@2X.png */; };
 		98DF319A181EBC310092E8A7 /* wall4-0@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 98DF316B181EBC310092E8A7 /* wall4-0@2X.png */; };
 		98DF319D181FD3800092E8A7 /* InitialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98DF319C181FD3800092E8A7 /* InitialViewController.m */; };
-		D00114B1181AC576002ED389 /* BottomPainel.m in Sources */ = {isa = PBXBuildFile; fileRef = D00114B0181AC576002ED389 /* BottomPainel.m */; };
+		D00114B1181AC576002ED389 /* BottomPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = D00114B0181AC576002ED389 /* BottomPanel.m */; };
 		D05CE05718193C2500827611 /* PathFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = D05CE05618193C2500827611 /* PathFinder.m */; };
 		D05CE05918198F6400827611 /* path2I@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = D05CE05818198F6400827611 /* path2I@2X.png */; };
 		D0BB820E182139D4006ECA83 /* armor@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = D0BB8205182139D4006ECA83 /* armor@2X.png */; };
@@ -220,8 +220,8 @@
 		98DF316B181EBC310092E8A7 /* wall4-0@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wall4-0@2X.png"; sourceTree = "<group>"; };
 		98DF319B181FD3800092E8A7 /* InitialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitialViewController.h; sourceTree = "<group>"; };
 		98DF319C181FD3800092E8A7 /* InitialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InitialViewController.m; sourceTree = "<group>"; };
-		D00114AF181AC576002ED389 /* BottomPainel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BottomPainel.h; sourceTree = "<group>"; };
-		D00114B0181AC576002ED389 /* BottomPainel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BottomPainel.m; sourceTree = "<group>"; };
+		D00114AF181AC576002ED389 /* BottomPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BottomPanel.h; sourceTree = "<group>"; };
+		D00114B0181AC576002ED389 /* BottomPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BottomPanel.m; sourceTree = "<group>"; };
 		D05CE05518193C2500827611 /* PathFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathFinder.h; sourceTree = "<group>"; };
 		D05CE05618193C2500827611 /* PathFinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PathFinder.m; sourceTree = "<group>"; };
 		D05CE05818198F6400827611 /* path2I@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "path2I@2X.png"; sourceTree = "<group>"; };
@@ -319,8 +319,8 @@
 				98DF3136181994760092E8A7 /* TextButton.m */,
 				98DF313A181AC1950092E8A7 /* Troop.h */,
 				98DF313B181AC1950092E8A7 /* Troop.m */,
-				D00114AF181AC576002ED389 /* BottomPainel.h */,
-				D00114B0181AC576002ED389 /* BottomPainel.m */,
+				D00114AF181AC576002ED389 /* BottomPanel.h */,
+				D00114B0181AC576002ED389 /* BottomPanel.m */,
 				D0BB821718214513006ECA83 /* TopPainel.h */,
 				D0BB821818214513006ECA83 /* TopPainel.m */,
 			);
@@ -620,7 +620,7 @@
 				98DF30D91818258F0092E8A7 /* Map.m in Sources */,
 				98DF30B418181E620092E8A7 /* GameScene.m in Sources */,
 				98DF30B118181E620092E8A7 /* GameViewController.m in Sources */,
-				D00114B1181AC576002ED389 /* BottomPainel.m in Sources */,
+				D00114B1181AC576002ED389 /* BottomPanel.m in Sources */,
 				98DF312818195A780092E8A7 /* Economy.m in Sources */,
 				98DF30AB18181E620092E8A7 /* AppDelegate.m in Sources */,
 				98DF31301819907C0092E8A7 /* Plug.m in Sources */,

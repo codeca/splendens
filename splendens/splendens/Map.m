@@ -9,7 +9,7 @@
 #import "Map.h"
 #import "Troop.h"
 #import "Economy.h"
-#import "BottomPainel.h"
+#import "BottomPanel.h"
 
 @interface Map()
 
@@ -321,7 +321,7 @@
 		
 		if (self.selected == destiny) {
 			// Update the info about the cell displayed in the interface
-			BottomPainel* bottomPainel = (BottomPainel*)[[self scene] childNodeWithName:@"bottomPainel"];
+			BottomPanel* bottomPainel = (BottomPanel*)[[self scene] childNodeWithName:@"bottomPainel"];
 			[bottomPainel update:destiny];
 		}
 	}

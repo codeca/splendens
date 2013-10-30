@@ -6,20 +6,20 @@
 //  Copyright (c) 2013 Codeca. All rights reserved.
 //
 
-#import "BottomPainel.h"
+#import "BottomPanel.h"
 #import "Map.h"
 #import "Economy.h"
 #import "TextButton.h"
 #import "GameScene.h"
 
-@interface BottomPainel()
+@interface BottomPanel()
 @property TextButton* city;
 @property TextButton* tower;
 @property TextButton* lab;
 @property TextButton* selected;
 @end
 
-@implementation BottomPainel
+@implementation BottomPanel
 
 - (id)init{
 	if (self = [super initWithImageNamed:@"bottomPanel"]) {
@@ -55,35 +55,35 @@
 }
 
 - (void)textButtonClicked:(TextButton *)button {
-	Map* map = (Map*)[[self scene] childNodeWithName:@"map"];
-	Cell* cell = map.selected;
-	if (button == self.upgradeButton){
-		Map* map = (Map*)[[self scene] childNodeWithName:@"map"];
-		Cell* cell = map.selected;
-		if (self.selected == nil)[cell upgrade];
-		else{
+	GameScene* game = (GameScene*)self.scene;
+	Cell* cell = game.map.selected;
+	if (button == self.upgradeButton) {
+		if (!game.userTurn)
+			return;
+		
+		if (self.selected == nil)
+			[game upgradeCell:cell toType:cell.type];
+		else {
 			if (self.selected == self.city)
-				[cell upgradeTo: CellTypeCity];
+				[game upgradeCell:cell toType:CellTypeCity];
 			else if (self.selected == self.tower)
-				[cell upgradeTo:CellTypeTower];
+				[game upgradeCell:cell toType:CellTypeTower];
 			else if (self.selected == self.lab)
-				[cell upgradeTo:CellTypeLab];
+				[game upgradeCell:cell toType:CellTypeLab];
 			self.selected = nil;
 		}
+		
 		[self update:cell];
 	}
 	else if(button == self.nextTurn) {
-		[((GameScene*)self.scene) endMyTurn];
-	}
-	else if(button == self.city){
+		[game endMyTurn];
+	} else if(button == self.city) {
 		self.selected = self.city;
 		[self update:cell];
-	}
-	else if(button == self.tower){
+	} else if(button == self.tower) {
 		self.selected = self.tower;
 		[self update:cell];
-	}
-	else if(button == self.lab){
+	} else if(button == self.lab) {
 		self.selected = self.lab;
 		[self update:cell];
 	}

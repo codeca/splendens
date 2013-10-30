@@ -10,7 +10,7 @@
 #import "Cell.h"
 #import "TextButton.h"
 
-@interface BottomPainel : SKSpriteNode<TextButtonDelegate>
+@interface BottomPanel : SKSpriteNode<TextButtonDelegate>
 
 @property (nonatomic) SKNode* table;
 @property (nonatomic) TextButton* upgradeButton;

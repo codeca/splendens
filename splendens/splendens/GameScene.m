@@ -38,7 +38,7 @@
 	self.plug = plug;
 	plug.delegate = self;
 	
-	self.bottomPanel = [[BottomPainel alloc] init];
+	self.bottomPanel = [[BottomPanel alloc] init];
 	[self addChild:self.bottomPanel];
 	
 	self.turnActions = [NSMutableArray array];
@@ -52,6 +52,7 @@
 
 - (void)endMyTurn {
 	[self.plug sendMessage:MSG_TURN_DATA data:@{@"player": self.thisPlayer.playerId, @"actions":self.turnActions}];
+	self.turnActions = [NSMutableArray array];
 	self.userTurn = NO;
 }
 
@@ -65,12 +66,35 @@
 	[self.map sendTroop:path];
 }
 
+- (void)upgradeCell:(Cell *)cell toType:(CellType)type {
+	TurnActionType actionType;
+	
+	// Do the upgrade
+	if (cell.type == CellTypeBasic) {
+		[cell upgradeTo:type];
+		if (type == CellTypeCity)
+			actionType = TurnActionUpgradeToCity;
+		else if (type == CellTypeTower)
+			actionType = TurnActionUpgradeToTower;
+		else
+			actionType = TurnActionUpgradeToLab;
+	} else {
+		[cell upgrade];
+		actionType = TurnActionUpgrade;
+	}
+	
+	// Save the action
+	NSDictionary* action = @{@"type": [NSNumber numberWithInt:actionType], @"x": [NSNumber numberWithInt:cell.x], @"y": [NSNumber numberWithInt:cell.y]};
+	[self.turnActions addObject:action];
+}
+
 - (void)plug:(Plug*)plug hasClosedWithError:(BOOL)error {
 	
 }
 
 - (void)plug:(Plug*)plug receivedMessage:(PlugMsgType)type data:(id)data {
 	NSLog(@"received data, %d moves", ((NSArray*)data).count);
+	NSLog(@"%@", data);
 }
 
 - (void)plugHasConnected:(Plug*)plug {

@@ -10,7 +10,7 @@
 #import "Map.h"
 #import "PathFinder.h"
 #import "Economy.h"
-#import "BottomPainel.h"
+#import "BottomPanel.h"
 #import "GameScene.h"
 
 @interface Cell()
@@ -307,7 +307,7 @@
 		map.selected = nil;
 	
 	// Show info about the clicked cell
-	BottomPainel* bottomPainel = (BottomPainel*)[[self scene] childNodeWithName: @"bottomPainel"];
+	BottomPanel* bottomPainel = (BottomPanel*)[[self scene] childNodeWithName: @"bottomPainel"];
 	[bottomPainel update: map.selected];
 	
 	// Show the range for a tower
