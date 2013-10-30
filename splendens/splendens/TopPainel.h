@@ -10,4 +10,6 @@
 
 @interface TopPainel : SKSpriteNode
 
+@property NSMutableArray* players;
+
 @end

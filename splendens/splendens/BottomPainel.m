@@ -23,7 +23,7 @@
 
 - (id)init{
 	if (self = [super initWithImageNamed:@"bottomPanel"]) {
-		self.size = CGSizeMake(MAP_SIZE,115);
+		//self.size = CGSizeMake(MAP_SIZE,115);
 		self.position = CGPointMake(768/2, (1024-self.size.height-MAP_SIZE-25)/2);
 		self.name = @"bottomPainel";
 		self.table = [[SKNode alloc]init];
