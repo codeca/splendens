@@ -8,7 +8,6 @@
 
 #import "BottomPainel.h"
 #import "Map.h"
-#import "UpgradeArrow.h"
 #import "Economy.h"
 #import "TextButton.h"
 
@@ -22,7 +21,7 @@
 @implementation BottomPainel
 
 - (id)init{
-	if (self = [super initWithColor:[UIColor grayColor] size:CGSizeMake(MAP_SIZE,116)]) {
+	if (self = [super initWithImageNamed:@"bottomPanel"]) {
 		self.size = CGSizeMake(MAP_SIZE,115);
 		self.position = CGPointMake(768/2, (1024-self.size.height-MAP_SIZE-25)/2);
 		self.name = @"bottomPainel";
@@ -31,15 +30,27 @@
 		
 		self.nextTurn = [[TextButton alloc] initWithText:@"Next turn"];
 		self.nextTurn.position = CGPointMake(self.size.width/2-100, 0);
+		self.nextTurn.userInteractionEnabled = NO;
 		[self addChild:self.nextTurn];
+		self.nextTurnDisabled = YES;
 		self.nextTurn.delegate = self;
 		
-		self.upgradeButton = [[TextButton alloc] initWithImage:@"beta"];
+		self.upgradeButton = [[TextButton alloc] initWithImage:@"arrow"];
 		self.upgradeButton.delegate = self;
 		
 
 	}
 	return self;
+}
+
+- (BOOL) setnextTurnDisabled: (BOOL) state{
+	if (state == YES || state == true){
+		self.nextTurn.userInteractionEnabled = NO;
+	}
+	else if (state == NO || state == false){
+		self.nextTurn.userInteractionEnabled = YES;
+	}
+	return state;
 }
 
 - (void)textButtonClicked:(TextButton *)button {
@@ -59,7 +70,6 @@
 			self.selected = nil;
 		}
 		[self update:cell];
-		NSLog(@"Upgrade!!!!");
 	}
 	else if(button == self.nextTurn){
 		Map* map = (Map*)[self.scene childNodeWithName:@"map"];
@@ -67,17 +77,14 @@
 		[self update:cell];
 	}
 	else if(button == self.city){
-		NSLog(@"virei City");
 		self.selected = self.city;
 		[self update:cell];
 	}
 	else if(button == self.tower){
-		NSLog(@"virei Tower");
 		self.selected = self.tower;
 		[self update:cell];
 	}
 	else if(button == self.lab){
-		NSLog(@"virei Lab");
 		self.selected = self.lab;
 		[self update:cell];
 	}
@@ -96,23 +103,15 @@
 		int dx3 = 0;
 		int fontSize = 28;
 		self.upgradeButton.position = CGPointMake(2*x+dy1+2*dy2+self.upgradeButton.size.width/2-self.size.width/2, 0);
-		if (self.selected == self.city) NSLog(@"Cidade");
-		if (self.selected == self.tower) NSLog(@"Torre");
-		if (self.selected == self.lab) NSLog(@"Lab");
-		NSLog(@"%@ %d",self.selected,selectedCell.type);
 		CGSize size = CGSizeMake(x,y);
-		SKSpriteNode* tableCell1 = [[SKSpriteNode alloc] initWithColor:[UIColor blueColor] size:size];
-		SKSpriteNode* tableCell2 = [[SKSpriteNode alloc] initWithColor:[UIColor blueColor] size:size];
-		SKSpriteNode* tableCell3 = [[SKSpriteNode alloc] initWithColor:[UIColor blueColor] size:size];
-		SKSpriteNode* tableCell4 = [[SKSpriteNode alloc] initWithColor:[UIColor blueColor] size:size];
+		SKSpriteNode* tableCell1 = [SKSpriteNode spriteNodeWithImageNamed:@"tableCell"];
+		SKSpriteNode* tableCell2 = [SKSpriteNode spriteNodeWithImageNamed:@"tableCell"];
+		SKSpriteNode* tableCell3 = [SKSpriteNode spriteNodeWithImageNamed:@"tableCell"];
+		SKSpriteNode* tableCell4 = [SKSpriteNode spriteNodeWithImageNamed:@"tableCell"];
 		[self.table addChild:tableCell1];
 		[self.table addChild:tableCell2];
 		[self.table addChild:tableCell3];
 		[self.table addChild:tableCell4];
-		tableCell1.size = size;
-		tableCell2.size = size;
-		tableCell3.size = size;
-		tableCell4.size = size;
 		tableCell1.position = CGPointMake(dy1+x/2-self.size.width/2, dy1+y+dy2+y/2-self.size.height/2);
 		tableCell2.position = CGPointMake(dy1+x+dy2+x/2-self.size.width/2, dy1+y+dy2+y/2-self.size.height/2);
 		tableCell3.position = CGPointMake(dy1+x/2-self.size.width/2, dy1+y/2-self.size.height/2);
@@ -121,13 +120,17 @@
 		int a = 2*x-3*y;
 		int da = 2*y-x;
 		size = CGSizeMake(a,a);
-		SKSpriteNode* attributeCell1 = [SKSpriteNode spriteNodeWithColor:[UIColor yellowColor] size:size];
+		
+		NSString* image;
+		image = [NSString stringWithFormat:@"Production"];
+
+		SKSpriteNode* attributeCell1 = [SKSpriteNode spriteNodeWithImageNamed:image];
 		attributeCell1.position = CGPointMake(da+a/2-x/2, da+a/2-y/2);
-		SKSpriteNode* attributeCell2 = [SKSpriteNode spriteNodeWithColor:[UIColor yellowColor] size:size];
+		SKSpriteNode* attributeCell2 = [SKSpriteNode spriteNodeWithImageNamed:@"armor"];
 		attributeCell2.position = CGPointMake(da+a/2-x/2, da+a/2-y/2);
-		SKSpriteNode* attributeCell3 = [SKSpriteNode spriteNodeWithColor:[UIColor yellowColor] size:size];
+		SKSpriteNode* attributeCell3 = [SKSpriteNode spriteNodeWithImageNamed:@"maxPopulation"];
 		attributeCell3.position = CGPointMake(da+a/2-x/2, da+a/2-y/2);
-		SKSpriteNode* attributeCell4 = [SKSpriteNode spriteNodeWithColor:[UIColor yellowColor] size:size];
+		SKSpriteNode* attributeCell4 = [SKSpriteNode spriteNodeWithImageNamed:@"speed"];
 		attributeCell4.position = CGPointMake(da+a/2-x/2, da+a/2-y/2);
 		[tableCell1 addChild:attributeCell1];
 		[tableCell2 addChild:attributeCell2];
@@ -277,31 +280,30 @@
 			else self.selected = nil;
 			if (selectedCell.level<4){
 				CGSize size = CGSizeMake(x,y);
-				SKSpriteNode* tableCell5 = [[SKSpriteNode alloc] initWithColor:[UIColor greenColor] size:size];
-				SKSpriteNode* tableCell6 = [[SKSpriteNode alloc] initWithColor:[UIColor greenColor] size:size];
-				SKSpriteNode* tableCell7 = [[SKSpriteNode alloc] initWithColor:[UIColor greenColor] size:size];
-				SKSpriteNode* tableCell8 = [[SKSpriteNode alloc] initWithColor:[UIColor greenColor] size:size];
+				SKSpriteNode* tableCell5 = [SKSpriteNode spriteNodeWithImageNamed:@"tableCell"];
+				SKSpriteNode* tableCell6 = [SKSpriteNode spriteNodeWithImageNamed:@"tableCell"];
+				SKSpriteNode* tableCell7 = [SKSpriteNode spriteNodeWithImageNamed:@"tableCell"];
+				SKSpriteNode* tableCell8 = [SKSpriteNode spriteNodeWithImageNamed:@"tableCell"];
 				[self.table addChild:tableCell5];
 				[self.table addChild:tableCell6];
 				[self.table addChild:tableCell7];
 				[self.table addChild:tableCell8];
-				tableCell5.size = size;
-				tableCell6.size = size;
-				tableCell7.size = size;
-				tableCell8.size = size;
 				tableCell5.position = CGPointMake(dx3+dy1+x/2-self.size.width/2+dy2+2*x+dy2+self.upgradeButton.size.width+dy2, dy1+y+dy2+y/2-self.size.height/2);
 				tableCell6.position = CGPointMake(dx3+dy1+x+dy2+x/2-self.size.width/2+dy2+2*x+dy2+self.upgradeButton.size.width+dy2, dy1+y+dy2+y/2-self.size.height/2);
 				tableCell7.position = CGPointMake(dx3+dy1+x/2-self.size.width/2+dy2+2*x+dy2+self.upgradeButton.size.width+dy2, dy1+y/2-self.size.height/2);
 				tableCell8.position = CGPointMake(dx3+dy1+x+dy2+x/2-self.size.width/2+dy2+2*x+dy2+self.upgradeButton.size.width+dy2, dy1+y/2-self.size.height/2);
 				
 				size = CGSizeMake(a,a);
-				SKSpriteNode* attributeCell5 = [SKSpriteNode spriteNodeWithColor:[UIColor yellowColor] size:size];
+				
+				image = [NSString stringWithFormat:@"Production"];
+				
+				SKSpriteNode* attributeCell5 = [SKSpriteNode spriteNodeWithImageNamed:image];
 				attributeCell5.position = CGPointMake(da+a/2-x/2, da+a/2-y/2);
-				SKSpriteNode* attributeCell6 = [SKSpriteNode spriteNodeWithColor:[UIColor yellowColor] size:size];
+				SKSpriteNode* attributeCell6 = [SKSpriteNode spriteNodeWithImageNamed:@"armor"];
 				attributeCell6.position = CGPointMake(da+a/2-x/2, da+a/2-y/2);
-				SKSpriteNode* attributeCell7 = [SKSpriteNode spriteNodeWithColor:[UIColor yellowColor] size:size];
+				SKSpriteNode* attributeCell7 = [SKSpriteNode spriteNodeWithImageNamed:@"maxPopulation"];
 				attributeCell7.position = CGPointMake(da+a/2-x/2, da+a/2-y/2);
-				SKSpriteNode* attributeCell8 = [SKSpriteNode spriteNodeWithColor:[UIColor yellowColor] size:size];
+				SKSpriteNode* attributeCell8 = [SKSpriteNode spriteNodeWithImageNamed:@"speed"];
 				attributeCell8.position = CGPointMake(da+a/2-x/2, da+a/2-y/2);
 				[tableCell5 addChild:attributeCell5];
 				[tableCell6 addChild:attributeCell6];

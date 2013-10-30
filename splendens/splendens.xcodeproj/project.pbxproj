@@ -97,7 +97,14 @@
 		D00114B1181AC576002ED389 /* BottomPainel.m in Sources */ = {isa = PBXBuildFile; fileRef = D00114B0181AC576002ED389 /* BottomPainel.m */; };
 		D05CE05718193C2500827611 /* PathFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = D05CE05618193C2500827611 /* PathFinder.m */; };
 		D05CE05918198F6400827611 /* path2I@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = D05CE05818198F6400827611 /* path2I@2X.png */; };
-		D05CE05C1819957600827611 /* UpgradeArrow.m in Sources */ = {isa = PBXBuildFile; fileRef = D05CE05B1819957600827611 /* UpgradeArrow.m */; };
+		D0BB820E182139D4006ECA83 /* armor@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = D0BB8205182139D4006ECA83 /* armor@2X.png */; };
+		D0BB820F182139D4006ECA83 /* arrow@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = D0BB8206182139D4006ECA83 /* arrow@2X.png */; };
+		D0BB8210182139D4006ECA83 /* bottomPanel@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = D0BB8207182139D4006ECA83 /* bottomPanel@2X.png */; };
+		D0BB8211182139D4006ECA83 /* maxPopulation@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = D0BB8208182139D4006ECA83 /* maxPopulation@2X.png */; };
+		D0BB8213182139D4006ECA83 /* production@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = D0BB820A182139D4006ECA83 /* production@2X.png */; };
+		D0BB8214182139D4006ECA83 /* speed@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = D0BB820B182139D4006ECA83 /* speed@2X.png */; };
+		D0BB8215182139D4006ECA83 /* tableCell@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = D0BB820C182139D4006ECA83 /* tableCell@2X.png */; };
+		D0BB8216182139D4006ECA83 /* topPanel@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = D0BB820D182139D4006ECA83 /* topPanel@2X.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -217,8 +224,14 @@
 		D05CE05518193C2500827611 /* PathFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathFinder.h; sourceTree = "<group>"; };
 		D05CE05618193C2500827611 /* PathFinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PathFinder.m; sourceTree = "<group>"; };
 		D05CE05818198F6400827611 /* path2I@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "path2I@2X.png"; sourceTree = "<group>"; };
-		D05CE05A1819957600827611 /* UpgradeArrow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpgradeArrow.h; sourceTree = "<group>"; };
-		D05CE05B1819957600827611 /* UpgradeArrow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpgradeArrow.m; sourceTree = "<group>"; };
+		D0BB8205182139D4006ECA83 /* armor@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "armor@2X.png"; sourceTree = "<group>"; };
+		D0BB8206182139D4006ECA83 /* arrow@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow@2X.png"; sourceTree = "<group>"; };
+		D0BB8207182139D4006ECA83 /* bottomPanel@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bottomPanel@2X.png"; sourceTree = "<group>"; };
+		D0BB8208182139D4006ECA83 /* maxPopulation@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "maxPopulation@2X.png"; sourceTree = "<group>"; };
+		D0BB820A182139D4006ECA83 /* production@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "production@2X.png"; sourceTree = "<group>"; };
+		D0BB820B182139D4006ECA83 /* speed@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "speed@2X.png"; sourceTree = "<group>"; };
+		D0BB820C182139D4006ECA83 /* tableCell@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tableCell@2X.png"; sourceTree = "<group>"; };
+		D0BB820D182139D4006ECA83 /* topPanel@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "topPanel@2X.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -301,8 +314,6 @@
 				98DF312F1819907C0092E8A7 /* Plug.m */,
 				98DF3135181994760092E8A7 /* TextButton.h */,
 				98DF3136181994760092E8A7 /* TextButton.m */,
-				D05CE05A1819957600827611 /* UpgradeArrow.h */,
-				D05CE05B1819957600827611 /* UpgradeArrow.m */,
 				98DF313A181AC1950092E8A7 /* Troop.h */,
 				98DF313B181AC1950092E8A7 /* Troop.m */,
 				D00114AF181AC576002ED389 /* BottomPainel.h */,
@@ -343,6 +354,14 @@
 		98DF30E21819317B0092E8A7 /* sprites */ = {
 			isa = PBXGroup;
 			children = (
+				D0BB8205182139D4006ECA83 /* armor@2X.png */,
+				D0BB8206182139D4006ECA83 /* arrow@2X.png */,
+				D0BB8207182139D4006ECA83 /* bottomPanel@2X.png */,
+				D0BB8208182139D4006ECA83 /* maxPopulation@2X.png */,
+				D0BB820A182139D4006ECA83 /* production@2X.png */,
+				D0BB820B182139D4006ECA83 /* speed@2X.png */,
+				D0BB820C182139D4006ECA83 /* tableCell@2X.png */,
+				D0BB820D182139D4006ECA83 /* topPanel@2X.png */,
 				98DF313D181EBC310092E8A7 /* wall0a-0@2X.png */,
 				98DF313E181EBC310092E8A7 /* wall0b-0@2X.png */,
 				98DF313F181EBC310092E8A7 /* wall0b-1@2X.png */,
@@ -502,6 +521,7 @@
 			files = (
 				98DF3187181EBC310092E8A7 /* wall1c-3@2X.png in Resources */,
 				98DF318D181EBC310092E8A7 /* wall2I-1@2X.png in Resources */,
+				D0BB8210182139D4006ECA83 /* bottomPanel@2X.png in Resources */,
 				98DF30A518181E620092E8A7 /* InfoPlist.strings in Resources */,
 				98DF3116181937570092E8A7 /* city@2X.png in Resources */,
 				98DF3173181EBC310092E8A7 /* wall0c-2@2X.png in Resources */,
@@ -520,9 +540,11 @@
 				98DF311D181937570092E8A7 /* path3@2X.png in Resources */,
 				98DF3114181937570092E8A7 /* basic2@2X.png in Resources */,
 				98DF317D181EBC310092E8A7 /* wall1a-1@2X.png in Resources */,
+				D0BB820F182139D4006ECA83 /* arrow@2X.png in Resources */,
 				98DF316E181EBC310092E8A7 /* wall0b-1@2X.png in Resources */,
 				98DF311A181937570092E8A7 /* lab2@2X.png in Resources */,
 				98DF3193181EBC310092E8A7 /* wall2Lb-1@2X.png in Resources */,
+				D0BB8211182139D4006ECA83 /* maxPopulation@2X.png in Resources */,
 				98DF3185181EBC310092E8A7 /* wall1c-1@2X.png in Resources */,
 				98DF3113181937570092E8A7 /* basic@2X.png in Resources */,
 				98DF3177181EBC310092E8A7 /* wall0e-0@2X.png in Resources */,
@@ -544,11 +566,14 @@
 				98DF3190181EBC310092E8A7 /* wall2La-2@2X.png in Resources */,
 				98DF3176181EBC310092E8A7 /* wall0d-1@2X.png in Resources */,
 				D05CE05918198F6400827611 /* path2I@2X.png in Resources */,
+				D0BB8213182139D4006ECA83 /* production@2X.png in Resources */,
+				D0BB8214182139D4006ECA83 /* speed@2X.png in Resources */,
 				98DF30B818181E620092E8A7 /* Images.xcassets in Resources */,
 				98DF3115181937570092E8A7 /* beta@2X.png in Resources */,
 				98DF30AE18181E620092E8A7 /* Main.storyboard in Resources */,
 				98DF3182181EBC310092E8A7 /* wall1b-2@2X.png in Resources */,
 				98DF318E181EBC310092E8A7 /* wall2La-0@2X.png in Resources */,
+				D0BB8215182139D4006ECA83 /* tableCell@2X.png in Resources */,
 				98DF3118181937570092E8A7 /* empty@2X.png in Resources */,
 				98DF316D181EBC310092E8A7 /* wall0b-0@2X.png in Resources */,
 				98DF317F181EBC310092E8A7 /* wall1a-3@2X.png in Resources */,
@@ -558,8 +583,10 @@
 				98DF311F181937570092E8A7 /* tower@2X.png in Resources */,
 				98DF3178181EBC310092E8A7 /* wall0e-1@2X.png in Resources */,
 				98DF317A181EBC310092E8A7 /* wall0e-3@2X.png in Resources */,
+				D0BB820E182139D4006ECA83 /* armor@2X.png in Resources */,
 				98DF316F181EBC310092E8A7 /* wall0b-2@2X.png in Resources */,
 				98DF3191181EBC310092E8A7 /* wall2La-3@2X.png in Resources */,
+				D0BB8216182139D4006ECA83 /* topPanel@2X.png in Resources */,
 				98DF3179181EBC310092E8A7 /* wall0e-2@2X.png in Resources */,
 				98DF3189181EBC310092E8A7 /* wall1d-1@2X.png in Resources */,
 				98DF3175181EBC310092E8A7 /* wall0d-0@2X.png in Resources */,
@@ -598,7 +625,6 @@
 				98DF319D181FD3800092E8A7 /* InitialViewController.m in Sources */,
 				98DF313C181AC1950092E8A7 /* Troop.m in Sources */,
 				98DF30DC18182C9E0092E8A7 /* Player.m in Sources */,
-				D05CE05C1819957600827611 /* UpgradeArrow.m in Sources */,
 				98DF30A718181E620092E8A7 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -15,6 +15,7 @@
 @property (nonatomic) SKNode* table;
 @property (nonatomic) TextButton* upgradeButton;
 @property (nonatomic) TextButton* nextTurn;
+@property (nonatomic) BOOL nextTurnDisabled;
 
 - (void) update: (Cell*)selectedCell;
 - (void)textButtonClicked:(TextButton *)button;
