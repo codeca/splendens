@@ -43,6 +43,7 @@
 
 - (IBAction)startMatching:(id)sender {
 	self.prepareMatchView.hidden = YES;
+	[self.nameInput resignFirstResponder];
 	self.waitMatchView.hidden = NO;
 	self.name = self.nameInput.text;
 	self.myId = [[NSUUID UUID] UUIDString];
@@ -70,6 +71,7 @@
 		[self.plug close];
 	self.plug = nil;
 	self.prepareMatchView.hidden = YES;
+	[self.nameInput resignFirstResponder];
 }
 
 - (IBAction)cancelWait:(id)sender {
@@ -88,6 +90,7 @@
 	self.plug = nil;
 	self.prepareMatchView.hidden = YES;
 	self.waitMatchView.hidden = YES;
+	[self.nameInput resignFirstResponder];
 }
 
 - (void)plug:(Plug *)plug receivedMessage:(PlugMsgType)type data:(id)data {
