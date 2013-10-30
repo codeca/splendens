@@ -41,6 +41,9 @@
 	self.bottomPanel = [[BottomPanel alloc] init];
 	[self addChild:self.bottomPanel];
 	
+	self.topPanel = [[TopPanel alloc] initWithGame:self];
+	[self addChild:self.topPanel];
+	
 	self.turnActions = [NSMutableArray array];
 	self.othersTurnActions = [NSMutableArray array];
 	self.userTurn = YES;
@@ -55,6 +58,8 @@
 	[self.plug sendMessage:MSG_TURN_DATA data:@{@"player": self.thisPlayer.playerId, @"actions":self.turnActions}];
 	self.turnActions = [NSMutableArray array];
 	self.userTurn = NO;
+	if (self.othersTurnActions.count == self.players.count-1)
+		[self simulateTurn];
 }
 
 - (void)sendUserTroop:(NSArray *)path {
@@ -112,7 +117,7 @@
 				for (NSDictionary* cellDic in path)
 					[path2 addObject:[self cellForXY:cellDic]];
 				
-				[self.map sendTroop:path];
+				[self.map sendTroop:path2];
 			} else {
 				Cell* cell = [self cellForXY:action];
 				if (type == TurnActionUpgrade)
@@ -128,6 +133,7 @@
 	}
 	self.othersTurnActions = [NSMutableArray array];
 	self.userTurn = YES;
+	[self.topPanel update];
 }
 
 - (void)plug:(Plug*)plug hasClosedWithError:(BOOL)error {
@@ -137,7 +143,7 @@
 - (void)plug:(Plug*)plug receivedMessage:(PlugMsgType)type data:(id)data {
 	if (type == MSG_TURN_DATA) {
 		[self.othersTurnActions addObject:data];
-		if (self.othersTurnActions.count == self.players.count-1)
+		if (self.othersTurnActions.count == self.players.count-1 && !self.userTurn)
 			[self simulateTurn];
 	}
 }

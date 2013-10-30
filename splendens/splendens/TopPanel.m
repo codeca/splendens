@@ -1,23 +1,23 @@
 //
-//  TopPainel.m
+//  TopPanel.m
 //  splendens
 //
 //  Created by Rodolfo Bitu on 30/10/13.
 //  Copyright (c) 2013 Codeca. All rights reserved.
 //
 
-#import "TopPainel.h"
+#import "TopPanel.h"
 #import "Map.h"
 #import "Player.h"
 #import "GameScene.h"
 
 
-@implementation TopPainel
+@implementation TopPanel
 
 
-- (id) init{
+- (id) initWithGame:(GameScene *)game {
 	if (self = [super initWithImageNamed:@"topPanel"]){
-		self.position = CGPointMake(768/2, (1024+MAP_SIZE+25)/2);
+		self.position = CGPointMake(768/2, (1024+self.size.height+MAP_SIZE+25)/2);
 		self.name = @"topPainel";
 		
 		
@@ -32,9 +32,8 @@
 		populationBar.position = CGPointMake(0, 155/2 - dx-by/2);
 		
 		
-		GameScene* gameScene = (GameScene*) self.parent;
-		for (Player* i in gameScene.players) {
-			int index = [gameScene.players indexOfObject:i];
+		for (Player* i in game.players) {
+			int index = [game.players indexOfObject:i];
 			
 			SKSpriteNode *cell;
 			SKLabelNode *name,*mana;

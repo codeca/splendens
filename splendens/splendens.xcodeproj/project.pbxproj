@@ -105,7 +105,7 @@
 		D0BB8214182139D4006ECA83 /* speed@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = D0BB820B182139D4006ECA83 /* speed@2X.png */; };
 		D0BB8215182139D4006ECA83 /* tableCell@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = D0BB820C182139D4006ECA83 /* tableCell@2X.png */; };
 		D0BB8216182139D4006ECA83 /* topPanel@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = D0BB820D182139D4006ECA83 /* topPanel@2X.png */; };
-		D0BB821918214513006ECA83 /* TopPainel.m in Sources */ = {isa = PBXBuildFile; fileRef = D0BB821818214513006ECA83 /* TopPainel.m */; };
+		D0BB821918214513006ECA83 /* TopPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = D0BB821818214513006ECA83 /* TopPanel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -233,8 +233,8 @@
 		D0BB820B182139D4006ECA83 /* speed@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "speed@2X.png"; sourceTree = "<group>"; };
 		D0BB820C182139D4006ECA83 /* tableCell@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tableCell@2X.png"; sourceTree = "<group>"; };
 		D0BB820D182139D4006ECA83 /* topPanel@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "topPanel@2X.png"; sourceTree = "<group>"; };
-		D0BB821718214513006ECA83 /* TopPainel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopPainel.h; sourceTree = "<group>"; };
-		D0BB821818214513006ECA83 /* TopPainel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopPainel.m; sourceTree = "<group>"; };
+		D0BB821718214513006ECA83 /* TopPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopPanel.h; sourceTree = "<group>"; };
+		D0BB821818214513006ECA83 /* TopPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopPanel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -321,8 +321,8 @@
 				98DF313B181AC1950092E8A7 /* Troop.m */,
 				D00114AF181AC576002ED389 /* BottomPanel.h */,
 				D00114B0181AC576002ED389 /* BottomPanel.m */,
-				D0BB821718214513006ECA83 /* TopPainel.h */,
-				D0BB821818214513006ECA83 /* TopPainel.m */,
+				D0BB821718214513006ECA83 /* TopPanel.h */,
+				D0BB821818214513006ECA83 /* TopPanel.m */,
 			);
 			path = splendens;
 			sourceTree = "<group>";
@@ -627,7 +627,7 @@
 				D05CE05718193C2500827611 /* PathFinder.m in Sources */,
 				98DF3137181994760092E8A7 /* TextButton.m in Sources */,
 				98DF30D6181825820092E8A7 /* Cell.m in Sources */,
-				D0BB821918214513006ECA83 /* TopPainel.m in Sources */,
+				D0BB821918214513006ECA83 /* TopPanel.m in Sources */,
 				98DF319D181FD3800092E8A7 /* InitialViewController.m in Sources */,
 				98DF313C181AC1950092E8A7 /* Troop.m in Sources */,
 				98DF30DC18182C9E0092E8A7 /* Player.m in Sources */,

@@ -13,6 +13,7 @@
 #import "Plug.h"
 #import "BottomPanel.h"
 #import "Player.h"
+#import "TopPanel.h"
 
 typedef enum {
 	TurnActionSendTroop,
@@ -30,6 +31,7 @@ typedef enum {
 @property (nonatomic) NSArray* players;
 @property (nonatomic) Player* thisPlayer;
 @property (nonatomic) BottomPanel* bottomPanel;
+@property (nonatomic) TopPanel* topPanel;
 
 // Indicate whether the game is ready and waiting for user movements
 @property (nonatomic) BOOL userTurn;

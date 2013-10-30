@@ -1,5 +1,5 @@
 //
-//  BottomPainel.h
+//  BottomPanel.h
 //  splendens
 //
 //  Created by Rodolfo Bitu on 25/10/13.

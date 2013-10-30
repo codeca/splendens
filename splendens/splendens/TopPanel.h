@@ -1,15 +1,22 @@
 //
-//  TopPainel.h
+//  TopPanel.h
 //  splendens
 //
 //  Created by Rodolfo Bitu on 30/10/13.
 //  Copyright (c) 2013 Codeca. All rights reserved.
 //
 
-#import <SpriteKit/SpriteKit.h>
+@class TopPanel;
 
-@interface TopPainel : SKSpriteNode
+#import <SpriteKit/SpriteKit.h>
+#import "GameScene.h"
+
+@interface TopPanel : SKSpriteNode
 
 @property NSMutableArray* players;
+
+- (id)initWithGame:(GameScene*)game;
+
+- (void)update;
 
 @end
