@@ -20,4 +20,6 @@
 - (void) update: (Cell*)selectedCell;
 - (void)textButtonClicked:(TextButton *)button;
 
+- (void) setNextTurnDisabled: (BOOL) state;
+
 @end

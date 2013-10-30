@@ -10,6 +10,7 @@
 #import "Map.h"
 #import "Economy.h"
 #import "TextButton.h"
+#import "GameScene.h"
 
 @interface BottomPainel()
 @property TextButton* city;
@@ -43,14 +44,14 @@
 	return self;
 }
 
-- (BOOL) setnextTurnDisabled: (BOOL) state{
+- (void) setNextTurnDisabled: (BOOL) state{
 	if (state == YES || state == true){
 		self.nextTurn.userInteractionEnabled = NO;
 	}
 	else if (state == NO || state == false){
 		self.nextTurn.userInteractionEnabled = YES;
 	}
-	return state;
+	_nextTurnDisabled = state;
 }
 
 - (void)textButtonClicked:(TextButton *)button {
@@ -71,10 +72,8 @@
 		}
 		[self update:cell];
 	}
-	else if(button == self.nextTurn){
-		Map* map = (Map*)[self.scene childNodeWithName:@"map"];
-		[map processTurn];
-		[self update:cell];
+	else if(button == self.nextTurn) {
+		[((GameScene*)self.scene) endMyTurn];
 	}
 	else if(button == self.city){
 		self.selected = self.city;

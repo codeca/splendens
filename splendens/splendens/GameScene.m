@@ -7,7 +7,6 @@
 //
 
 #import "GameScene.h"
-#import "BottomPainel.h"
 
 @implementation GameScene
 
@@ -18,8 +17,24 @@
 	self.plug = plug;
 	plug.delegate = self;
 	
-	BottomPainel* bottomPainel = [[BottomPainel alloc] init];
-	[self addChild:bottomPainel];
+	self.bottomPanel = [[BottomPainel alloc] init];
+	[self addChild:self.bottomPanel];
+	
+	self.userTurn = YES;
+}
+
+- (void)setUserTurn:(BOOL)userTurn {
+	_userTurn = userTurn;
+	self.bottomPanel.nextTurnDisabled = !userTurn;
+}
+
+- (void)endMyTurn {
+	NSMutableArray* actions = [NSMutableArray array];
+	// TODO: store the actions
+	NSDictionary* data = @{@"player": self.map.thisPlayer.playerId, @"actions":actions};
+	[self.plug sendMessage:MSG_TURN_DATA data:data];
+	
+	self.userTurn = NO;
 }
 
 - (void)plug:(Plug*)plug hasClosedWithError:(BOOL)error {
