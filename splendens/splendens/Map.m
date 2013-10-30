@@ -102,8 +102,11 @@
 				int newPop = cell.population + [Economy productionForType:cell.type level:cell.level];
 				cell.population = newPop>maxPop ? maxPop : newPop;
 			}
-		} else if (cell.type == CellTypeLab)
-			cell.owner.mana += [Economy productionForType:cell.type level:cell.level];
+		} else if (cell.type == CellTypeLab){
+			int newMana = cell.owner.mana + [Economy productionForType:cell.type level:cell.level];
+			if (cell.owner.maxMana > newMana)cell.owner.mana = newMana;
+			else cell.owner.mana = cell.owner.maxMana;
+		}
 	}
 	GameScene* game = (GameScene*)self.parent;
 	[game.topPanel update];

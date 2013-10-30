@@ -374,12 +374,12 @@
 }
 
 - (void) upgrade{
-	int popCost = [Economy upgradePopulationCostForType:self.type level:self.level];
-	int manaCost = [Economy upgradeManaCostForType:self.type level:self.level];
+	int popCost = [Economy upgradePopulationCostForType:self.type level:self.level+1];
+	int manaCost = [Economy upgradeManaCostForType:self.type level:self.level+1];
 	if (popCost>-1 && manaCost>-1){
-		if (self.population >= popCost && ((GameScene*)self.parent.parent).thisPlayer.mana >= manaCost){
+		if (self.population >= popCost && self.owner.mana >= manaCost){
 			self.population -= popCost;
-			((GameScene*)self.parent.parent).thisPlayer.mana -= manaCost;
+			self.owner.mana -= manaCost;
 			self.level += 1;
 		}
 	}

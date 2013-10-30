@@ -31,7 +31,7 @@
 		
 		self.nextTurn = [[TextButton alloc] initWithText:@"Next turn"];
 		self.nextTurn.position = CGPointMake(self.size.width/2-100, 0);
-		self.nextTurn.userInteractionEnabled = NO;
+		self.nextTurn.hidden = YES;
 		[self addChild:self.nextTurn];
 		self.nextTurnDisabled = YES;
 		self.nextTurn.delegate = self;
