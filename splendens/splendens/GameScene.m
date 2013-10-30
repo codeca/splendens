@@ -55,12 +55,22 @@
 	self.userTurn = NO;
 }
 
+- (void)sendUserTroop:(NSArray *)path {
+	NSMutableArray* path2 = [NSMutableArray array];
+	for (Cell* cell in path)
+		[path2 addObject:@{@"x": [NSNumber numberWithInt:cell.x], @"y": [NSNumber numberWithInt:cell.y]}];
+	NSDictionary* action = @{@"type": [NSNumber numberWithInt:TurnActionSendTroop], @"path": path2};
+	[self.turnActions addObject:action];
+	
+	[self.map sendTroop:path];
+}
+
 - (void)plug:(Plug*)plug hasClosedWithError:(BOOL)error {
 	
 }
 
 - (void)plug:(Plug*)plug receivedMessage:(PlugMsgType)type data:(id)data {
-	
+	NSLog(@"received data, %d moves", ((NSArray*)data).count);
 }
 
 - (void)plugHasConnected:(Plug*)plug {

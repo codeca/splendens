@@ -352,10 +352,11 @@
 
 - (void)stopedDragToCell:(Cell*)cell {
 	Map* map = (Map*)self.parent;
+	GameScene* game = (GameScene*)map.parent;
 	
 	// Send troops if possible
-	if ([cell isCenter] && self.population)
-		[map sendTroop:map.lastPath];
+	if (game.userTurn && [cell isCenter] && self.population)
+		[game sendUserTroop:map.lastPath];
 	
 	// Clear the previous focused path
 	for (Cell* i in map.lastPath)

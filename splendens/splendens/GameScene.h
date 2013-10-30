@@ -14,6 +14,14 @@
 #import "BottomPainel.h"
 #import "Player.h"
 
+typedef enum {
+	TurnActionSendTroop,
+	TurnActionUpgrade,
+	TurnActionUpgradeToCity,
+	TurnActionUpgradeToTower,
+	TurnActionUpgradeToLab
+} TurnActionType;
+
 // The main scene, for the game itself
 @interface GameScene : SKScene <PlugDelegate>
 
@@ -36,6 +44,10 @@
 // Called when this player press the NextTurn button
 // Send the user turn to other players
 - (void)endMyTurn;
+
+// Send the user troop
+// Save the action in turnActions and call sendTroop in the map
+- (void)sendUserTroop:(NSArray*)path;
 
 - (void)setUserTurn:(BOOL)userTurn;
 
