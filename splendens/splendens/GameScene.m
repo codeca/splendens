@@ -11,7 +11,28 @@
 @implementation GameScene
 
 - (void)loadGame:(id)game myId:(NSString*)myId plug:(Plug*)plug {
-	self.map = [[Map alloc] initWithDefinition:game myId:myId];
+	// Create the players
+	NSArray* gamePlayers = game[@"players"];
+	
+	int mana = [[game[@"map"] objectForKey:@"mana"] integerValue];
+	NSMutableArray* players = [NSMutableArray array];
+	NSArray* colors = @[[UIColor redColor], [UIColor greenColor], [UIColor blueColor], [UIColor whiteColor]];
+	int me = 0;
+	for (int i=0; i<gamePlayers.count; i++) {
+		Player* player = [[Player alloc] init];
+		NSString* playerId = gamePlayers[i][@"id"];
+		player.mana = mana;
+		player.color = colors[i];
+		player.name = gamePlayers[i][@"name"];
+		player.playerId = playerId;
+		[players addObject:player];
+		if ([playerId isEqualToString:myId])
+			me = i;
+	}
+	self.players = players;
+	self.thisPlayer = players[me];
+	
+	self.map = [[Map alloc] initWithDefinition:game[@"map"] myId:myId game:self];
 	[self addChild:self.map];
 	
 	self.plug = plug;
@@ -20,6 +41,7 @@
 	self.bottomPanel = [[BottomPainel alloc] init];
 	[self addChild:self.bottomPanel];
 	
+	self.turnActions = [NSMutableArray array];
 	self.userTurn = YES;
 }
 
@@ -29,11 +51,7 @@
 }
 
 - (void)endMyTurn {
-	NSMutableArray* actions = [NSMutableArray array];
-	// TODO: store the actions
-	NSDictionary* data = @{@"player": self.map.thisPlayer.playerId, @"actions":actions};
-	[self.plug sendMessage:MSG_TURN_DATA data:data];
-	
+	[self.plug sendMessage:MSG_TURN_DATA data:@{@"player": self.thisPlayer.playerId, @"actions":self.turnActions}];
 	self.userTurn = NO;
 }
 

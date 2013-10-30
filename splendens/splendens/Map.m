@@ -19,34 +19,11 @@
 
 @implementation Map
 
-- (id)initWithDefinition:(id)def myId:(NSString *)myId {
+- (id)initWithDefinition:(id)def myId:(NSString *)myId game:(GameScene*)game {
 	if (self = [super init]) {
-		NSDictionary* mapDef = def[@"map"];
-		NSArray* playerDef = def[@"players"];
-		
 		// Extract the size
-		self.size = [[mapDef objectForKey:@"size"] integerValue];
+		self.size = [def[@"size"] integerValue];
 		self.name = @"map";
-		
-		// Extract all players
-		int numPlayers = [[mapDef objectForKey:@"players"] integerValue];
-		int mana = [[mapDef objectForKey:@"mana"] integerValue];
-		NSMutableArray* players = [[NSMutableArray alloc] initWithCapacity:numPlayers];
-		NSArray* colors = @[[UIColor redColor], [UIColor greenColor], [UIColor blueColor], [UIColor whiteColor]];
-		int me = 0;
-		for (int i=0; i<numPlayers; i++) {
-			Player* player = [[Player alloc] init];
-			NSString* playerId = playerDef[i][@"id"];
-			player.mana = mana;
-			player.color = colors[i];
-			player.name = playerDef[i][@"name"];
-			player.playerId = playerId;
-			[players addObject:player];
-			if ([playerId isEqualToString:myId])
-				me = i;
-		}
-		self.players = players;
-		self.thisPlayer = players[me];
 		
 		// Create root node
 		self.position = CGPointMake((768-MAP_SIZE)/2, (1024-MAP_SIZE)/2);
@@ -65,18 +42,18 @@
 		self.cells = cells;
 		
 		// Update each cell to the saved type
-		NSArray* savedCells = [mapDef objectForKey:@"cells"];
+		NSArray* savedCells = def[@"cells"];
 		for (NSDictionary* savedCell in savedCells) {
-			int x = [[savedCell objectForKey:@"x"] integerValue];
-			int y = [[savedCell objectForKey:@"y"] integerValue];
+			int x = [savedCell[@"x"] integerValue];
+			int y = [savedCell[@"y"] integerValue];
 			Cell* cell = [self cellAtX:x y:y];
-			cell.level = [[savedCell objectForKey:@"level"] integerValue];
-			cell.type = [[savedCell objectForKey:@"type"] integerValue];
-			cell.population = [[savedCell objectForKey:@"population"] integerValue];
+			cell.level = [savedCell[@"level"] integerValue];
+			cell.type = [savedCell[@"type"] integerValue];
+			cell.population = [savedCell[@"population"] integerValue];
 			if (cell.type != CellTypeEmpty && cell.type != CellTypeWall) {
-				id owner = [savedCell objectForKey:@"owner"];
+				id owner = savedCell[@"owner"];
 				if (owner != [NSNull null])
-					cell.owner = [players objectAtIndex:[owner integerValue]];
+					cell.owner = [game.players objectAtIndex:[owner integerValue]];
 			}
 		}
 		
@@ -149,6 +126,7 @@
 			[troops addObject:troop];
 	
 	// Order troops with this criteria
+	GameScene* game = (GameScene*)self.parent;
 	[troops sortUsingComparator:^(Troop* a, Troop* b) {
 		Cell* cellA = [a currentCell];
 		Cell* cellB = [b currentCell];
@@ -176,8 +154,8 @@
 		else if (a.owner.mana < b.owner.mana) return NSOrderedDescending;
 		
 		// Player order in the map.players array
-		int iA = [self.players indexOfObject:a.owner];
-		int iB = [self.players indexOfObject:b.owner];
+		int iA = [game.players indexOfObject:a.owner];
+		int iB = [game.players indexOfObject:b.owner];
 		if (iA > iB) return NSOrderedAscending;
 		else if (iA < iB) return NSOrderedDescending;
 		return NSOrderedSame;
@@ -295,6 +273,7 @@
 
 - (void)processDeliveredTroops:(NSArray*)troops {
 	// Order troops (criteria defined in the project wiki)
+	GameScene* game = (GameScene*)self.parent;
 	troops = [troops sortedArrayUsingComparator:^(Troop* a, Troop* b) {
 		// Nearest
 		float timeA = (float)(a.path.count-a.pos)/a.speed;
@@ -315,8 +294,8 @@
 		else if (a.owner.mana < b.owner.mana) return NSOrderedDescending;
 		
 		// Player order in the map.players array
-		int iA = [self.players indexOfObject:a.owner];
-		int iB = [self.players indexOfObject:b.owner];
+		int iA = [game.players indexOfObject:a.owner];
+		int iB = [game.players indexOfObject:b.owner];
 		if (iA > iB) return NSOrderedAscending;
 		else if (iA < iB) return NSOrderedDescending;
 		

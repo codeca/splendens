@@ -6,23 +6,28 @@
 //  Copyright (c) 2013 Codeca. All rights reserved.
 //
 
+@class GameScene;
+
 #import <SpriteKit/SpriteKit.h>
 #import "Map.h"
 #import "Plug.h"
 #import "BottomPainel.h"
+#import "Player.h"
 
 // The main scene, for the game itself
 @interface GameScene : SKScene <PlugDelegate>
 
 @property (nonatomic) Plug* plug;
 @property (nonatomic) Map* map;
+@property (nonatomic) NSArray* players;
+@property (nonatomic) Player* thisPlayer;
 @property (nonatomic) BottomPainel* bottomPanel;
 
 // Indicate whether the game is ready and waiting for user movements
 @property (nonatomic) BOOL userTurn;
 
 // Store all the turn actions (like upgrades and movements)
-// Each element is an instance of a concrete subclass of TurnAction
+// Each element is a NSDictionary with the fields described in the project wiki
 @property (nonatomic) NSMutableArray* turnActions;
 
 // Create the game map and import the plug

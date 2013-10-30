@@ -90,7 +90,7 @@
 }
 
 - (void) update: (Cell*)selectedCell{
-	Map* map = (Map*)[[self scene] childNodeWithName: @"map"];
+	GameScene* game = (GameScene*)self.parent;
 	[self.table removeAllChildren];
 	[self.upgradeButton removeAllChildren];
 	if (selectedCell == nil);
@@ -164,7 +164,7 @@
 		[tableCell3 addChild:infoCell3];
 		[tableCell4 addChild:infoCell4];
 		
-		if (selectedCell.owner == map.thisPlayer){
+		if (selectedCell.owner == game.thisPlayer){
 			SKLabelNode* popCost = [[SKLabelNode alloc] initWithFontNamed:@"Arial"];
 			SKLabelNode* manaCost = [[SKLabelNode alloc] initWithFontNamed:@"Arial"];
 			if (selectedCell.level<4){
@@ -184,7 +184,7 @@
 					manaCost.fontSize = fontSize;
 					manaCost.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
 					manaCost.fontColor = [UIColor blueColor];
-					if ([Economy upgradeManaCostForType:selectedCell.type level:selectedCell.level+1] > map.thisPlayer.mana) manaCost.fontColor = [UIColor redColor];
+					if ([Economy upgradeManaCostForType:selectedCell.type level:selectedCell.level+1] > game.thisPlayer.mana) manaCost.fontColor = [UIColor redColor];
 					[self.upgradeButton addChild:manaCost];
 					manaCost.position = CGPointMake(0, - self.upgradeButton.size.height/2-dy2-manaCost.frame.size.height/2);
 				}
@@ -195,7 +195,7 @@
 					self.city = [[TextButton alloc] initWithImage:@"City"];
 					self.city.xScale = self.city.yScale = 0.5;
 					self.city.delegate = self;
-					self.city.color = map.thisPlayer.color;
+					self.city.color = game.thisPlayer.color;
 				}
 				[self.table addChild:self.city];
 				self.city.colorBlendFactor = 0;
@@ -205,7 +205,7 @@
 					self.tower = [[TextButton alloc] initWithImage:@"Tower"];
 					self.tower.xScale = self.tower.yScale = 0.5;
 					self.tower.delegate = self;
-					self.tower.color = map.thisPlayer.color;
+					self.tower.color = game.thisPlayer.color;
 				}
 				[self.table addChild:self.tower];
 				self.tower.colorBlendFactor = 0;
@@ -215,7 +215,7 @@
 					self.lab = [[TextButton alloc] initWithImage:@"Lab"];
 					self.lab.xScale = self.lab.yScale = 0.5;
 					self.lab.delegate = self;
-					self.lab.color = map.thisPlayer.color;
+					self.lab.color = game.thisPlayer.color;
 				}
 				[self.table addChild:self.lab];
 				self.lab.colorBlendFactor = 0;
@@ -251,26 +251,21 @@
 					temp2 =[NSString stringWithFormat:@"%d",[Economy upgradePopulationCostForType:CellTypeCity level:1]];
 					
 					if ([Economy upgradePopulationCostForType:CellTypeCity level:1] > selectedCell.population) popCost.fontColor = [UIColor redColor];
-					if ([Economy upgradeManaCostForType:CellTypeCity level:1] > map.thisPlayer.mana) manaCost.fontColor = [UIColor redColor];
+					if ([Economy upgradeManaCostForType:CellTypeCity level:1] > game.thisPlayer.mana) manaCost.fontColor = [UIColor redColor];
 					
 				}
 				else if (self.selected == self.tower){
 					temp = [NSString stringWithFormat:@"%d",[Economy upgradePopulationCostForType:CellTypeTower level:1]];
 					temp2 =[NSString stringWithFormat:@"%d",[Economy upgradePopulationCostForType:CellTypeTower level:1]];
 					if ([Economy upgradePopulationCostForType:CellTypeTower level:1] > selectedCell.population) popCost.fontColor = [UIColor redColor];
-					if ([Economy upgradeManaCostForType:CellTypeTower level:1] > map.thisPlayer.mana) manaCost.fontColor = [UIColor redColor];
+					if ([Economy upgradeManaCostForType:CellTypeTower level:1] > game.thisPlayer.mana) manaCost.fontColor = [UIColor redColor];
 				}
 				else if (self.selected == self.lab){
 					temp = [NSString stringWithFormat:@"%d",[Economy upgradePopulationCostForType:CellTypeLab level:1]];
 					temp2 =[NSString stringWithFormat:@"%d",[Economy upgradePopulationCostForType:CellTypeLab level:1]];
 					if ([Economy upgradePopulationCostForType:CellTypeLab level:1] > selectedCell.population) popCost.fontColor = [UIColor redColor];
-					if ([Economy upgradeManaCostForType:CellTypeLab level:1] > map.thisPlayer.mana) manaCost.fontColor = [UIColor redColor];
+					if ([Economy upgradeManaCostForType:CellTypeLab level:1] > game.thisPlayer.mana) manaCost.fontColor = [UIColor redColor];
 				}
-				
-				if (self.selected == self.city) NSLog(@"Cidade");
-				if (self.selected == self.tower) NSLog(@"Torre");
-				if (self.selected == self.lab) NSLog(@"Lab");
-				NSLog(@"%@ %@ vAARRGG",temp,temp2);
 				
 				popCost.text = temp;
 				manaCost.text = temp2;

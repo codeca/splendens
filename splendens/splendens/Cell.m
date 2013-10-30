@@ -11,6 +11,7 @@
 #import "PathFinder.h"
 #import "Economy.h"
 #import "BottomPainel.h"
+#import "GameScene.h"
 
 @interface Cell()
 
@@ -322,6 +323,7 @@
 
 - (void)draggedToCell:(Cell*)cell {
 	Map* map = (Map*)self.parent;
+	GameScene* game = (GameScene*)map.parent;
 	
 	// Clear focused cells
 	for (Cell* cell in map.cells)
@@ -334,7 +336,7 @@
 	map.lastPath = nil;
 	
 	// Paint the new path
-	if (self.isCenter && self.owner == map.thisPlayer && self.population) {
+	if (self.isCenter && self.owner == game.thisPlayer && self.population) {
 		map.lastPath = [PathFinder findPathwithStart:self andGoal:cell andMap:map];
 		UIColor* color = [cell isCenter] ? [UIColor magentaColor] : [UIColor redColor];
 		Cell* previous = nil;
@@ -365,9 +367,9 @@
 	int popCost = [Economy upgradePopulationCostForType:type level:1];
 	int manaCost = [Economy upgradeManaCostForType:type level:1];
 	if (popCost>-1 && manaCost>-1){
-		if (self.population >= popCost && ((Map*)self.parent).thisPlayer.mana >= manaCost){
+		if (self.population >= popCost && ((GameScene*)self.parent.parent).thisPlayer.mana >= manaCost){
 			self.population -= popCost;
-			((Map*)self.parent).thisPlayer.mana -= manaCost;
+			((GameScene*)self.parent.parent).thisPlayer.mana -= manaCost;
 			self.type = type;
 			self.level = 1;
 		}
@@ -378,9 +380,9 @@
 	int popCost = [Economy upgradePopulationCostForType:self.type level:self.level];
 	int manaCost = [Economy upgradeManaCostForType:self.type level:self.level];
 	if (popCost>-1 && manaCost>-1){
-		if (self.population >= popCost && ((Map*)self.parent).thisPlayer.mana >= manaCost){
+		if (self.population >= popCost && ((GameScene*)self.parent.parent).thisPlayer.mana >= manaCost){
 			self.population -= popCost;
-			((Map*)self.parent).thisPlayer.mana -= manaCost;
+			((GameScene*)self.parent.parent).thisPlayer.mana -= manaCost;
 			self.level += 1;
 		}
 	}

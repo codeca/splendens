@@ -6,11 +6,14 @@
 //  Copyright (c) 2013 Codeca. All rights reserved.
 //
 
+@class Map;
+
 #import <Foundation/Foundation.h>
 #import <SpriteKit/SpriteKit.h>
 #import "Cell.h"
 #import "Player.h"
 #import "Troop.h"
+#import "GameScene.h"
 
 // The map size in points
 #define MAP_SIZE 700.0
@@ -26,14 +29,11 @@
 
 @property (nonatomic) int size;
 @property (nonatomic) NSArray* cells;
-@property (nonatomic) NSArray* players;
 @property (nonatomic) Cell* selected;
-@property (nonatomic) Player* thisPlayer;
 @property (nonatomic) NSArray* lastPath;
 
-
 // Create a new map from a JSON string (see the structure in the project wiki)
-- (id)initWithDefinition:(id)def myId:(NSString*)myId;
+- (id)initWithDefinition:(id)def myId:(NSString*)myId game:(GameScene*)game;
 
 // Return the cell at the given position
 - (Cell*)cellAtX:(int)x y:(int)y;
