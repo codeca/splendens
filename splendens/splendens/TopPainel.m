@@ -18,26 +18,45 @@
 - (id) init{
 	if (self = [super initWithImageNamed:@"topPanel"]){
 		self.position = CGPointMake(768/2, (1024+MAP_SIZE+25)/2);
-		//self.size = (MAP_SIZE,155);
 		self.name = @"topPainel";
+		
+		
+		int x,y,dx,by,dxx;
+		dx = 10;
+		x = (MAP_SIZE-3*dx)/2;
+		y = 40;
+		by = 155 - 4*dx - 2*y;
+		dxx = 5;
+		SKSpriteNode* populationBar;
+		populationBar = [SKSpriteNode spriteNodeWithColor:[UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:0.5] size:CGSizeMake(MAP_SIZE-2*dx, 155 - 4*dx - 2*y)];
+		populationBar.position = CGPointMake(0, 155/2 - dx-by/2);
+		
+		
 		GameScene* gameScene = (GameScene*) self.parent;
-		int dx = 10;
 		for (Player* i in gameScene.players) {
 			int index = [gameScene.players indexOfObject:i];
-			SKSpriteNode* cell;
+			
+			SKSpriteNode *cell;
 			SKLabelNode *name,*mana;
 			
-			cell = [SKSpriteNode spriteNodeWithColor:i.color size:CGSizeMake((MAP_SIZE-3*dx)/2,40)];
 			
+			cell = [SKSpriteNode spriteNodeWithColor:i.color size:CGSizeMake(x,y)];
+			cell.position = CGPointMake(-x/2-dx/2 + ((int)index/2)*(x+dx), 155/2-dx*2-by-y/2 - index%2*(y+dx));
+			cell.name = [NSString stringWithFormat:@"celula%d",index];
+			[self addChild:cell];
 			
 			name  = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
+			name.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
 			name.text = i.name;
+			name.position = CGPointMake(0, cell.size.height/2-dxx-name.frame.size.height/2);
+			name.name = @"name";
+			[cell addChild:name];
 			
 			mana = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
-			mana.text = [NSString stringWithFormat:@"%d/%d",i.mana,i.maxMana];
-			
-			
-			
+			mana.text = [NSString stringWithFormat:@"Mana %d/%d",i.mana,i.maxMana];
+			mana.name = @"mana";
+			mana.position = CGPointMake(0, -cell.size.height/2+dxx+mana.frame.size.height/2);
+			[cell addChild:mana];
 		}
 	}
 
@@ -45,7 +64,15 @@
 }
 
 - (void) update{
+	GameScene* gameScene = (GameScene*) self.parent;
 	
+	for (Player* i in gameScene.players){
+		int index = [gameScene.players indexOfObject:i];
+		
+		SKSpriteNode *cell = (SKSpriteNode*)[self childNodeWithName:[NSString stringWithFormat:@"celula%d",index]];
+		SKLabelNode *mana = (SKLabelNode*)[cell childNodeWithName:[NSString stringWithFormat:@"mana"]];
+		mana.text = [NSString stringWithFormat:@"Mana %d/%d",i.mana,i.maxMana];
+	}
 	
 }
 
