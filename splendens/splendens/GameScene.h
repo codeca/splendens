@@ -38,6 +38,10 @@ typedef enum {
 // Each element is a NSDictionary with the fields described in the project wiki
 @property (nonatomic) NSMutableArray* turnActions;
 
+// Store all received user turn actions
+// Each element is a NSDictionary returned by the server
+@property (nonatomic) NSMutableArray* othersTurnActions;
+
 // Create the game map and import the plug
 - (void)loadGame:(id)game myId:(NSString*)myId plug:(Plug*)plug;
 

@@ -42,6 +42,7 @@
 	[self addChild:self.bottomPanel];
 	
 	self.turnActions = [NSMutableArray array];
+	self.othersTurnActions = [NSMutableArray array];
 	self.userTurn = YES;
 }
 
@@ -88,13 +89,57 @@
 	[self.turnActions addObject:action];
 }
 
+// Return the cell in the x and y position given by the dictionary
+- (Cell*)cellForXY:(NSDictionary*)dic {
+	int x = [dic[@"x"] integerValue];
+	int y = [dic[@"y"] integerValue];
+	return [self.map cellAtX:x y:y];
+}
+
+// Process all users actions in this turn
+- (void)simulateTurn {
+	for (NSDictionary* turnActions in self.othersTurnActions) {
+		NSArray* actions = turnActions[@"actions"];
+		
+		// Process each turn action
+		for (NSDictionary* action in actions) {
+			TurnActionType type = [action[@"type"] integerValue];
+			
+			if (type == TurnActionSendTroop) {
+				// Create the path array (each element is a cell)
+				NSArray* path = action[@"path"];
+				NSMutableArray* path2 = [NSMutableArray array];
+				for (NSDictionary* cellDic in path)
+					[path2 addObject:[self cellForXY:cellDic]];
+				
+				[self.map sendTroop:path];
+			} else {
+				Cell* cell = [self cellForXY:action];
+				if (type == TurnActionUpgrade)
+					[cell upgrade];
+				else if (type == TurnActionUpgradeToCity)
+					[cell upgradeTo:CellTypeCity];
+				else if (type == TurnActionUpgradeToTower)
+					[cell upgradeTo:CellTypeTower];
+				else
+					[cell upgradeTo:CellTypeLab];
+			}
+		}
+	}
+	self.othersTurnActions = [NSMutableArray array];
+	self.userTurn = YES;
+}
+
 - (void)plug:(Plug*)plug hasClosedWithError:(BOOL)error {
 	
 }
 
 - (void)plug:(Plug*)plug receivedMessage:(PlugMsgType)type data:(id)data {
-	NSLog(@"received data, %d moves", ((NSArray*)data).count);
-	NSLog(@"%@", data);
+	if (type == MSG_TURN_DATA) {
+		[self.othersTurnActions addObject:data];
+		if (self.othersTurnActions.count == self.players.count-1)
+			[self simulateTurn];
+	}
 }
 
 - (void)plugHasConnected:(Plug*)plug {
