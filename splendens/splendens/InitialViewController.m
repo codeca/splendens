@@ -98,8 +98,8 @@
 		int waitingFor2, waitingFor3, waitingFor4;
 		float progress2, progress3, progress4, maxProgress;
 		waitingFor2 = [data[@"waitingFor2"] integerValue];
-		waitingFor3 = [data[@"waitingFor2"] integerValue];
-		waitingFor4 = [data[@"waitingFor2"] integerValue];
+		waitingFor3 = [data[@"waitingFor3"] integerValue];
+		waitingFor4 = [data[@"waitingFor4"] integerValue];
 		progress2 = self.want2 ? waitingFor2/2.0 : 0;
 		progress3 = self.want3 ? waitingFor3/3.0 : 0;
 		progress4 = self.want4 ? waitingFor4/4.0 : 0;
