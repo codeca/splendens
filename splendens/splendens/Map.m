@@ -127,16 +127,27 @@
 // Process all attacks after a while
 // timer.userInfo carries all delivered troops in this turn
 - (void)processTowerAttacksAndTroopsDelivery:(NSTimer*)timer {
+	BOOL towersAttacked = NO;
+	
 	for (Cell* cell in self.cells)
 		if (cell.type == CellTypeTower)
-			[self processTowerAttack:cell];
+			if ([self processTowerAttack:cell])
+				towersAttacked = YES;
+	
 	[self processDeliveredTroops:timer.userInfo];
-	[NSTimer scheduledTimerWithTimeInterval:TOTAL_ATTACK_TIME target:self selector:@selector(updateTroopsAmount) userInfo:nil repeats:NO];
-	[NSTimer scheduledTimerWithTimeInterval:TOTAL_ATTACK_TIME target:self selector:@selector(checkVictory) userInfo:nil repeats:NO];
+	GameScene* game = (GameScene*)self.parent;
+	
+	if (towersAttacked) {
+		// Wait for tower attacks animation to end
+		[NSTimer scheduledTimerWithTimeInterval:TOTAL_ATTACK_TIME target:self selector:@selector(updateTroopsAmount) userInfo:nil repeats:NO];
+		[NSTimer scheduledTimerWithTimeInterval:TOTAL_ATTACK_TIME target:game selector:@selector(checkVictory) userInfo:nil repeats:NO];
+	} else
+		[game checkVictory];
 }
 
 // Process the attacks made by the given tower
-- (void)processTowerAttack:(Cell*)tower {
+// Return whether any troop was attacked
+- (BOOL)processTowerAttack:(Cell*)tower {
 	// Get all attackable troops
 	NSMutableArray* troops = [NSMutableArray array];
 	for (Troop* troop in self.troops)
@@ -216,6 +227,8 @@
 		SKAction* shoot = [SKAction group:@[[SKAction sequence:@[grow, delay, shrink]], move]];
 		[bullet runAction:[SKAction sequence:@[shoot, remove]]];
 	}
+	
+	return troops.count ? YES : NO;
 }
 
 // Update all the displayed troop amount to the calculated amount
