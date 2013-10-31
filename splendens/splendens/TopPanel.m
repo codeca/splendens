@@ -21,7 +21,6 @@
 	if (self = [super initWithImageNamed:@"topPanel"]){
 		self.position = CGPointMake(768/2, (1024+self.size.height+MAP_SIZE+25)/2);
 		self.name = @"topPanel";
-		
 		int x,y,dx1,dx2,by,dxx,dxbar;
 		dx1 = 15;
 		dx2 = 5;
@@ -31,11 +30,10 @@
 		dxbar = 5;
 		
 		SKSpriteNode* populationBar;
-		populationBar = [SKSpriteNode spriteNodeWithColor:[UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:0.5] size:CGSizeMake(MAP_SIZE-2*dx1, by)];
+		populationBar = [SKSpriteNode spriteNodeWithColor:[UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1] size:CGSizeMake(MAP_SIZE-2*dx1, by)];
 		populationBar.position = CGPointMake(0, 115/2 - dx1-by/2);
-		populationBar.anchorPoint = CGPointMake(-populationBar.size.width/2+dxbar, 0);
+		populationBar.name = @"populationBar";
 		[self addChild:populationBar];
-		
 		
 		for (Player* i in game.players) {
 			int index = [game.players indexOfObject:i];
@@ -71,8 +69,16 @@
 			name.position = CGPointMake(-cell.size.width/2+dxx+name.frame.size.width/2, 0);
 			mana.position = CGPointMake(cell.size.width/2-dxx-mana.frame.size.width/2, 0);
 		}
+		
+		for (Player* i in game.players){
+			SKSpriteNode* bar;
+			bar = [SKSpriteNode spriteNodeWithColor:i.color size:CGSizeMake(0, populationBar.size.height*5/7)];
+			bar.anchorPoint = CGPointMake(0, 0.5);
+			bar.name = [NSString stringWithFormat:@"bar%d",[game.players indexOfObject:i]];
+			[populationBar addChild: bar];
+		}
 	}
-
+	
 	return self;
 }
 
@@ -101,6 +107,7 @@
 - (void) updateTotalPopulation{
 	GameScene* game = (GameScene*)self.parent;
 	Map* map = game.map;
+	int totalPopulation = 0;
 	
 	for (Player* i in game.players){
 		i.totalPopulation = 0;
@@ -108,8 +115,33 @@
 	for (Cell* i in map.cells) {
 		if (i.owner != nil){
 			i.owner.totalPopulation += i.population;
+			totalPopulation += i.population;
 		}
 	}
+	int	dxbar = 5;
+	SKSpriteNode* populationBar = (SKSpriteNode*)[self childNodeWithName:@"populationBar"];
+	for (Player* i in game.players){
+		NSString* name = [NSString stringWithFormat:@"bar%d",[game.players indexOfObject:i]];
+		NSString* lastName;
+		if ([game.players indexOfObject:i] > 0){
+			lastName = [NSString stringWithFormat:@"bar%d",[game.players indexOfObject:i]-1];
+		}
+		else lastName = nil;
+
+		SKSpriteNode* bar = (SKSpriteNode*)[populationBar childNodeWithName:name];
+		SKSpriteNode* lastBar;
+		if (lastName == nil){
+			bar.position = CGPointMake(dxbar-populationBar.size.width/2, 0);
+		}
+		else{
+			NSLog(lastName);
+			lastBar = (SKSpriteNode*)[populationBar childNodeWithName:lastName];
+			bar.position = CGPointMake(lastBar.position.x+lastBar.size.width, 0);
+		}
+		bar.size = CGSizeMake((populationBar.size.width-2*dxbar)*i.totalPopulation/totalPopulation, populationBar.size.height*5/7);
+		
+	}
+	
 	
 }
 
