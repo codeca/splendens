@@ -127,8 +127,9 @@
 - (void)checkVictory {
 	Player* winner = nil;
 	
+	// Check if there is only 1 connected player with cells
 	for (Cell* cell in self.map.cells) {
-		if (cell.type != CellTypeEmpty && cell.type != CellTypeWall && cell.owner) {
+		if (cell.type != CellTypeEmpty && cell.type != CellTypeWall && cell.owner && !cell.owner.disconnected) {
 			if (!winner)
 				winner = cell.owner;
 			else if (winner != cell.owner) {
@@ -205,7 +206,9 @@
 		if (self.othersTurnActions.count == self.connectedPlayers-1 && !self.userTurn)
 			[self simulateTurn];
 	} else if (type == MSG_PLAYER_DISCONNECTED) {
-		[self.topPanel playerDisconnection:[self playerById:data]];
+		Player* player = [self playerById:data];
+		player.disconnected = YES;
+		[self.topPanel playerDisconnection:player];
 		self.connectedPlayers--;
 	}
 }

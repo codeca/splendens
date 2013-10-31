@@ -16,5 +16,6 @@
 @property (nonatomic) NSString* playerId;
 @property (nonatomic) UIColor* color;
 @property (nonatomic) int totalPopulation;
+@property (nonatomic) BOOL disconnected;
 
 @end
