@@ -10,9 +10,6 @@
 
 @interface Player : NSObject
 
-// Indicate whether the player is currently connected
-@property (nonatomic) BOOL disconnected;
-
 @property (nonatomic) int mana;
 @property (nonatomic) int maxMana;
 @property (nonatomic) NSString* name;

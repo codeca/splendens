@@ -118,7 +118,7 @@
 	[game.topPanel updateMaxMana];
 	
 	// Move troops
-	if (self.troops) {
+	if (self.troops.count) {
 		NSArray* deliveredTroops = [self moveTroops];
 		
 		// Wait for the movement animation

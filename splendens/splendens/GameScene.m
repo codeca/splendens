@@ -71,6 +71,7 @@
 	[self.plug sendMessage:MSG_TURN_DATA data:@{@"player": self.thisPlayer.playerId, @"actions":self.turnActions}];
 	self.turnActions = [NSMutableArray array];
 	self.userTurn = NO;
+	// TODO: self.thisPlayer.turnReady = YES;
 	if (self.othersTurnActions.count == self.connectedPlayers-1)
 		[self simulateTurn];
 }
@@ -174,6 +175,11 @@
 		}
 	}
 	self.othersTurnActions = [NSMutableArray array];
+	
+	// Reset all player turnReady flags
+	for (Player* player in self.players);
+		// TODO: player.turnReady = NO;
+	
 	[self.map processTurn];
 }
 
@@ -183,18 +189,21 @@
 		[self.viewController dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (Player*)playerById:(NSString*)playerId {
+	for (Player* player in self.players)
+		if ([player.playerId isEqualToString:playerId])
+			return player;
+	return nil;
+}
+
 - (void)plug:(Plug*)plug receivedMessage:(PlugMsgType)type data:(id)data {
 	if (type == MSG_TURN_DATA) {
 		[self.othersTurnActions addObject:data];
+		// TODO: [self playerById:data[@"player"]].turnReady = YES;
 		if (self.othersTurnActions.count == self.connectedPlayers-1 && !self.userTurn)
 			[self simulateTurn];
 	} else if (type == MSG_PLAYER_DISCONNECTED) {
-		NSString* playerId = data;
-		for (Player* player in self.players)
-			if ([player.playerId isEqualToString:playerId]) {
-				player.disconnected = YES;
-				break;
-			}
+		// TODO: [self playerById:data].disconnected = YES;
 		self.connectedPlayers--;
 	}
 }
