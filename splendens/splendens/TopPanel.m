@@ -21,13 +21,12 @@
 	if (self = [super initWithImageNamed:@"topPanel"]){
 		self.position = CGPointMake(768/2, (1024+self.size.height+MAP_SIZE+25)/2);
 		self.name = @"topPanel";
-		int x,y,dx1,dx2,by,dxx,dxbar;
+		int x,y,dx1,dx2,by,dxx;
 		dx1 = 15;
 		dx2 = 5;
 		x = (MAP_SIZE-2*dx1-dx2)/2;
 		y = 25;
 		by = 115 - 2*dx1 - 2*dx2 - 2*y;
-		dxbar = 5;
 		
 		SKSpriteNode* populationBar;
 		populationBar = [SKSpriteNode spriteNodeWithColor:[UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1] size:CGSizeMake(MAP_SIZE-2*dx1, by)];
@@ -126,8 +125,8 @@
 		}
 	}
 	int	dxbar = 5;
-	int lastPosition;
-	int lastWidth;
+	int lastPosition = 0;
+	int lastWidth = 0;
 	SKSpriteNode* populationBar = (SKSpriteNode*)[self childNodeWithName:@"populationBar"];
 	for (Player* i in game.players){
 		NSString* name = [NSString stringWithFormat:@"bar%d",[game.players indexOfObject:i]];
@@ -138,14 +137,12 @@
 		else lastName = nil;
 
 		SKSpriteNode* bar = (SKSpriteNode*)[populationBar childNodeWithName:name];
-		SKSpriteNode* lastBar;
 		if (lastName == nil){
 			[bar runAction: [SKAction moveToX:dxbar-populationBar.size.width/2 duration:0.5]];
 			//bar.position = CGPointMake(dxbar-populationBar.size.width/2, 0);
 			lastPosition = dxbar - populationBar.size.width/2;
 		}
 		else{
-			lastBar = (SKSpriteNode*)[populationBar childNodeWithName:lastName];
 			[bar runAction:[SKAction moveToX: lastPosition+lastWidth duration:0.5]];
 			//bar.position = CGPointMake(lastBar.position.x+lastBar.size.width, 0);
 			lastPosition = lastPosition + lastWidth;

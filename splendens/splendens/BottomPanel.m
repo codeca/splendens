@@ -101,7 +101,6 @@
 		int dx3 = 0;
 		int fontSize = 28;
 		self.upgradeButton.position = CGPointMake(2*x+dy1+2*dy2+self.upgradeButton.size.width/2-self.size.width/2, 0);
-		CGSize size = CGSizeMake(x,y);
 		SKSpriteNode* tableCell1 = [SKSpriteNode spriteNodeWithImageNamed:@"tableCell"];
 		SKSpriteNode* tableCell2 = [SKSpriteNode spriteNodeWithImageNamed:@"tableCell"];
 		SKSpriteNode* tableCell3 = [SKSpriteNode spriteNodeWithImageNamed:@"tableCell"];
@@ -117,7 +116,6 @@
 		
 		int a = 2*x-3*y;
 		int da = 2*y-x;
-		size = CGSizeMake(a,a);
 		
 		NSString* image;
 		image = [NSString stringWithFormat:@"Production"];
@@ -276,8 +274,7 @@
 				
 			}
 			else self.selected = nil;
-			if (selectedCell.level<4){
-				CGSize size = CGSizeMake(x,y);
+			if (selectedCell.level<4) {
 				SKSpriteNode* tableCell5 = [SKSpriteNode spriteNodeWithImageNamed:@"tableCell"];
 				SKSpriteNode* tableCell6 = [SKSpriteNode spriteNodeWithImageNamed:@"tableCell"];
 				SKSpriteNode* tableCell7 = [SKSpriteNode spriteNodeWithImageNamed:@"tableCell"];
@@ -290,8 +287,6 @@
 				tableCell6.position = CGPointMake(dx3+dy1+x+dy2+x/2-self.size.width/2+dy2+2*x+dy2+self.upgradeButton.size.width+dy2, dy1+y+dy2+y/2-self.size.height/2);
 				tableCell7.position = CGPointMake(dx3+dy1+x/2-self.size.width/2+dy2+2*x+dy2+self.upgradeButton.size.width+dy2, dy1+y/2-self.size.height/2);
 				tableCell8.position = CGPointMake(dx3+dy1+x+dy2+x/2-self.size.width/2+dy2+2*x+dy2+self.upgradeButton.size.width+dy2, dy1+y/2-self.size.height/2);
-				
-				size = CGSizeMake(a,a);
 				
 				image = [NSString stringWithFormat:@"Production"];
 				
