@@ -95,6 +95,7 @@
 		98DF319A181EBC310092E8A7 /* wall4-0@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 98DF316B181EBC310092E8A7 /* wall4-0@2X.png */; };
 		98DF319D181FD3800092E8A7 /* InitialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98DF319C181FD3800092E8A7 /* InitialViewController.m */; };
 		98DF31A0182278E70092E8A7 /* GameOverScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 98DF319F182278E70092E8A7 /* GameOverScene.m */; };
+		98DF31A41822B0B90092E8A7 /* check@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 98DF31A31822B0B90092E8A7 /* check@2X.png */; };
 		D00114B1181AC576002ED389 /* BottomPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = D00114B0181AC576002ED389 /* BottomPanel.m */; };
 		D05CE05718193C2500827611 /* PathFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = D05CE05618193C2500827611 /* PathFinder.m */; };
 		D05CE05918198F6400827611 /* path2I@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = D05CE05818198F6400827611 /* path2I@2X.png */; };
@@ -223,6 +224,7 @@
 		98DF319C181FD3800092E8A7 /* InitialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InitialViewController.m; sourceTree = "<group>"; };
 		98DF319E182278E70092E8A7 /* GameOverScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameOverScene.h; sourceTree = "<group>"; };
 		98DF319F182278E70092E8A7 /* GameOverScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameOverScene.m; sourceTree = "<group>"; };
+		98DF31A31822B0B90092E8A7 /* check@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "check@2X.png"; sourceTree = "<group>"; };
 		D00114AF181AC576002ED389 /* BottomPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BottomPanel.h; sourceTree = "<group>"; };
 		D00114B0181AC576002ED389 /* BottomPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BottomPanel.m; sourceTree = "<group>"; };
 		D05CE05518193C2500827611 /* PathFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathFinder.h; sourceTree = "<group>"; };
@@ -362,6 +364,7 @@
 		98DF30E21819317B0092E8A7 /* sprites */ = {
 			isa = PBXGroup;
 			children = (
+				98DF31A31822B0B90092E8A7 /* check@2X.png */,
 				D0BB8205182139D4006ECA83 /* armor@2X.png */,
 				D0BB8206182139D4006ECA83 /* arrow@2X.png */,
 				D0BB8207182139D4006ECA83 /* bottomPanel@2X.png */,
@@ -539,6 +542,7 @@
 				98DF30E1181848E30092E8A7 /* star.png in Resources */,
 				98DF3184181EBC310092E8A7 /* wall1c-0@2X.png in Resources */,
 				98DF3195181EBC310092E8A7 /* wall2Lb-3@2X.png in Resources */,
+				98DF31A41822B0B90092E8A7 /* check@2X.png in Resources */,
 				98DF3174181EBC310092E8A7 /* wall0c-3@2X.png in Resources */,
 				98DF3170181EBC310092E8A7 /* wall0b-3@2X.png in Resources */,
 				98DF311C181937570092E8A7 /* path2L@2X.png in Resources */,
