@@ -119,6 +119,8 @@
 		}
 	}
 	int	dxbar = 5;
+	int lastPosition;
+	int lastWidth;
 	SKSpriteNode* populationBar = (SKSpriteNode*)[self childNodeWithName:@"populationBar"];
 	for (Player* i in game.players){
 		NSString* name = [NSString stringWithFormat:@"bar%d",[game.players indexOfObject:i]];
@@ -133,13 +135,16 @@
 		if (lastName == nil){
 			[bar runAction: [SKAction moveToX:dxbar-populationBar.size.width/2 duration:0.5]];
 			//bar.position = CGPointMake(dxbar-populationBar.size.width/2, 0);
+			lastPosition = dxbar - populationBar.size.width/2;
 		}
 		else{
 			lastBar = (SKSpriteNode*)[populationBar childNodeWithName:lastName];
-			[bar runAction:[SKAction moveToX: lastBar.position.x+lastBar.size.width duration:0.5]];
+			[bar runAction:[SKAction moveToX: lastPosition+lastWidth duration:0.5]];
 			//bar.position = CGPointMake(lastBar.position.x+lastBar.size.width, 0);
+			lastPosition = lastPosition + lastWidth;
 		}
 		[bar runAction: [SKAction resizeToWidth: (populationBar.size.width-2*dxbar)*i.totalPopulation/totalPopulation duration: 0.5]];
+		lastWidth = (populationBar.size.width-2*dxbar)*i.totalPopulation/totalPopulation;
 		
 		//bar.size = CGSizeMake((populationBar.size.width-2*dxbar)*i.totalPopulation/totalPopulation, populationBar.size.height*5/7);
 		
@@ -147,6 +152,26 @@
 	
 	
 }
+
+- (void) playerDisconnection: (Player*) player{
+	GameScene* game = (GameScene*)self.parent;
+	int index = [game.players indexOfObject:player];
+	NSString* name = [NSString stringWithFormat:@"celula%d",index];
+	SKSpriteNode* cell = (SKSpriteNode*)[self childNodeWithName:name];
+
+	[cell runAction: [SKAction colorizeWithColor:[UIColor grayColor] colorBlendFactor:0 duration:0.5]];
+}
+
+- (void) playerTurnReady: (Player*) player{
+	GameScene* game = (GameScene*)self.parent;
+	int index = [game.players indexOfObject:player];
+	NSString* name = [NSString stringWithFormat:@"celula%d",index];
+	SKSpriteNode* cell = (SKSpriteNode*)[self childNodeWithName:name];
+	
+	[cell runAction: [SKAction colorizeWithColor:[UIColor magentaColor] colorBlendFactor:0 duration:0.5]];
+}
+
+
 
 
 @end
