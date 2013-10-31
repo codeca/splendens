@@ -133,12 +133,11 @@
 		}
 	}
 	self.othersTurnActions = [NSMutableArray array];
-	self.userTurn = YES;
 	[self.map processTurn];
 }
 
 - (void)plug:(Plug*)plug hasClosedWithError:(BOOL)error {
-	
+	[self.viewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)plug:(Plug*)plug receivedMessage:(PlugMsgType)type data:(id)data {

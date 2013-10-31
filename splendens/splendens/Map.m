@@ -10,6 +10,7 @@
 #import "Troop.h"
 #import "Economy.h"
 #import "BottomPanel.h"
+#import "GameOverScene.h"
 
 @interface Map()
 
@@ -127,6 +128,7 @@
 			[self processTowerAttack:cell];
 	[self processDeliveredTroops:timer.userInfo];
 	[NSTimer scheduledTimerWithTimeInterval:TOTAL_ATTACK_TIME target:self selector:@selector(updateTroopsAmount) userInfo:nil repeats:NO];
+	[NSTimer scheduledTimerWithTimeInterval:TOTAL_ATTACK_TIME target:self selector:@selector(checkVictory) userInfo:nil repeats:NO];
 }
 
 // Process the attacks made by the given tower
@@ -223,6 +225,30 @@
 			[newTroops addObject:troop];
 	}
 	self.troops = newTroops;
+}
+
+// Check if someone won
+// If it does
+- (void)checkVictory {
+	Player* winner = nil;
+	GameScene* game = (GameScene*)self.parent;
+	
+	for (Cell* cell in self.cells) {
+		if (cell.type != CellTypeEmpty && cell.type != CellTypeWall && cell.owner) {
+			if (!winner)
+				winner = cell.owner;
+			else if (winner != cell.owner) {
+				// No winner yet
+				game.userTurn = YES;
+				return;
+			}
+		}
+	}
+	
+	// We have a winner!
+	GameOverScene* nextScene = [[GameOverScene alloc] initWithSize:game.size winner:winner thisPlayer:game.thisPlayer];
+	nextScene.viewController = game.viewController;
+	[game.view presentScene:nextScene transition:[SKTransition doorwayWithDuration:2]];
 }
 
 #pragma mark - troops

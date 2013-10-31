@@ -18,6 +18,7 @@
     
     GameScene* scene = [GameScene sceneWithSize:view.bounds.size];
     [scene loadGame:game myId:myId plug:plug];
+	scene.viewController = self;
     [view presentScene:scene];
 }
 

@@ -94,6 +94,7 @@
 		98DF3199181EBC310092E8A7 /* wall3-3@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 98DF316A181EBC310092E8A7 /* wall3-3@2X.png */; };
 		98DF319A181EBC310092E8A7 /* wall4-0@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 98DF316B181EBC310092E8A7 /* wall4-0@2X.png */; };
 		98DF319D181FD3800092E8A7 /* InitialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98DF319C181FD3800092E8A7 /* InitialViewController.m */; };
+		98DF31A0182278E70092E8A7 /* GameOverScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 98DF319F182278E70092E8A7 /* GameOverScene.m */; };
 		D00114B1181AC576002ED389 /* BottomPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = D00114B0181AC576002ED389 /* BottomPanel.m */; };
 		D05CE05718193C2500827611 /* PathFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = D05CE05618193C2500827611 /* PathFinder.m */; };
 		D05CE05918198F6400827611 /* path2I@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = D05CE05818198F6400827611 /* path2I@2X.png */; };
@@ -220,6 +221,8 @@
 		98DF316B181EBC310092E8A7 /* wall4-0@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wall4-0@2X.png"; sourceTree = "<group>"; };
 		98DF319B181FD3800092E8A7 /* InitialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitialViewController.h; sourceTree = "<group>"; };
 		98DF319C181FD3800092E8A7 /* InitialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InitialViewController.m; sourceTree = "<group>"; };
+		98DF319E182278E70092E8A7 /* GameOverScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameOverScene.h; sourceTree = "<group>"; };
+		98DF319F182278E70092E8A7 /* GameOverScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameOverScene.m; sourceTree = "<group>"; };
 		D00114AF181AC576002ED389 /* BottomPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BottomPanel.h; sourceTree = "<group>"; };
 		D00114B0181AC576002ED389 /* BottomPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BottomPanel.m; sourceTree = "<group>"; };
 		D05CE05518193C2500827611 /* PathFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathFinder.h; sourceTree = "<group>"; };
@@ -444,6 +447,8 @@
 				98DF319C181FD3800092E8A7 /* InitialViewController.m */,
 				98DF30B218181E620092E8A7 /* GameScene.h */,
 				98DF30B318181E620092E8A7 /* GameScene.m */,
+				98DF319E182278E70092E8A7 /* GameOverScene.h */,
+				98DF319F182278E70092E8A7 /* GameOverScene.m */,
 			);
 			name = scenes;
 			sourceTree = "<group>";
@@ -631,6 +636,7 @@
 				98DF319D181FD3800092E8A7 /* InitialViewController.m in Sources */,
 				98DF313C181AC1950092E8A7 /* Troop.m in Sources */,
 				98DF30DC18182C9E0092E8A7 /* Player.m in Sources */,
+				98DF31A0182278E70092E8A7 /* GameOverScene.m in Sources */,
 				98DF30A718181E620092E8A7 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -36,6 +36,9 @@ typedef enum {
 // Indicate whether the game is ready and waiting for user movements
 @property (nonatomic) BOOL userTurn;
 
+// Store a reference to the view controller to dismiss the segue
+@property (nonatomic, weak) UIViewController* viewController;
+
 // Store all the turn actions (like upgrades and movements)
 // Each element is a NSDictionary with the fields described in the project wiki
 @property (nonatomic) NSMutableArray* turnActions;
