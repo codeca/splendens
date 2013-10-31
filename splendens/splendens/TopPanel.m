@@ -131,14 +131,17 @@
 		SKSpriteNode* bar = (SKSpriteNode*)[populationBar childNodeWithName:name];
 		SKSpriteNode* lastBar;
 		if (lastName == nil){
-			bar.position = CGPointMake(dxbar-populationBar.size.width/2, 0);
+			[bar runAction: [SKAction moveToX:dxbar-populationBar.size.width/2 duration:0.5]];
+			//bar.position = CGPointMake(dxbar-populationBar.size.width/2, 0);
 		}
 		else{
-			NSLog(lastName);
 			lastBar = (SKSpriteNode*)[populationBar childNodeWithName:lastName];
-			bar.position = CGPointMake(lastBar.position.x+lastBar.size.width, 0);
+			[bar runAction:[SKAction moveToX: lastBar.position.x+lastBar.size.width duration:0.5]];
+			//bar.position = CGPointMake(lastBar.position.x+lastBar.size.width, 0);
 		}
-		bar.size = CGSizeMake((populationBar.size.width-2*dxbar)*i.totalPopulation/totalPopulation, populationBar.size.height*5/7);
+		[bar runAction: [SKAction resizeToWidth: (populationBar.size.width-2*dxbar)*i.totalPopulation/totalPopulation duration: 0.5]];
+		
+		//bar.size = CGSizeMake((populationBar.size.width-2*dxbar)*i.totalPopulation/totalPopulation, populationBar.size.height*5/7);
 		
 	}
 	

@@ -108,6 +108,9 @@
 	// Save the action
 	NSDictionary* action = @{@"type": [NSNumber numberWithInt:actionType], @"x": [NSNumber numberWithInt:cell.x], @"y": [NSNumber numberWithInt:cell.y]};
 	[self.turnActions addObject:action];
+	
+	//update total pop after upgrading
+	[self.topPanel updateTotalPopulation];
 }
 
 // Return the cell in the x and y position given by the dictionary

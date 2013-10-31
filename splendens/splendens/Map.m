@@ -115,7 +115,7 @@
 	[game.topPanel updateTotalPopulation];
 	
 	//update MaxMana after upgrades
-	[game.topPanel updateTotalPopulation];
+	[game.topPanel updateMaxMana];
 	
 	// Move troops
 	if (self.troops) {
