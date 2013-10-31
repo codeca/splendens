@@ -14,6 +14,7 @@
 #import "BottomPanel.h"
 #import "Player.h"
 #import "TopPanel.h"
+#import "GameOverScene.h"
 
 typedef enum {
 	TurnActionSendTroop,
@@ -64,6 +65,10 @@ typedef enum {
 // The action MUST be valid
 // Save the action in turnActiond and call upgrade in the cell
 - (void)upgradeCell:(Cell*)cell toType:(CellType)type;
+
+// Check if someone won the game
+// If it does, go to game over scene
+- (void)checkVictory;
 
 - (void)setUserTurn:(BOOL)userTurn;
 

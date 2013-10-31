@@ -111,6 +111,29 @@
 	return [self.map cellAtX:x y:y];
 }
 
+- (void)checkVictory {
+	Player* winner = nil;
+	GameScene* game = (GameScene*)self.parent;
+	
+	for (Cell* cell in self.map.cells) {
+		if (cell.type != CellTypeEmpty && cell.type != CellTypeWall && cell.owner) {
+			if (!winner)
+				winner = cell.owner;
+			else if (winner != cell.owner) {
+				// No winner yet
+				game.userTurn = YES;
+				return;
+			}
+		}
+	}
+	
+	// We have a winner!
+	[self.plug close];
+	GameOverScene* nextScene = [[GameOverScene alloc] initWithSize:game.size winner:winner thisPlayer:game.thisPlayer];
+	nextScene.viewController = game.viewController;
+	[game.view presentScene:nextScene transition:[SKTransition doorwayWithDuration:1.5]];
+}
+
 // Process all users actions in this turn
 - (void)simulateTurn {
 	for (NSDictionary* turnActions in self.othersTurnActions) {
