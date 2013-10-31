@@ -8,6 +8,12 @@
 
 #import "GameScene.h"
 
+@interface GameScene()
+
+@property (nonatomic) BOOL gameEnded;
+
+@end
+
 @implementation GameScene
 
 - (void)loadGame:(id)game myId:(NSString*)myId plug:(Plug*)plug {
@@ -127,6 +133,7 @@
 	}
 	
 	// We have a winner!
+	self.gameEnded = YES;
 	[self.plug close];
 	GameOverScene* nextScene = [[GameOverScene alloc] initWithSize:self.size winner:winner thisPlayer:self.thisPlayer];
 	nextScene.viewController = self.viewController;
@@ -168,7 +175,9 @@
 }
 
 - (void)plug:(Plug*)plug hasClosedWithError:(BOOL)error {
-	[self.viewController dismissViewControllerAnimated:YES completion:nil];
+	if (!self.gameEnded)
+		// If the game has ended, it is normal to have the connection closed
+		[self.viewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)plug:(Plug*)plug receivedMessage:(PlugMsgType)type data:(id)data {
