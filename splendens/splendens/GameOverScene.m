@@ -17,12 +17,12 @@
 		SKLabelNode* label = [SKLabelNode labelNodeWithFontNamed:@"arial"];
 		label.text = [NSString stringWithFormat:winner==thisPlayer ? @"You won, %@!" : @"You lost, %@ won", winner.name];
 		[self addChild:label];
-		label.position = CGPointMake(x, y-25);
+		label.position = CGPointMake(x, y+30);
 		
 		TextButton* goBack = [[TextButton alloc] initWithText:@"Try again?"];
 		goBack.delegate = self;
 		[self addChild:goBack];
-		goBack.position = CGPointMake(x, y+25);
+		goBack.position = CGPointMake(x, y-30);
 	}
 	return self;
 }

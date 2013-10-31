@@ -9,6 +9,12 @@
 #import "Troop.h"
 #import "Economy.h"
 
+@interface Troop()
+
+@property (nonatomic) SKLabelNode* label;
+
+@end
+
 @implementation Troop
 
 - (id)initWithPath:(NSArray *)path amount:(int)amount {
@@ -33,11 +39,11 @@
 		// Set amount label
 		_amount = amount;
 		self.newAmount = amount;
-		SKLabelNode* label = [SKLabelNode labelNodeWithFontNamed:@"arial"];
-		label.text = [NSString stringWithFormat:@"%d", amount];
-		label.fontSize = 16;
-		label.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
-		[self.node addChild:label];
+		self.label = [SKLabelNode labelNodeWithFontNamed:@"arial"];
+		self.label.text = [NSString stringWithFormat:@"%d", amount];
+		self.label.fontSize = size*2/3;
+		self.label.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
+		[self.node addChild:self.label];
 	}
 	return self;
 }
@@ -51,7 +57,8 @@
 	SKLabelNode* label = (SKLabelNode*)self.node.children[0];
 	label.text = [NSString stringWithFormat:@"%d", amount];
 	float size = 2*self.currentCell.size.width*sqrt(amount/(50*M_PI));
-	self.node.size = CGSizeMake(size, size);
+	[self.node runAction:[SKAction resizeToWidth:size height:size duration:.5]];
+	self.label.fontSize = size*2/3;
 }
 
 @end

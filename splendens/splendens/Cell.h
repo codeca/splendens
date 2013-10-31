@@ -37,7 +37,6 @@ typedef enum {
 @property (nonatomic) int level; // not used for empty, wall and basic cells
 @property (nonatomic) Player* owner; // not used for empty and wall cells. nil means abandoned cell
 @property (nonatomic) NSArray* cellsInRange; // Store all cells in the tower range (nil if the cell is not a range)
-@property (nonatomic) BOOL overcrowded;
 
 // Create a new empty cell with the given position
 - (id)initWithX:(int)x y:(int)y size:(CGSize)size;
@@ -57,7 +56,5 @@ typedef enum {
 
 // Return a random point near the center of this cell (used to place troops)
 - (CGPoint)randomPointNear: (float) ratio;
-
-- (void)setOvercrowded:(BOOL)overcrowded;
 
 @end

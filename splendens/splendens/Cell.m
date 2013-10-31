@@ -115,11 +115,6 @@
 	_cellsInRange = nil;
 }
 
-- (void)setOvercrowded:(BOOL)overcrowded {
-	self.populationLabel.fontColor = overcrowded ? [UIColor magentaColor] : [UIColor whiteColor];
-	_overcrowded = overcrowded;
-}
-
 // Update the type overlay
 - (void)updateOverlay {
 	// Set size and texture overlay
@@ -136,6 +131,7 @@
 	if (self.owner) {
 		self.typeOverlay.colorBlendFactor = .75;
 		self.typeOverlay.color = self.owner.color;
+		[self.typeOverlay setScale:self.population>=[Economy maxPopulationForType:self.type level:self.level] ? 1.2 : 1];
 	} else
 		self.typeOverlay.colorBlendFactor = 0;
 	
