@@ -12,13 +12,16 @@
 
 - (id)initWithSize:(CGSize)size winner:(Player*)winner thisPlayer:(Player*)thisPlayer {
 	if (self = [super initWithSize:size]) {
+		CGPoint middle = CGPointMake(self.size.width/2, self.size.height/2);
 		SKLabelNode* label = [SKLabelNode labelNodeWithFontNamed:@"arial"];
 		label.text = [NSString stringWithFormat:winner==thisPlayer ? @"You won, %@!" : @"You lost, %@ won", winner.name];
 		[self addChild:label];
+		label.position = middle;
 		
 		TextButton* goBack = [[TextButton alloc] initWithText:@"Try again?"];
 		goBack.delegate = self;
 		[self addChild:goBack];
+		goBack.position = middle;
 	}
 	return self;
 }
