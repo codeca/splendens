@@ -107,6 +107,8 @@
 			if (cell.owner.maxMana > newMana)cell.owner.mana = newMana;
 			else cell.owner.mana = cell.owner.maxMana;
 		}
+		
+		cell.overcrowded = cell.population >= maxPop;
 	}
 	GameScene* game = (GameScene*)self.parent;
 	[game.bottomPanel update];

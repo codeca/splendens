@@ -14,11 +14,11 @@
 - (id)initWithPath:(NSArray *)path amount:(int)amount {
 	if (self = [super init]) {
 		Cell* firstCell = path[0];
-		float size = firstCell.size.width;
+		float size = 2*firstCell.size.width*sqrt(amount/(50*M_PI));
 		
 		// Create the node
 		self.node = [SKSpriteNode spriteNodeWithImageNamed:@"troop"];
-		self.node.size = CGSizeMake(size/2, size/2);
+		self.node.size = CGSizeMake(size, size);
 		self.node.xScale = self.node.yScale = 0;
 		self.node.position = [firstCell randomPointNear: 1];
 		[self.node runAction:[SKAction scaleTo:1 duration:.5]];
@@ -50,6 +50,8 @@
 	_amount = amount;
 	SKLabelNode* label = (SKLabelNode*)self.node.children[0];
 	label.text = [NSString stringWithFormat:@"%d", amount];
+	float size = 2*self.currentCell.size.width*sqrt(amount/(50*M_PI));
+	self.node.size = CGSizeMake(size, size);
 }
 
 @end
