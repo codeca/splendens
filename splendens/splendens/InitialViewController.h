@@ -20,6 +20,8 @@
 @property (weak, nonatomic) IBOutlet UIProgressView *matchProgress;
 @property (nonatomic) Plug* plug;
 
+- (void)startMultiplay;
+
 - (void)plug:(Plug *)plug hasClosedWithError:(BOOL)error;
 
 - (void)plug:(Plug *)plug receivedMessage:(PlugMsgType)type data:(id)data;

@@ -34,6 +34,10 @@
 	self.startButton.enabled = NO;
 }
 
+- (void)startMultiplay {
+	[self startMultiplay:nil];
+}
+
 - (IBAction)startMultiplay:(id)sender {
 	// Start the connection
 	self.plug = [Plug plug];

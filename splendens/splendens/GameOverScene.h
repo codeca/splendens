@@ -9,6 +9,7 @@
 #import <SpriteKit/SpriteKit.h>
 #import "Player.h"
 #import "TextButton.h"
+#import "InitialViewController.h"
 
 @interface GameOverScene : SKScene<TextButtonDelegate>
 

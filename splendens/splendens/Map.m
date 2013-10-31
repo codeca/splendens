@@ -118,10 +118,15 @@
 	[game.topPanel updateTotalPopulation];
 	
 	// Move troops
-	NSArray* deliveredTroops = [self moveTroops];
-	
-	// Wait for the movement animation
-	[NSTimer scheduledTimerWithTimeInterval:TOTAL_MOV_TIME target:self selector:@selector(processTowerAttacksAndTroopsDelivery:) userInfo:deliveredTroops repeats:NO];
+	if (self.troops) {
+		NSArray* deliveredTroops = [self moveTroops];
+		
+		// Wait for the movement animation
+		[NSTimer scheduledTimerWithTimeInterval:TOTAL_MOV_TIME target:self selector:@selector(processTowerAttacksAndTroopsDelivery:) userInfo:deliveredTroops repeats:NO];
+	} else {
+		// No need to wait to troop movements or tower attacks
+		[game checkVictory];
+	}
 }
 
 // Process all attacks after a while

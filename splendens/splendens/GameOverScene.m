@@ -12,22 +12,25 @@
 
 - (id)initWithSize:(CGSize)size winner:(Player*)winner thisPlayer:(Player*)thisPlayer {
 	if (self = [super initWithSize:size]) {
-		CGPoint middle = CGPointMake(self.size.width/2, self.size.height/2);
+		float x = self.size.width/2;
+		float y = self.size.height/2;
 		SKLabelNode* label = [SKLabelNode labelNodeWithFontNamed:@"arial"];
 		label.text = [NSString stringWithFormat:winner==thisPlayer ? @"You won, %@!" : @"You lost, %@ won", winner.name];
 		[self addChild:label];
-		label.position = middle;
+		label.position = CGPointMake(x, y-25);
 		
 		TextButton* goBack = [[TextButton alloc] initWithText:@"Try again?"];
 		goBack.delegate = self;
 		[self addChild:goBack];
-		goBack.position = middle;
+		goBack.position = CGPointMake(x, y+25);
 	}
 	return self;
 }
 
 - (void)textButtonClicked:(TextButton *)button {
+	InitialViewController* initialView = (InitialViewController*)self.viewController.presentingViewController;
 	[self.viewController dismissViewControllerAnimated:YES completion:nil];
+	[initialView startMultiplay];
 }
 
 @end
