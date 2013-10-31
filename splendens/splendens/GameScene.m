@@ -31,6 +31,7 @@
 			me = i;
 	}
 	self.players = players;
+	self.connectedPlayers = players.count;
 	self.thisPlayer = players[me];
 	
 	self.map = [[Map alloc] initWithDefinition:game[@"map"] myId:myId game:self];
@@ -59,7 +60,7 @@
 	[self.plug sendMessage:MSG_TURN_DATA data:@{@"player": self.thisPlayer.playerId, @"actions":self.turnActions}];
 	self.turnActions = [NSMutableArray array];
 	self.userTurn = NO;
-	if (self.othersTurnActions.count == self.players.count-1)
+	if (self.othersTurnActions.count == self.connectedPlayers-1)
 		[self simulateTurn];
 }
 
@@ -143,8 +144,16 @@
 - (void)plug:(Plug*)plug receivedMessage:(PlugMsgType)type data:(id)data {
 	if (type == MSG_TURN_DATA) {
 		[self.othersTurnActions addObject:data];
-		if (self.othersTurnActions.count == self.players.count-1 && !self.userTurn)
+		if (self.othersTurnActions.count == self.connectedPlayers-1 && !self.userTurn)
 			[self simulateTurn];
+	} else if (type == MSG_PLAYER_DISCONNECTED) {
+		NSString* playerId = data;
+		for (Player* player in self.players)
+			if ([player.playerId isEqualToString:playerId]) {
+				player.disconnected = YES;
+				break;
+			}
+		self.connectedPlayers--;
 	}
 }
 

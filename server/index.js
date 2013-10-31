@@ -6,7 +6,6 @@ var getRandomMap = require("./maps.js").getRandomMap
 require("./setIp.js")
 
 // Constants
-var MSG_DEBUG = -2
 var MSG_PLAYER_DISCONNECTED = -1
 var MATCH_TYPE_UNKNOW = 0
 var MATCH_TYPE_SIMPLE = 1
@@ -30,10 +29,7 @@ function broadcast(players, type, data, ignoreThis) {
 
 // Treat each new message from a device
 function onmessage(type, data) {
-    if (type == MSG_DEBUG) {
-        // Debug
-        this.sendMessage(MSG_DEBUG, getRandomMap(Math.floor(Math.random()*3)+2))
-    } else if (this.game) {
+    if (this.game) {
 		// Broadcast the message
 		broadcast(this.game.players, type, data, this)
 	} else if (simpleMatch.handleMessage(this, type, data))

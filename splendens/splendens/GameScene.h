@@ -30,6 +30,7 @@ typedef enum {
 @property (nonatomic) Map* map;
 @property (nonatomic) NSArray* players;
 @property (nonatomic) Player* thisPlayer;
+@property (nonatomic) int connectedPlayers;
 @property (nonatomic) BottomPanel* bottomPanel;
 @property (nonatomic) TopPanel* topPanel;
 
