@@ -71,7 +71,7 @@
 	[self.plug sendMessage:MSG_TURN_DATA data:@{@"player": self.thisPlayer.playerId, @"actions":self.turnActions}];
 	self.turnActions = [NSMutableArray array];
 	self.userTurn = NO;
-	// TODO: self.thisPlayer.turnReady = YES;
+	[self.topPanel playerTurnReady:self.thisPlayer];
 	if (self.othersTurnActions.count == self.connectedPlayers-1)
 		[self simulateTurn];
 }
@@ -112,6 +112,9 @@
 	
 	//update total pop after upgrading
 	[self.topPanel updateTotalPopulation];
+	
+	//update Max Mana after upgrading
+	[self.topPanel updateMaxMana];
 }
 
 // Return the cell in the x and y position given by the dictionary
@@ -177,8 +180,7 @@
 	self.othersTurnActions = [NSMutableArray array];
 	
 	// Reset all player turnReady flags
-	for (Player* player in self.players);
-		// TODO: player.turnReady = NO;
+	[self.topPanel playersTurnReset];
 	
 	[self.map processTurn];
 }
@@ -199,11 +201,11 @@
 - (void)plug:(Plug*)plug receivedMessage:(PlugMsgType)type data:(id)data {
 	if (type == MSG_TURN_DATA) {
 		[self.othersTurnActions addObject:data];
-		// TODO: [self playerById:data[@"player"]].turnReady = YES;
+		[self.topPanel playerTurnReady:[self playerById:data[@"player"]]];
 		if (self.othersTurnActions.count == self.connectedPlayers-1 && !self.userTurn)
 			[self simulateTurn];
 	} else if (type == MSG_PLAYER_DISCONNECTED) {
-		// TODO: [self playerById:data].disconnected = YES;
+		[self.topPanel playerDisconnection:[self playerById:data]];
 		self.connectedPlayers--;
 	}
 }

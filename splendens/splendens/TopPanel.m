@@ -40,6 +40,7 @@
 			
 			SKSpriteNode *cell;
 			SKLabelNode *name,*mana;
+			SKSpriteNode *ready;
 			
 			float red,green,blue,alpha;
 			[i.color getRed:&red green:&green blue:&blue alpha:&alpha];
@@ -63,11 +64,17 @@
 			mana.name = @"mana";
 			mana.fontSize = 20;
 			[cell addChild:mana];
-
-			if (name.frame.size.width+mana.frame.size.width+2>cell.frame.size.width) name.text = [i.name substringToIndex:17];
-			dxx = (cell.size.width - mana.frame.size.width - name.frame.size.width)/3;
-			name.position = CGPointMake(-cell.size.width/2+dxx+name.frame.size.width/2, 0);
-			mana.position = CGPointMake(cell.size.width/2-dxx-mana.frame.size.width/2, 0);
+			
+			ready = [SKSpriteNode spriteNodeWithImageNamed:@"check"];
+			ready.name = @"ready";
+			ready.alpha = 0;
+			[cell addChild:ready];
+			
+			if (name.frame.size.width+mana.frame.size.width+ready.size.width>cell.frame.size.width) name.text = [i.name substringToIndex:17];
+			dxx = (cell.size.width - mana.frame.size.width - name.frame.size.width - ready.size.width)/4;
+			ready.position = CGPointMake(-cell.size.width/2+dxx+ready.size.width/2, 0);
+			name.position = CGPointMake(-cell.size.width/2+2*dxx+ready.size.width+name.frame.size.width/2, 0);
+			mana.position = CGPointMake(-cell.size.width/2+3*dxx+ready.size.width+name.frame.size.width+mana.frame.size.width/2, 0);
 		}
 		
 		for (Player* i in game.players){
@@ -159,7 +166,7 @@
 	NSString* name = [NSString stringWithFormat:@"celula%d",index];
 	SKSpriteNode* cell = (SKSpriteNode*)[self childNodeWithName:name];
 
-	[cell runAction: [SKAction colorizeWithColor:[UIColor grayColor] colorBlendFactor:0 duration:0.5]];
+	[cell runAction: [SKAction colorizeWithColor:[UIColor colorWithRed:.5 green:.5 blue:.5 alpha:.75] colorBlendFactor:0 duration:0.5]];
 }
 
 - (void) playerTurnReady: (Player*) player{
@@ -167,11 +174,26 @@
 	int index = [game.players indexOfObject:player];
 	NSString* name = [NSString stringWithFormat:@"celula%d",index];
 	SKSpriteNode* cell = (SKSpriteNode*)[self childNodeWithName:name];
+	SKNode* ready;
+	ready = [cell childNodeWithName:@"ready"];
 	
-	[cell runAction: [SKAction colorizeWithColor:[UIColor magentaColor] colorBlendFactor:0 duration:0.5]];
+	[ready runAction: [SKAction fadeInWithDuration:0.5]];
+	
 }
 
+- (void) playersTurnReset {
+	GameScene* game = (GameScene*)self.parent;
+	for (int i=0; i<game.players.count; i++) {
+		
+		NSString* name = [NSString stringWithFormat:@"celula%d", i];
+		SKNode* cell = [self childNodeWithName:name];
+		[cell removeAllActions];
 
-
+		SKNode* ready;
+		ready = [cell childNodeWithName:@"ready"];
+		
+		[ready runAction: [SKAction fadeOutWithDuration:0.5]];
+	}
+}
 
 @end

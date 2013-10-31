@@ -38,6 +38,7 @@
 		self.nextTurn.delegate = self;
 		
 		self.upgradeButton = [[TextButton alloc] initWithImage:@"arrow"];
+		self.upgradeButton.colorBlendFactor = 1;
 		self.upgradeButton.delegate = self;
 		
 
@@ -166,26 +167,31 @@
 			SKLabelNode* popCost = [[SKLabelNode alloc] initWithFontNamed:@"Arial"];
 			SKLabelNode* manaCost = [[SKLabelNode alloc] initWithFontNamed:@"Arial"];
 			if (selectedCell.level<4){
+				int popCostValue = [Economy upgradePopulationCostForType:selectedCell.type level:selectedCell.level+1];
+				int manaCostValue = [Economy upgradeManaCostForType:selectedCell.type level:selectedCell.level+1];
 				[self.table addChild: self.upgradeButton];
 				NSString* temp;
-				temp = [NSString stringWithFormat:@"%d",[Economy upgradePopulationCostForType:selectedCell.type level:selectedCell.level+1]];
+				temp = [NSString stringWithFormat:@"%d",popCostValue];
 				popCost.text = temp;
 				popCost.fontSize = fontSize;
 				popCost.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
 				popCost.fontColor = [UIColor greenColor];
-				if ([Economy upgradePopulationCostForType:selectedCell.type level:selectedCell.level+1] > selectedCell.population) popCost.fontColor = [UIColor redColor];
+				
+				if (popCostValue > selectedCell.population) popCost.fontColor = [UIColor redColor];
 				[self.upgradeButton addChild:popCost];
 				popCost.position = CGPointMake(0, self.upgradeButton.size.height/2+dy2+popCost.frame.size.height/2);
-				if ([Economy upgradeManaCostForType:selectedCell.type level:selectedCell.level+1] > 0){
-					temp = [NSString stringWithFormat:@"%d",[Economy upgradeManaCostForType:selectedCell.type level:selectedCell.level+1]];
+				if (manaCostValue > 0){
+					temp = [NSString stringWithFormat:@"%d",manaCostValue];
 					manaCost.text = temp;
 					manaCost.fontSize = fontSize;
 					manaCost.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
 					manaCost.fontColor = [UIColor blueColor];
-					if ([Economy upgradeManaCostForType:selectedCell.type level:selectedCell.level+1] > game.thisPlayer.mana) manaCost.fontColor = [UIColor redColor];
+					if (manaCostValue > game.thisPlayer.mana) manaCost.fontColor = [UIColor redColor];
 					[self.upgradeButton addChild:manaCost];
 					manaCost.position = CGPointMake(0, - self.upgradeButton.size.height/2-dy2-manaCost.frame.size.height/2);
 				}
+				if (popCostValue<selectedCell.population && (manaCostValue == -1 || manaCostValue < game.thisPlayer.mana)) self.upgradeButton.color = [UIColor colorWithRed:0 green:0.5 blue:0 alpha:1];
+				else self.upgradeButton.color = [UIColor colorWithRed:0.5 green:0 blue:0 alpha:1];
 			}
 			if (selectedCell.type == CellTypeBasic){
 				

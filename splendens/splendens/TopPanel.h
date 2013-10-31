@@ -21,4 +21,10 @@
 
 - (void) updateTotalPopulation;
 
+- (void) playerTurnReady: (Player*) player;
+
+- (void) playersTurnReset;
+
+- (void) playerDisconnection: (Player*) player;
+
 @end
