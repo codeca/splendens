@@ -31,10 +31,10 @@
 	if (type == CellTypeCity && level == 2) return 45;
 	if (type == CellTypeCity && level == 3) return 60;
 	if (type == CellTypeCity && level == 4) return 75;
-	if (type == CellTypeTower && level == 1) return 20;
-	if (type == CellTypeTower && level == 2) return 30;
-	if (type == CellTypeTower && level == 3) return 40;
-	if (type == CellTypeTower && level == 4) return 50;
+	if (type == CellTypeTower && level == 1) return 10;
+	if (type == CellTypeTower && level == 2) return 20;
+	if (type == CellTypeTower && level == 3) return 30;
+	if (type == CellTypeTower && level == 4) return 40;
 	if (type == CellTypeLab && level == 1) return 20;
 	if (type == CellTypeLab && level == 2) return 30;
 	if (type == CellTypeLab && level == 3) return 40;
@@ -66,9 +66,9 @@
 	if (type == CellTypeCity && level == 3) return 1;
 	if (type == CellTypeCity && level == 4) return 1;
 	if (type == CellTypeTower && level == 1) return 2;
-	if (type == CellTypeTower && level == 2) return 3;
-	if (type == CellTypeTower && level == 3) return 4;
-	if (type == CellTypeTower && level == 4) return 5;
+	if (type == CellTypeTower && level == 2) return 2;
+	if (type == CellTypeTower && level == 3) return 3;
+	if (type == CellTypeTower && level == 4) return 4;
 	if (type == CellTypeLab && level == 1) return 1;
 	if (type == CellTypeLab && level == 2) return 1;
 	if (type == CellTypeLab && level == 3) return 1;
@@ -85,9 +85,9 @@
 }
 
 + (int)attackDamageForTowerLevel:(int)level {
-	if (level == 1) return 2;
+	if (level == 1) return 3;
 	if (level == 2) return 3;
-	if (level == 3) return 3;
+	if (level == 3) return 4;
 	if (level == 4) return 4;
 	return -1;
 }
