@@ -10,6 +10,8 @@
 #import "Map.h"
 #import "Player.h"
 #import "GameScene.h"
+#import "Map.h"
+#import "Economy.h"
 
 
 @implementation TopPanel
@@ -20,16 +22,19 @@
 		self.position = CGPointMake(768/2, (1024+self.size.height+MAP_SIZE+25)/2);
 		self.name = @"topPanel";
 		
+		int x,y,dx1,dx2,by,dxx,dxbar;
+		dx1 = 15;
+		dx2 = 5;
+		x = (MAP_SIZE-2*dx1-dx2)/2;
+		y = 25;
+		by = 115 - 2*dx1 - 2*dx2 - 2*y;
+		dxbar = 5;
 		
-		int x,y,dx,by,dxx;
-		dx = 10;
-		x = (MAP_SIZE-3*dx)/2;
-		y = 30;
-		by = 115 - 4*dx - 2*y;
-		dxx = 5;
 		SKSpriteNode* populationBar;
-		populationBar = [SKSpriteNode spriteNodeWithColor:[UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:0.5] size:CGSizeMake(MAP_SIZE-2*dx, by)];
-		populationBar.position = CGPointMake(0, 115/2 - dx-by/2);
+		populationBar = [SKSpriteNode spriteNodeWithColor:[UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:0.5] size:CGSizeMake(MAP_SIZE-2*dx1, by)];
+		populationBar.position = CGPointMake(0, 115/2 - dx1-by/2);
+		populationBar.anchorPoint = CGPointMake(-populationBar.size.width/2+dxbar, 0);
+		[self addChild:populationBar];
 		
 		
 		for (Player* i in game.players) {
@@ -38,43 +43,75 @@
 			SKSpriteNode *cell;
 			SKLabelNode *name,*mana;
 			
+			float red,green,blue,alpha;
+			[i.color getRed:&red green:&green blue:&blue alpha:&alpha];
+			UIColor* color = [UIColor colorWithRed:red green:green blue:blue alpha:0.75];
 			
-			cell = [SKSpriteNode spriteNodeWithColor:i.color size:CGSizeMake(x,y)];
-			cell.position = CGPointMake(-x/2-dx/2 + ((int)index/2)*(x+dx), 115/2-dx*2-by-y/2 - index%2*(y+dx));
+			cell = [SKSpriteNode spriteNodeWithColor:color size:CGSizeMake(x,y)];
+			cell.position = CGPointMake(-x/2-dx2/2 + ((int)index/2)*(x+dx2), 115/2-dx1-dx2-by-y/2 - index%2*(y+dx2));
 			cell.name = [NSString stringWithFormat:@"celula%d",index];
 			[self addChild:cell];
 			
 			name  = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
 			name.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
 			name.text = i.name;
-			name.position = CGPointMake(0, cell.size.height/2-dxx-name.frame.size.height/2);
 			name.name = @"name";
 			name.fontSize = 20;
 			[cell addChild:name];
 			
 			mana = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
+			mana.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
 			mana.text = [NSString stringWithFormat:@"Mana %d/%d",i.mana,i.maxMana];
 			mana.name = @"mana";
 			mana.fontSize = 20;
-			mana.position = CGPointMake(0, -cell.size.height/2+dxx+mana.frame.size.height/2);
 			[cell addChild:mana];
+
+			if (name.frame.size.width+mana.frame.size.width+2>cell.frame.size.width) name.text = [i.name substringToIndex:17];
+			dxx = (cell.size.width - mana.frame.size.width - name.frame.size.width)/3;
+			name.position = CGPointMake(-cell.size.width/2+dxx+name.frame.size.width/2, 0);
+			mana.position = CGPointMake(cell.size.width/2-dxx-mana.frame.size.width/2, 0);
 		}
 	}
 
 	return self;
 }
 
-- (void) update{
-	GameScene* gameScene = (GameScene*) self.parent;
+- (void) updateMaxMana{
+	GameScene* game = (GameScene*) self.parent;
+	Map* map = game.map;
 	
-	for (Player* i in gameScene.players){
-		int index = [gameScene.players indexOfObject:i];
+	for (Player* i in game.players){
+		i.maxMana = 10;
+	}
+	for (Cell* i in map.cells) {
+		if (i.type == CellTypeLab && i.owner != nil){
+			i.owner.maxMana += [Economy bonusMaxManaForLabLevel:i.level];
+		}
+	}
+	
+	for (Player* i in game.players){
+		int index = [game.players indexOfObject:i];
 		
 		SKSpriteNode *cell = (SKSpriteNode*)[self childNodeWithName:[NSString stringWithFormat:@"celula%d",index]];
 		SKLabelNode *mana = (SKLabelNode*)[cell childNodeWithName:[NSString stringWithFormat:@"mana"]];
 		mana.text = [NSString stringWithFormat:@"Mana %d/%d",i.mana,i.maxMana];
 	}
+}
+
+- (void) updateTotalPopulation{
+	GameScene* game = (GameScene*)self.parent;
+	Map* map = game.map;
+	
+	for (Player* i in game.players){
+		i.totalPopulation = 0;
+	}
+	for (Cell* i in map.cells) {
+		if (i.owner != nil){
+			i.owner.totalPopulation += i.population;
+		}
+	}
 	
 }
+
 
 @end

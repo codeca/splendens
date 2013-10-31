@@ -110,8 +110,13 @@
 		}
 	}
 	GameScene* game = (GameScene*)self.parent;
-	[game.topPanel update];
 	[game.bottomPanel update];
+	
+	//update totalPopulation after process population creation
+	[game.topPanel updateTotalPopulation];
+	
+	//update MaxMana after upgrades
+	[game.topPanel updateTotalPopulation];
 	
 	// Move troops
 	NSArray* deliveredTroops = [self moveTroops];
@@ -260,6 +265,10 @@
 	Troop* troop = [[Troop alloc] initWithPath:path amount:amount];
 	[self.troops addObject:troop];
 	[self addChild:troop.node];
+	
+	//update totalPopulation after send troops
+	GameScene* game = (GameScene*) self.parent;
+	[game.topPanel updateTotalPopulation];
 }
 
 // Move each troop and return all troops that got delivered in this turn
@@ -364,18 +373,13 @@
 			[bottomPanel update];
 		}
 	}
+	
+	//update totalPopulation after attacks
+	[game.topPanel updateTotalPopulation];
+	
+	//update maxMana after attacks
+	[game.topPanel updateMaxMana];
 }
 
-- (void) updateMana{
-	GameScene* game = (GameScene*)self.parent;
-	for (Player* i in game.players){
-		i.maxMana = 10;
-	}
-	for (Cell* i in self.cells) {
-		if (i.type == CellTypeLab && i.owner != nil){
-			i.owner.maxMana += [Economy bonusMaxManaForLabLevel:i.level];
-		}
-	}
-}
 
 @end

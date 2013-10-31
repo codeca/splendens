@@ -18,5 +18,6 @@
 @property (nonatomic) NSString* name;
 @property (nonatomic) NSString* playerId;
 @property (nonatomic) UIColor* color;
+@property (nonatomic) int totalPopulation;
 
 @end

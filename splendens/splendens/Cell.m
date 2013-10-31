@@ -344,6 +344,7 @@
 			previous = now;
 		}
 	}
+	
 }
 
 - (void)stopedDragToCell:(Cell*)cell {
@@ -358,6 +359,7 @@
 	for (Cell* i in map.lastPath)
 		i.pathFocus.hidden = YES;
 	map.lastPath = nil;
+	
 }
 
 - (void) upgradeTo: (CellType)type{
@@ -381,6 +383,7 @@
 			self.population -= popCost;
 			self.owner.mana -= manaCost;
 			self.level += 1;
+			
 		}
 	}
 	

@@ -23,6 +23,7 @@
 		NSString* playerId = gamePlayers[i][@"id"];
 		player.mana = mana;
 		player.maxMana = 10;
+		player.totalPopulation = 0;
 		player.color = colors[i];
 		player.name = gamePlayers[i][@"name"];
 		player.playerId = playerId;
@@ -45,6 +46,10 @@
 	
 	self.topPanel = [[TopPanel alloc] initWithGame:self];
 	[self addChild:self.topPanel];
+	
+	//update maxMana and totalPopulation on load
+	[self.topPanel updateMaxMana];
+	[self.topPanel updateTotalPopulation];
 	
 	self.turnActions = [NSMutableArray array];
 	self.othersTurnActions = [NSMutableArray array];
@@ -72,6 +77,9 @@
 	[self.turnActions addObject:action];
 	
 	[self.map sendTroop:path];
+	
+	//update total pop after sending troops
+	[self.topPanel updateTotalPopulation];
 }
 
 - (void)upgradeCell:(Cell *)cell toType:(CellType)type {

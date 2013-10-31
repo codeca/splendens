@@ -67,8 +67,10 @@
 				[game upgradeCell:cell toType:CellTypeLab];
 			self.selected = nil;
 		}
-		TopPanel* topPanel = (TopPanel*) [game childNodeWithName:@"topPanel"];
-		[topPanel update];
+		if (self.selected == self.lab || cell.type == CellTypeLab){
+			TopPanel* topPanel = (TopPanel*) [game childNodeWithName:@"topPanel"];
+			[topPanel updateMaxMana];
+		}
 	}
 	else if(button == self.nextTurn) {
 		[game endMyTurn];

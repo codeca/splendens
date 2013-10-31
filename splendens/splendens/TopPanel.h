@@ -17,6 +17,8 @@
 
 - (id)initWithGame:(GameScene*)game;
 
-- (void)update;
+- (void)updateMaxMana;
+
+- (void) updateTotalPopulation;
 
 @end
