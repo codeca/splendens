@@ -352,7 +352,7 @@
 	GameScene* game = (GameScene*)map.parent;
 	
 	// Send troops if possible
-	if (game.userTurn && [cell isCenter] && self.population)
+	if (self.isCenter && self.owner == game.thisPlayer && self.population && game.userTurn && [cell isCenter])
 		[game sendUserTroop:map.lastPath];
 	
 	// Clear the previous focused path
