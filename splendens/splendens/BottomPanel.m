@@ -32,6 +32,7 @@
 		self.nextTurn = [[TextButton alloc] initWithText:@"Next turn"];
 		self.nextTurn.position = CGPointMake(self.size.width/2-100, 0);
 		self.nextTurn.hidden = YES;
+		self.nextTurn.userInteractionEnabled = NO;
 		[self addChild:self.nextTurn];
 		self.nextTurnDisabled = YES;
 		self.nextTurn.delegate = self;
@@ -46,6 +47,7 @@
 
 - (void) setNextTurnDisabled:(BOOL)nextTurnDisabled{
 	self.nextTurn.hidden = nextTurnDisabled;
+	self.nextTurn.userInteractionEnabled = !nextTurnDisabled;
 	_nextTurnDisabled = nextTurnDisabled;
 }
 
