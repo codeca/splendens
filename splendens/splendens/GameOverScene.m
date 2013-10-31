@@ -15,7 +15,10 @@
 		float x = self.size.width/2;
 		float y = self.size.height/2;
 		SKLabelNode* label = [SKLabelNode labelNodeWithFontNamed:@"arial"];
-		label.text = [NSString stringWithFormat:winner==thisPlayer ? @"You won, %@!" : @"You lose, %@ won", winner.name];
+		if (winner)
+			label.text = [NSString stringWithFormat:winner==thisPlayer ? @"You won, %@!" : @"You lose, %@ won", winner.name];
+		else
+			label.text = @"You lose";
 		[self addChild:label];
 		label.position = CGPointMake(x, y+30);
 		

@@ -134,18 +134,20 @@
 				winner = cell.owner;
 			else if (winner != cell.owner) {
 				// No winner yet
-				self.userTurn = YES;
-				return;
+				winner = nil;
+				break;
 			}
 		}
 	}
 	
-	// We have a winner!
-	self.gameEnded = YES;
-	[self.plug close];
-	GameOverScene* nextScene = [[GameOverScene alloc] initWithSize:self.size winner:winner thisPlayer:self.thisPlayer];
-	nextScene.viewController = self.viewController;
-	[self.view presentScene:nextScene transition:[SKTransition doorwayWithDuration:1.5]];
+	if (winner || !self.thisPlayer.totalPopulation) {
+		self.gameEnded = YES;
+		[self.plug close];
+		GameOverScene* nextScene = [[GameOverScene alloc] initWithSize:self.size winner:winner thisPlayer:self.thisPlayer];
+		nextScene.viewController = self.viewController;
+		[self.view presentScene:nextScene transition:[SKTransition doorwayWithDuration:1.5]];
+	} else
+		self.userTurn = YES;
 }
 
 // Process all users actions in this turn
