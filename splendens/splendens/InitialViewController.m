@@ -51,9 +51,12 @@
 	self.waitMatchView.hidden = NO;
 	self.name = self.nameInput.text;
 	self.myId = [[NSUUID UUID] UUIDString];
-	self.want2 = ((UISwitch*)self.playersSwitch[0]).on;
-	self.want3 = ((UISwitch*)self.playersSwitch[1]).on;
-	self.want4 = ((UISwitch*)self.playersSwitch[2]).on;
+	for (int i=0; i<3; i++) {
+		UISwitch* view = self.playersSwitch[i];
+		if (view.tag == 2) self.want2 = view.on;
+		else if (view.tag == 3) self.want3 = view.on;
+		else if (view.tag == 4) self.want4 = view.on;
+	}
 	NSDictionary* data = @{@"want2": [NSNumber numberWithBool:self.want2],
 						   @"want3": [NSNumber numberWithBool:self.want3],
 						   @"want4": [NSNumber numberWithBool:self.want4],
