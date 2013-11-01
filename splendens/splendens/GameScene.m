@@ -12,6 +12,11 @@
 
 @property (nonatomic) BOOL gameEnded;
 
+// Save the next generated bonus drop
+// It's created by addRandomBonus
+// Applyed right at the beginning of the next turn
+@property (nonatomic) NSDictionary* nextBonus;
+
 @end
 
 @implementation GameScene
@@ -67,11 +72,52 @@
 	self.bottomPanel.nextTurnDisabled = !userTurn;
 }
 
+// Add a random bonus to the strongest neutral cell in the map
+- (void)addRandomBonus {
+	// Find the strongest neutral cell
+	NSLog(@"(void)addRandomBonus");
+	Cell* target = nil;
+	int maxStrength = 0;
+	for (Cell* cell in self.map.cells) {
+		if ([cell isCenter] && !cell.owner && cell.bonus == BonusNone) {
+			int strength = cell.population*[Economy armorForType:cell.type level:cell.level];
+			if (strength > maxStrength) {
+				maxStrength = strength;
+				target = cell;
+			}
+		}
+	}
+	
+	if (target) {
+		BonusType bonus = (BonusType)(arc4random_uniform(3)+1);
+		NSDictionary* dic = @{@"type": [NSNumber numberWithInteger:TurnActionBonus],
+							  @"x": [NSNumber numberWithInteger:target.x],
+							  @"y": [NSNumber numberWithInteger:target.y],
+							  @"bonus": [NSNumber numberWithInteger:bonus]}
+		self.nextBonus = dic;
+		[self.turnActions addObject:dic];
+	}
+}
+
 - (void)endMyTurn {
+	// Try to add a random bonus if it's the first player
+	BOOL firstPlayer = NO;
+	for (Player* player in self.players)
+		if (!player.disconnected) {
+			firstPlayer = player==self.thisPlayer;
+			break;
+		}
+	if (firstPlayer && arc4random_uniform(10) == 7)
+		[self addRandomBonus];
+	
+	// Group all actions and send
 	[self.plug sendMessage:MSG_TURN_DATA data:@{@"player": self.thisPlayer.playerId, @"actions":self.turnActions}];
+	
+	// Set turn state to done
 	self.turnActions = [NSMutableArray array];
 	self.userTurn = NO;
 	[self.topPanel playerTurnReady:self.thisPlayer];
+	
 	if (self.othersTurnActions.count == self.connectedPlayers-1)
 		[self simulateTurn];
 }
@@ -129,7 +175,7 @@
 	
 	// Check if there is only 1 connected player with cells
 	for (Cell* cell in self.map.cells) {
-		if (cell.type != CellTypeEmpty && cell.type != CellTypeWall && cell.owner && !cell.owner.disconnected) {
+		if ([cell isCenter] && cell.owner && !cell.owner.disconnected) {
 			if (!winner)
 				winner = cell.owner;
 			else if (winner != cell.owner) {
@@ -167,6 +213,8 @@
 					[path2 addObject:[self cellForXY:cellDic]];
 				
 				[self.map sendTroop:path2];
+			} else if (type == TurnActionBonus) {
+				self.nextBonus = action;
 			} else {
 				Cell* cell = [self cellForXY:action];
 				if (type == TurnActionUpgrade)
@@ -185,6 +233,14 @@
 	// Reset all player turnReady flags
 	[self.topPanel playersTurnReset];
 	
+	if (self.nextBonus) {
+		int x = [self.nextBonus[@"x"] integerValue];
+		int y = [self.nextBonus[@"y"] integerValue];
+		BonusType bonus = (BonusType)[self.nextBonus[@"bonus"] integerValue];
+		Cell* target = [self.map cellAtX:x y:y];
+		target.bonus = bonus;
+		self.nextBonus = nil;
+	}
 	[self.map processTurn];
 }
 

@@ -15,14 +15,24 @@
 #import "Player.h"
 #import "TopPanel.h"
 #import "GameOverScene.h"
+#import "Economy.h"
 
 typedef enum {
 	TurnActionSendTroop,
 	TurnActionUpgrade,
 	TurnActionUpgradeToCity,
 	TurnActionUpgradeToTower,
-	TurnActionUpgradeToLab
+	TurnActionUpgradeToLab,
+	TurnActionBonus
 } TurnActionType;
+
+// Possible cell bonus
+typedef enum {
+	BonusNone = 0,
+	BonusPopulation,
+	BonusArmor,
+	BonusSpeed
+} BonusType;
 
 // The main scene, for the game itself
 @interface GameScene : SKScene <PlugDelegate>

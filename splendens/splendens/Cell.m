@@ -115,6 +115,11 @@
 	_cellsInRange = nil;
 }
 
+- (void)setBonus:(BonusType)bonus {
+	NSLog("added bonus to cell at (%d, %d): %d", self.x, self.y, bonus);
+	_bonus = bonus;
+}
+
 // Update the type overlay
 - (void)updateOverlay {
 	// Set size and texture overlay

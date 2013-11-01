@@ -1,3 +1,4 @@
+
 //
 //  MapCell.h
 //  splendens
@@ -6,9 +7,12 @@
 //  Copyright (c) 2013 Codeca. All rights reserved.
 //
 
+@class cell;
+
 #import <Foundation/Foundation.h>
 #import <SpriteKit/SpriteKit.h>
 #import "Player.h"
+#import "GameScene.h"
 
 // Possible cell types
 typedef enum {
@@ -37,12 +41,15 @@ typedef enum {
 @property (nonatomic) int level; // not used for empty, wall and basic cells
 @property (nonatomic) Player* owner; // not used for empty and wall cells. nil means abandoned cell
 @property (nonatomic) NSArray* cellsInRange; // Store all cells in the tower range (nil if the cell is not a range)
+@property (nonatomic) BonusType bonus;
 
 // Create a new empty cell with the given position
 - (id)initWithX:(int)x y:(int)y size:(CGSize)size;
 
 - (void) upgradeTo: (CellType)type;
 - (void) upgrade;
+
+- (void)setBonus:(BonusType)bonus;
 
 // Force the texture update
 - (void)updateOverlay;
