@@ -8,7 +8,6 @@
 
 #import "InitialViewController.h"
 #import "GameViewController.h"
-#import "FakePlayer.h"
 
 @interface InitialViewController ()
 
@@ -17,7 +16,6 @@
 @property (nonatomic) BOOL want2;
 @property (nonatomic) BOOL want3;
 @property (nonatomic) BOOL want4;
-@property (nonatomic) NSMutableArray* fakePlayers;
 @property (nonatomic) CGPoint outside;
 
 @end
@@ -46,12 +44,6 @@
 
 - (void)startMultiplay {
 	[self startMultiplay:nil];
-}
-
-- (IBAction)createFakePlayer:(id)sender {
-	if (!self.fakePlayers)
-		self.fakePlayers = [NSMutableArray array];
-	[self.fakePlayers addObject:[[FakePlayer alloc] init]];
 }
 
 - (IBAction)startMultiplay:(id)sender {
