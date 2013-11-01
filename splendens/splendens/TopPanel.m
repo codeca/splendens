@@ -46,7 +46,7 @@
 			UIColor* color = [UIColor colorWithRed:red green:green blue:blue alpha:0.75];
 			
 			cell = [SKSpriteNode spriteNodeWithColor:color size:CGSizeMake(x,y)];
-			cell.position = CGPointMake(-x/2-dx2/2 + ((int)index/2)*(x+dx2), 115/2-dx1-dx2-by-y/2 - index%2*(y+dx2));
+			cell.position = CGPointMake(-x/2-dx2/2 + (index%2)*(x+dx2), 115/2-dx1-dx2-by-y/2 - (index/2)*(y+dx2));
 			cell.name = [NSString stringWithFormat:@"celula%d",index];
 			[self addChild:cell];
 			

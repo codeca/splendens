@@ -49,6 +49,7 @@
 	
 	self.map = [[Map alloc] initWithDefinition:game[@"map"] myId:myId game:self];
 	self.map.game = self;
+	self.map.zPosition = 1;
 	[self addChild:self.map];
 	
 	self.plug = plug;

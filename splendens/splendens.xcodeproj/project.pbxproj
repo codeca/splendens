@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		98560D201823C71E005A83CD /* FakePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 98560D1F1823C71E005A83CD /* FakePlayer.m */; };
+		98560D221823D8EE005A83CD /* star@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 98560D211823D8EE005A83CD /* star@2X.png */; };
 		98DF309918181E620092E8A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98DF309818181E620092E8A7 /* Foundation.framework */; };
 		98DF309B18181E620092E8A7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98DF309A18181E620092E8A7 /* CoreGraphics.framework */; };
 		98DF309D18181E620092E8A7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98DF309C18181E620092E8A7 /* UIKit.framework */; };
@@ -27,7 +28,6 @@
 		98DF30D6181825820092E8A7 /* Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = 98DF30D5181825820092E8A7 /* Cell.m */; };
 		98DF30D91818258F0092E8A7 /* Map.m in Sources */ = {isa = PBXBuildFile; fileRef = 98DF30D81818258F0092E8A7 /* Map.m */; };
 		98DF30DC18182C9E0092E8A7 /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 98DF30DB18182C9E0092E8A7 /* Player.m */; };
-		98DF30E1181848E30092E8A7 /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 98DF30E0181848E20092E8A7 /* star.png */; };
 		98DF3113181937570092E8A7 /* basic@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 98DF3103181937570092E8A7 /* basic@2X.png */; };
 		98DF3114181937570092E8A7 /* basic2@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 98DF3104181937570092E8A7 /* basic2@2X.png */; };
 		98DF3115181937570092E8A7 /* beta@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 98DF3105181937570092E8A7 /* beta@2X.png */; };
@@ -124,6 +124,7 @@
 /* Begin PBXFileReference section */
 		98560D1E1823C71E005A83CD /* FakePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FakePlayer.h; sourceTree = "<group>"; };
 		98560D1F1823C71E005A83CD /* FakePlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FakePlayer.m; sourceTree = "<group>"; };
+		98560D211823D8EE005A83CD /* star@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star@2X.png"; sourceTree = "<group>"; };
 		98DF309518181E620092E8A7 /* splendens.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = splendens.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		98DF309818181E620092E8A7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		98DF309A18181E620092E8A7 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -152,7 +153,6 @@
 		98DF30D81818258F0092E8A7 /* Map.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Map.m; sourceTree = "<group>"; };
 		98DF30DA18182C9E0092E8A7 /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
 		98DF30DB18182C9E0092E8A7 /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Player.m; sourceTree = "<group>"; };
-		98DF30E0181848E20092E8A7 /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = star.png; path = ../star.png; sourceTree = "<group>"; };
 		98DF3103181937570092E8A7 /* basic@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "basic@2X.png"; sourceTree = "<group>"; };
 		98DF3104181937570092E8A7 /* basic2@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "basic2@2X.png"; sourceTree = "<group>"; };
 		98DF3105181937570092E8A7 /* beta@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "beta@2X.png"; sourceTree = "<group>"; };
@@ -369,6 +369,7 @@
 		98DF30E21819317B0092E8A7 /* sprites */ = {
 			isa = PBXGroup;
 			children = (
+				98560D211823D8EE005A83CD /* star@2X.png */,
 				98DF31A31822B0B90092E8A7 /* check@2X.png */,
 				D0BB8205182139D4006ECA83 /* armor@2X.png */,
 				D0BB8206182139D4006ECA83 /* arrow@2X.png */,
@@ -441,7 +442,6 @@
 				98DF310F181937570092E8A7 /* tower@2X.png */,
 				98DF3110181937570092E8A7 /* tower2@2X.png */,
 				98DF3111181937570092E8A7 /* troop@2X.png */,
-				98DF30E0181848E20092E8A7 /* star.png */,
 			);
 			path = sprites;
 			sourceTree = "<group>";
@@ -544,7 +544,6 @@
 				98DF3116181937570092E8A7 /* city@2X.png in Resources */,
 				98DF3173181EBC310092E8A7 /* wall0c-2@2X.png in Resources */,
 				98DF3196181EBC310092E8A7 /* wall3-0@2X.png in Resources */,
-				98DF30E1181848E30092E8A7 /* star.png in Resources */,
 				98DF3184181EBC310092E8A7 /* wall1c-0@2X.png in Resources */,
 				98DF3195181EBC310092E8A7 /* wall2Lb-3@2X.png in Resources */,
 				98DF31A41822B0B90092E8A7 /* check@2X.png in Resources */,
@@ -564,6 +563,7 @@
 				98DF311A181937570092E8A7 /* lab2@2X.png in Resources */,
 				98DF3193181EBC310092E8A7 /* wall2Lb-1@2X.png in Resources */,
 				D0BB8211182139D4006ECA83 /* maxPopulation@2X.png in Resources */,
+				98560D221823D8EE005A83CD /* star@2X.png in Resources */,
 				98DF3185181EBC310092E8A7 /* wall1c-1@2X.png in Resources */,
 				98DF3113181937570092E8A7 /* basic@2X.png in Resources */,
 				98DF3177181EBC310092E8A7 /* wall0e-0@2X.png in Resources */,
