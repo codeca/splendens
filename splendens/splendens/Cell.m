@@ -128,16 +128,25 @@
 
 - (void)setBonus:(BonusType)bonus {
 	// Remove previous bonus
-	if (_bonus != BonusNone)
+	if (_bonus != BonusNone && bonus == BonusNone) {
+		SKAction* fade = [SKAction fadeOutWithDuration:1];
+		SKAction* shrink = [SKAction scaleTo:0 duration:1];
+		SKAction* remove = [SKAction removeFromParent];
+		[self.bonusNode runAction:[SKAction sequence:@[[SKAction group:@[fade, shrink]], remove]]];
+	} else if (_bonus != BonusNone) {
 		[self.bonusNode removeFromParent];
+	}
 	
-	self.bonusNode.alpha = 0;
-	[self.bonusNode setScale:0];
-	[self.parent addChild:self.bonusNode];
-	SKAction* grow = [SKAction scaleTo:2 duration:.5];
-	SKAction* fadeIn = [SKAction fadeInWithDuration:.5];
-	SKAction* scaleToNormal = [SKAction scaleTo:1 duration:.5];
-	[self.bonusNode runAction:[SKAction sequence:@[[SKAction group:@[grow, fadeIn]], scaleToNormal]]];
+	// Add new bonus
+	if (bonus != BonusNone) {
+		self.bonusNode.alpha = 0;
+		[self.bonusNode setScale:0];
+		[self.parent addChild:self.bonusNode];
+		SKAction* grow = [SKAction scaleTo:2 duration:.5];
+		SKAction* fadeIn = [SKAction fadeInWithDuration:.5];
+		SKAction* scaleToNormal = [SKAction scaleTo:1 duration:.5];
+		[self.bonusNode runAction:[SKAction sequence:@[[SKAction group:@[grow, fadeIn]], scaleToNormal]]];
+	}
 	
 	_bonus = bonus;
 }

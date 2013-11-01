@@ -10,4 +10,12 @@
 
 @implementation Player
 
+- (void)setBonus:(BonusType)bonus {
+	// Update all owned cells
+	for (Cell* cell in self.game.map.cells)
+		if (cell.owner == self)
+			cell.bonus = bonus;
+	_bonus = bonus;
+}
+
 @end

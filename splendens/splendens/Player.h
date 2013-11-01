@@ -22,5 +22,8 @@
 @property (nonatomic) BOOL disconnected;
 @property (nonatomic) BonusType bonus;
 @property (nonatomic) int bonusTimeLeft;
+@property (nonatomic, weak) GameScene* game;
+
+- (void)setBonus:(BonusType)bonus;
 
 @end

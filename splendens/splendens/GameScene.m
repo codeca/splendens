@@ -38,6 +38,7 @@
 		player.color = colors[i];
 		player.name = gamePlayers[i][@"name"];
 		player.playerId = playerId;
+		player.game = self;
 		[players addObject:player];
 		if ([playerId isEqualToString:myId])
 			me = i;
@@ -47,6 +48,7 @@
 	self.thisPlayer = players[me];
 	
 	self.map = [[Map alloc] initWithDefinition:game[@"map"] myId:myId game:self];
+	self.map.game = self;
 	[self addChild:self.map];
 	
 	self.plug = plug;

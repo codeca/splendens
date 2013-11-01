@@ -84,6 +84,14 @@
 #pragma mark - main turn logic
 
 - (void)processTurn {
+	// Players bonus
+	for (Player* player in self.game.players)
+		if (player.bonusTimeLeft) {
+			player.bonusTimeLeft--;
+			if (!player.bonusTimeLeft)
+				player.bonus = BonusNone;
+		}
+	
 	// Produce population and mana
 	for (Cell* cell in self.cells) {
 		if (!cell.owner)
@@ -106,14 +114,13 @@
 			else cell.owner.mana = cell.owner.maxMana;
 		}
 	}
-	GameScene* game = (GameScene*)self.parent;
-	[game.bottomPanel update];
+	[self.game.bottomPanel update];
 	
 	//update totalPopulation after process population creation
-	[game.topPanel updateTotalPopulation];
+	[self.game.topPanel updateTotalPopulation];
 	
 	//update MaxMana after upgrades
-	[game.topPanel updateMaxMana];
+	[self.game.topPanel updateMaxMana];
 	
 	// Move troops
 	if (self.troops.count) {
@@ -123,7 +130,7 @@
 		[NSTimer scheduledTimerWithTimeInterval:TOTAL_MOV_TIME target:self selector:@selector(processTowerAttacksAndTroopsDelivery:) userInfo:deliveredTroops repeats:NO];
 	} else {
 		// No need to wait to troop movements or tower attacks
-		[game checkVictory];
+		[self.game checkVictory];
 	}
 }
 
@@ -350,6 +357,10 @@
 			destiny.population += troop.amount;
 		} else if (troop.amount > destiny.population*destinyArmor){
 			// Attack resulted in conquest
+			if (destiny.bonus != BonusNone && !destiny.owner) {
+				troop.owner.bonus = destiny.bonus;
+				troop.owner.bonusTimeLeft = 5;
+			}
 			destiny.population = troop.amount - destiny.population*destinyArmor;
 			destiny.owner = troop.owner;
 		} else {
