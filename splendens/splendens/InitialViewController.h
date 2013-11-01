@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <SpriteKit/SpriteKit.h>
 #import "Plug.h"
+#import "AnimatedBackgroundScene.h"
 
 @interface InitialViewController : UIViewController<PlugDelegate>
 

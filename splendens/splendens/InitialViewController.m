@@ -26,6 +26,10 @@
 	[super viewDidLoad];
 	for (UIButton* button in self.buttons)
 		[InitialViewController prepareButton:button];
+	SKView* view = [[SKView alloc] initWithFrame:self.view.bounds];
+	[self.view insertSubview:view atIndex:0];
+    AnimatedBackgroundScene* scene = [AnimatedBackgroundScene sceneWithSize:view.bounds.size];
+    [view presentScene:scene];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		98560D221823D8EE005A83CD /* star@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 98560D211823D8EE005A83CD /* star@2X.png */; };
+		98560D2518240C3B005A83CD /* AnimatedBackgroundScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 98560D2418240C3B005A83CD /* AnimatedBackgroundScene.m */; };
 		98DF309918181E620092E8A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98DF309818181E620092E8A7 /* Foundation.framework */; };
 		98DF309B18181E620092E8A7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98DF309A18181E620092E8A7 /* CoreGraphics.framework */; };
 		98DF309D18181E620092E8A7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98DF309C18181E620092E8A7 /* UIKit.framework */; };
@@ -122,6 +123,8 @@
 
 /* Begin PBXFileReference section */
 		98560D211823D8EE005A83CD /* star@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star@2X.png"; sourceTree = "<group>"; };
+		98560D2318240C3B005A83CD /* AnimatedBackgroundScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedBackgroundScene.h; sourceTree = "<group>"; };
+		98560D2418240C3B005A83CD /* AnimatedBackgroundScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimatedBackgroundScene.m; sourceTree = "<group>"; };
 		98DF309518181E620092E8A7 /* splendens.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = splendens.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		98DF309818181E620092E8A7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		98DF309A18181E620092E8A7 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -452,6 +455,8 @@
 				98DF30B318181E620092E8A7 /* GameScene.m */,
 				98DF319E182278E70092E8A7 /* GameOverScene.h */,
 				98DF319F182278E70092E8A7 /* GameOverScene.m */,
+				98560D2318240C3B005A83CD /* AnimatedBackgroundScene.h */,
+				98560D2418240C3B005A83CD /* AnimatedBackgroundScene.m */,
 			);
 			name = scenes;
 			sourceTree = "<group>";
@@ -635,6 +640,7 @@
 				98DF31301819907C0092E8A7 /* Plug.m in Sources */,
 				D05CE05718193C2500827611 /* PathFinder.m in Sources */,
 				98DF3137181994760092E8A7 /* TextButton.m in Sources */,
+				98560D2518240C3B005A83CD /* AnimatedBackgroundScene.m in Sources */,
 				98DF30D6181825820092E8A7 /* Cell.m in Sources */,
 				D0BB821918214513006ECA83 /* TopPanel.m in Sources */,
 				98DF319D181FD3800092E8A7 /* InitialViewController.m in Sources */,
