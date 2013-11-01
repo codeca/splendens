@@ -150,6 +150,8 @@
 		[self.bonusNode runAction:[SKAction sequence:@[[SKAction group:@[grow, fadeIn]], scaleToNormal]]];
 	}
 	
+	_bonus = bonus;
+	
 	// Update the bottom panel if needed
 	Map* map = (Map*)self.parent;
 	if (map.selected == self)
