@@ -18,6 +18,7 @@
 @property (strong, nonatomic) IBOutletCollection(UISwitch) NSArray *playersSwitch;
 @property (weak, nonatomic) IBOutlet UIButton *startButton;
 @property (weak, nonatomic) IBOutlet UIProgressView *matchProgress;
+@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *buttons;
 @property (nonatomic) Plug* plug;
 
 - (void)startMultiplay;

@@ -119,7 +119,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KX9-vv-uiJ">
-                                <rect key="frame" x="109.5" y="483.5" width="550" height="350"/>
+                                <rect key="frame" x="108" y="560" width="550" height="350"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" fixedFrame="YES" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="9Qg-WV-XQu">
@@ -159,6 +159,10 @@
                         <outletCollection property="playersSwitch" destination="zse-sG-DXi" id="l3f-f5-G1f"/>
                         <outletCollection property="playersSwitch" destination="ufk-ID-8ah" id="bHX-Fq-0Hk"/>
                         <outletCollection property="playersSwitch" destination="2Pt-fG-mtc" id="iIw-wH-XdK"/>
+                        <outletCollection property="buttons" destination="zzi-xK-afd" id="meo-Gs-Y4n"/>
+                        <outletCollection property="buttons" destination="OuK-fj-JE6" id="cS5-aS-qhj"/>
+                        <outletCollection property="buttons" destination="hxc-cN-74b" id="JXb-wc-Vt3"/>
+                        <outletCollection property="buttons" destination="Idg-sZ-gCe" id="zjX-DJ-NPl"/>
                         <segue destination="BV1-FR-VrT" kind="modal" identifier="startGame" id="CzY-4S-7ZZ"/>
                     </connections>
                 </viewController>

@@ -22,6 +22,12 @@
 
 @implementation InitialViewController
 
+- (void)viewDidLoad {
+	[super viewDidLoad];
+	for (UIButton* button in self.buttons)
+		[InitialViewController prepareButton:button];
+}
+
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 	self.matchProgress.progress = 0;
@@ -92,6 +98,14 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 	GameViewController* destination = segue.destinationViewController;
 	[destination loadGame:sender myId:self.myId plug:self.plug];
+}
+
++ (void)prepareButton:(UIButton*)button {
+	static UIImage* buttonBackground;
+	if (!buttonBackground)
+			buttonBackground = [[UIImage imageNamed:@"greenButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
+	[button setBackgroundImage:buttonBackground forState:UIControlStateNormal];
+	[button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 }
 
 #pragma mark - animations
