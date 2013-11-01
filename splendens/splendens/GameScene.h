@@ -8,6 +8,23 @@
 
 @class GameScene;
 
+typedef enum {
+	TurnActionSendTroop,
+	TurnActionUpgrade,
+	TurnActionUpgradeToCity,
+	TurnActionUpgradeToTower,
+	TurnActionUpgradeToLab,
+	TurnActionBonus
+} TurnActionType;
+
+// Possible cell bonus
+typedef enum {
+	BonusNone = 0,
+	BonusPopulation,
+	BonusArmor,
+	BonusSpeed
+} BonusType;
+
 #import <SpriteKit/SpriteKit.h>
 #import "Map.h"
 #import "Plug.h"
@@ -15,14 +32,7 @@
 #import "Player.h"
 #import "TopPanel.h"
 #import "GameOverScene.h"
-
-typedef enum {
-	TurnActionSendTroop,
-	TurnActionUpgrade,
-	TurnActionUpgradeToCity,
-	TurnActionUpgradeToTower,
-	TurnActionUpgradeToLab
-} TurnActionType;
+#import "Economy.h"
 
 // The main scene, for the game itself
 @interface GameScene : SKScene <PlugDelegate>

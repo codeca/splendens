@@ -30,7 +30,7 @@
 		[self.node runAction:[SKAction scaleTo:1 duration:.5]];
 		
 		self.path = path;
-		self.speed = [Economy speedForType:firstCell.type level:firstCell.level];
+		self.speed = [Economy speedForCell:firstCell];
 		self.pos = 0;
 		self.owner = firstCell.owner;
 		self.node.color = firstCell.owner.color;

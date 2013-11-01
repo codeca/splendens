@@ -1,3 +1,4 @@
+
 //
 //  MapCell.h
 //  splendens
@@ -6,9 +7,7 @@
 //  Copyright (c) 2013 Codeca. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import <SpriteKit/SpriteKit.h>
-#import "Player.h"
+@class Cell;
 
 // Possible cell types
 typedef enum {
@@ -28,6 +27,11 @@ typedef enum {
 	CellPositionBellow,
 } CellPosition;
 
+#import <Foundation/Foundation.h>
+#import <SpriteKit/SpriteKit.h>
+#import "Player.h"
+#import "GameScene.h"
+
 @interface Cell : SKSpriteNode
 
 @property (nonatomic, readonly) int x;
@@ -37,12 +41,15 @@ typedef enum {
 @property (nonatomic) int level; // not used for empty, wall and basic cells
 @property (nonatomic) Player* owner; // not used for empty and wall cells. nil means abandoned cell
 @property (nonatomic) NSArray* cellsInRange; // Store all cells in the tower range (nil if the cell is not a range)
+@property (nonatomic) BonusType bonus;
 
 // Create a new empty cell with the given position
-- (id)initWithX:(int)x y:(int)y size:(CGSize)size;
+- (id)initWithX:(int)x y:(int)y size:(CGSize)size map:(Map*)map;
 
 - (void) upgradeTo: (CellType)type;
 - (void) upgrade;
+
+- (void)setBonus:(BonusType)bonus;
 
 // Force the texture update
 - (void)updateOverlay;
@@ -56,5 +63,8 @@ typedef enum {
 
 // Return a random point near the center of this cell (used to place troops)
 - (CGPoint)randomPointNear: (float) ratio;
+
+// Return whether the cell is not empty nor a wall
+- (BOOL)isCenter;
 
 @end

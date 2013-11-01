@@ -33,10 +33,8 @@
 		NSMutableArray* cells = [[NSMutableArray alloc] initWithCapacity:self.size*self.size];
 		for (int y=0; y<self.size; y++) {
 			for (int x=0; x<self.size; x++) {
-				Cell* cell = [[Cell alloc] initWithX:x y:y size:CGSizeMake(cellSize, cellSize)];
-				cell.position = CGPointMake(x*cellSize+cellSize/2, y*cellSize+cellSize/2);
+				Cell* cell = [[Cell alloc] initWithX:x y:y size:CGSizeMake(cellSize, cellSize) map:self];
 				[cells addObject:cell];
-				[self addChild:cell];
 			}
 		}
 		self.cells = cells;
@@ -86,11 +84,19 @@
 #pragma mark - main turn logic
 
 - (void)processTurn {
+	// Players bonus
+	for (Player* player in self.game.players)
+		if (player.bonusTimeLeft) {
+			player.bonusTimeLeft--;
+			if (!player.bonusTimeLeft)
+				player.bonus = BonusNone;
+		}
+	
 	// Produce population and mana
 	for (Cell* cell in self.cells) {
 		if (!cell.owner)
 			continue;
-			
+		
 		int maxPop = [Economy maxPopulationForType:cell.type level:cell.level];
 		
 		if (cell.population >= maxPop)
@@ -99,7 +105,7 @@
 		
 		if (cell.type == CellTypeBasic || cell.type == CellTypeCity) {
 			if (cell.population < maxPop) {
-				int newPop = cell.population + [Economy productionForType:cell.type level:cell.level];
+				int newPop = cell.population + [Economy productionForCell:cell];
 				cell.population = newPop>maxPop ? maxPop : newPop;
 			}
 		} else if (cell.type == CellTypeLab){
@@ -108,14 +114,13 @@
 			else cell.owner.mana = cell.owner.maxMana;
 		}
 	}
-	GameScene* game = (GameScene*)self.parent;
-	[game.bottomPanel update];
+	[self.game.bottomPanel update];
 	
 	//update totalPopulation after process population creation
-	[game.topPanel updateTotalPopulation];
+	[self.game.topPanel updateTotalPopulation];
 	
 	//update MaxMana after upgrades
-	[game.topPanel updateMaxMana];
+	[self.game.topPanel updateMaxMana];
 	
 	// Move troops
 	if (self.troops.count) {
@@ -125,7 +130,7 @@
 		[NSTimer scheduledTimerWithTimeInterval:TOTAL_MOV_TIME target:self selector:@selector(processTowerAttacksAndTroopsDelivery:) userInfo:deliveredTroops repeats:NO];
 	} else {
 		// No need to wait to troop movements or tower attacks
-		[game checkVictory];
+		[self.game checkVictory];
 	}
 }
 
@@ -345,13 +350,17 @@
 	// Process each troop in order
 	for (Troop* troop in troops) {
 		Cell* destiny = [troop.path lastObject];
-		int destinyArmor = [Economy armorForType:destiny.type level:destiny.level];
+		int destinyArmor = [Economy armorForCell:destiny];
 		
 		if (troop.owner == destiny.owner) {
 			// Reinforcement
 			destiny.population += troop.amount;
 		} else if (troop.amount > destiny.population*destinyArmor){
 			// Attack resulted in conquest
+			if (destiny.bonus != BonusNone && !destiny.owner) {
+				troop.owner.bonus = destiny.bonus;
+				troop.owner.bonusTimeLeft = 5;
+			}
 			destiny.population = troop.amount - destiny.population*destinyArmor;
 			destiny.owner = troop.owner;
 		} else {

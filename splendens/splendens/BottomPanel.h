@@ -6,6 +6,8 @@
 //  Copyright (c) 2013 Codeca. All rights reserved.
 //
 
+@class BottomPanel;
+
 #import <SpriteKit/SpriteKit.h>
 #import "Cell.h"
 #import "TextButton.h"

@@ -171,11 +171,9 @@
 	int index = [game.players indexOfObject:player];
 	NSString* name = [NSString stringWithFormat:@"celula%d",index];
 	SKSpriteNode* cell = (SKSpriteNode*)[self childNodeWithName:name];
-	SKNode* ready;
-	ready = [cell childNodeWithName:@"ready"];
-	
+	SKNode* ready = [cell childNodeWithName:@"ready"];
+	[ready removeAllActions];
 	[ready runAction: [SKAction fadeInWithDuration:0.5]];
-	
 }
 
 - (void) playersTurnReset {
@@ -184,11 +182,9 @@
 		
 		NSString* name = [NSString stringWithFormat:@"celula%d", i];
 		SKNode* cell = [self childNodeWithName:name];
-		[cell removeAllActions];
 
-		SKNode* ready;
-		ready = [cell childNodeWithName:@"ready"];
-		
+		SKNode* ready = [cell childNodeWithName:@"ready"];
+		[ready removeAllActions];
 		[ready runAction: [SKAction fadeOutWithDuration:0.5]];
 	}
 }

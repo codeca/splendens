@@ -6,6 +6,8 @@
 //  Copyright (c) 2013 Codeca. All rights reserved.
 //
 
+@class Troop;
+
 #import <SpriteKit/SpriteKit.h>
 #import "Player.h"
 #import "Cell.h"

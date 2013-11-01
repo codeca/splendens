@@ -23,13 +23,18 @@
 @property (nonatomic) SKLabelNode* populationLabel;
 @property (nonatomic) SKSpriteNode* pathFocus;
 @property (nonatomic) SKSpriteNode* selectedFocus;
+@property (nonatomic) SKSpriteNode* bonusNode; // A node to represent the cell bonus, child of map, but managed by the cell
 
 @end
 
 @implementation Cell
 
-- (id)initWithX:(int)x y:(int)y size:(CGSize)size {
+- (id)initWithX:(int)x y:(int)y size:(CGSize)size map:(Map*)map {
 	if (self = [super initWithTexture:[Cell textureWithName:@"empty"] color:[UIColor clearColor] size:size]) {
+		// Position this node in the map
+		self.position = CGPointMake(x*size.width+size.width/2, y*size.height+size.height/2);
+		[map addChild:self];
+		
 		// Create subnode to render the cell type texture
 		self.typeOverlay = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:size];
 		[self addChild:self.typeOverlay];
@@ -65,6 +70,12 @@
 		self.selectedFocus.colorBlendFactor = 1;
 		self.selectedFocus.hidden = YES;
 		[self addChild:self.selectedFocus];
+		
+		// Bonus overlay (children of map)
+		CGSize bonusSize = CGSizeMake(size.width/2, size.height/2);
+		self.bonusNode = [SKSpriteNode spriteNodeWithColor:[UIColor redColor] size:bonusSize];
+		self.bonusNode.position = CGPointMake(self.position.x, self.position.y+size.height/2);
+		self.bonusNode.zPosition = 2;
 		
 		self.userInteractionEnabled = YES;
 		_x = x;
@@ -113,6 +124,33 @@
 	_level = level;
 	[self updateOverlay];
 	_cellsInRange = nil;
+}
+
+- (void)setBonus:(BonusType)bonus {
+	// Remove previous bonus
+	if (_bonus != BonusNone && bonus == BonusNone) {
+		SKAction* fade = [SKAction fadeOutWithDuration:1];
+		SKAction* shrink = [SKAction scaleTo:0 duration:1];
+		SKAction* remove = [SKAction removeFromParent];
+		[self.bonusNode runAction:[SKAction sequence:@[[SKAction group:@[fade, shrink]], remove]]];
+	} else if (_bonus != BonusNone) {
+		[self.bonusNode removeFromParent];
+	}
+	
+	// Add new bonus
+	if (bonus != BonusNone) {
+		self.bonusNode.alpha = 0;
+		NSString* name = bonus==BonusPopulation ? @"maxPopulation" : (bonus==BonusArmor ? @"armor" : @"speed");
+		self.bonusNode.texture = [Cell textureWithName:name];
+		[self.bonusNode setScale:0];
+		[self.parent addChild:self.bonusNode];
+		SKAction* grow = [SKAction scaleTo:2 duration:.5];
+		SKAction* fadeIn = [SKAction fadeInWithDuration:.5];
+		SKAction* scaleToNormal = [SKAction scaleTo:1 duration:.5];
+		[self.bonusNode runAction:[SKAction sequence:@[[SKAction group:@[grow, fadeIn]], scaleToNormal]]];
+	}
+	
+	_bonus = bonus;
 }
 
 // Update the type overlay

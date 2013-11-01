@@ -6,7 +6,10 @@
 //  Copyright (c) 2013 Codeca. All rights reserved.
 //
 
+@class Player;
+
 #import <Foundation/Foundation.h>
+#import "GameScene.h"
 
 @interface Player : NSObject
 
@@ -17,5 +20,10 @@
 @property (nonatomic) UIColor* color;
 @property (nonatomic) int totalPopulation;
 @property (nonatomic) BOOL disconnected;
+@property (nonatomic) BonusType bonus;
+@property (nonatomic) int bonusTimeLeft;
+@property (nonatomic, weak) GameScene* game;
+
+- (void)setBonus:(BonusType)bonus;
 
 @end
