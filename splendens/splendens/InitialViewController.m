@@ -18,22 +18,30 @@
 @property (nonatomic) BOOL want3;
 @property (nonatomic) BOOL want4;
 @property (nonatomic) NSMutableArray* fakePlayers;
+@property (nonatomic) CGPoint outside;
 
 @end
 
 @implementation InitialViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-	self.matchProgress.progress = 0;
-	self.nameInput.text = @"sitegui";
-}
-
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
-	self.prepareMatchView.hidden = YES;
-	self.waitMatchView.hidden = YES;
+	self.matchProgress.progress = 0;
 	self.startButton.enabled = NO;
+	
+	// Load default user name
+	NSString* name = [[NSUserDefaults standardUserDefaults] stringForKey:@"name"];
+	if (name.length)
+		self.nameInput.text = name;
+}
+
+- (void)viewDidLayoutSubviews {
+	[super viewDidLayoutSubviews];
+	float height = MAX(self.prepareMatchView.bounds.size.height, self.waitMatchView.bounds.size.height);
+	self.outside = CGPointMake(self.view.center.x, self.view.bounds.size.height+height);
+	self.prepareMatchView.center = self.outside;
+	self.waitMatchView.center = self.outside;
+	self.multiplayButton.center = self.view.center;
 }
 
 - (void)startMultiplay {
@@ -50,14 +58,14 @@
 	// Start the connection
 	self.plug = [Plug plug];
 	self.plug.delegate = self;
-	self.prepareMatchView.hidden = NO;
+	[self showPrepareMatch];
 }
 
 - (IBAction)startMatching:(id)sender {
-	self.prepareMatchView.hidden = YES;
 	[self.nameInput resignFirstResponder];
-	self.waitMatchView.hidden = NO;
+	[self showWaitMatch];
 	self.name = self.nameInput.text;
+	[[NSUserDefaults standardUserDefaults] setObject:self.name forKey:@"name"];
 	self.myId = [[NSUUID UUID] UUIDString];
 	for (int i=0; i<3; i++) {
 		UISwitch* view = self.playersSwitch[i];
@@ -77,7 +85,7 @@
 	if (self.plug.readyState == PLUGSTATE_OPEN)
 		[self.plug close];
 	self.plug = nil;
-	self.prepareMatchView.hidden = YES;
+	[self hidePrepareMatch];
 	[self.nameInput resignFirstResponder];
 }
 
@@ -85,7 +93,8 @@
 	if (self.plug.readyState == PLUGSTATE_OPEN)
 		[self.plug close];
 	self.plug = nil;
-	self.waitMatchView.hidden = YES;
+	[self hideWaitMatch];
+	[self hidePrepareMatch];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -93,10 +102,34 @@
 	[destination loadGame:sender myId:self.myId plug:self.plug];
 }
 
+#pragma mark - animations
+- (void)showPrepareMatch {
+	[UIView animateWithDuration:1.5 delay:0 usingSpringWithDamping:.7 initialSpringVelocity:0 options:0 animations:^{
+		self.prepareMatchView.center = self.view.center;
+	} completion:nil];
+}
+- (void)hidePrepareMatch {
+	[UIView animateWithDuration:1.5 delay:0 usingSpringWithDamping:.7 initialSpringVelocity:0 options:0 animations:^{
+		self.prepareMatchView.center = self.outside;
+	} completion:nil];
+}
+- (void)showWaitMatch {
+	[UIView animateWithDuration:1.5 delay:0 usingSpringWithDamping:.7 initialSpringVelocity:0 options:0 animations:^{
+		self.waitMatchView.center = self.view.center;
+	} completion:nil];
+}
+- (void)hideWaitMatch {
+	[UIView animateWithDuration:1.5 delay:0 usingSpringWithDamping:.7 initialSpringVelocity:0 options:0 animations:^{
+		self.waitMatchView.center = self.outside;
+	} completion:nil];
+}
+
+#pragma mark - plug delegate
+
 - (void)plug:(Plug *)plug hasClosedWithError:(BOOL)error {
 	self.plug = nil;
-	self.prepareMatchView.hidden = YES;
-	self.waitMatchView.hidden = YES;
+	[self hideWaitMatch];
+	[self hidePrepareMatch];
 	self.startButton.enabled = NO;
 	[self.nameInput resignFirstResponder];
 }
