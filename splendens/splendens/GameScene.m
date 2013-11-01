@@ -200,6 +200,10 @@
 
 // Process all users actions in this turn
 - (void)simulateTurn {
+	if (self.gameEnded)
+		// Avoid checking twice when in a 2-player game, one of them disconnect right after clicking next turn
+		return;
+	
 	for (NSDictionary* turnActions in self.othersTurnActions) {
 		NSArray* actions = turnActions[@"actions"];
 		
