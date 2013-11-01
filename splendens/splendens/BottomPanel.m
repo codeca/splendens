@@ -139,13 +139,13 @@
 		infoCell1.fontSize = fontSize;
 		infoCell1.position = CGPointMake(2*da+a+a/2-x/2, da+a/2-y/2);
 		infoCell1.text = [NSString stringWithFormat:@"%d",[Economy productionForCell: selectedCell]];
-		if ([Economy productionForCell: selectedCell] > [Economy productionForType:selectedCell.type level:selectedCell.level]) infoCell1.fontColor = [UIColor yellowColor];
+		if (selectedCell.bonus == BonusPopulation) infoCell1.fontColor = [UIColor yellowColor];
 		infoCell1.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
 		SKLabelNode* infoCell2 = [[SKLabelNode alloc] initWithFontNamed:@"arial"];
 		infoCell2.fontSize = fontSize;
 		infoCell2.position = CGPointMake(2*da+a+a/2-x/2, da+a/2-y/2);
 		infoCell2.text = [NSString stringWithFormat:@"%d",[Economy armorForCell:selectedCell]];
-		if ([Economy armorForCell: selectedCell] > [Economy armorForType:selectedCell.type level:selectedCell.level]) infoCell1.fontColor = [UIColor yellowColor];
+		if (selectedCell.bonus == BonusArmor) infoCell1.fontColor = [UIColor yellowColor];
 		infoCell2.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
 		SKLabelNode* infoCell3 = [[SKLabelNode alloc] initWithFontNamed:@"arial"];
 		infoCell3.fontSize = fontSize;
@@ -156,7 +156,7 @@
 		infoCell4.fontSize = fontSize;
 		infoCell4.position = CGPointMake(2*da+a+a/2-x/2, da+a/2-y/2);
 		infoCell4.text = [NSString stringWithFormat:@"%d",[Economy speedForCell:selectedCell]];
-		if ([Economy speedForCell: selectedCell] > [Economy speedForType:selectedCell.type level:selectedCell.level]) infoCell1.fontColor = [UIColor yellowColor];
+		if (selectedCell.bonus == BonusSpeed) infoCell1.fontColor = [UIColor yellowColor];
 		infoCell4.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
 		
 		[tableCell1 addChild:infoCell1];
