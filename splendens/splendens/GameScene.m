@@ -17,6 +17,8 @@
 // Applyed right at the beginning of the next turn
 @property (nonatomic) NSDictionary* nextBonus;
 
+@property (nonatomic) NSTimer* timer;
+
 @end
 
 @implementation GameScene
@@ -101,7 +103,15 @@
 	}
 }
 
+// Called when the button "Next turn" is pressed
 - (void)endMyTurn {
+	[self.timer invalidate];
+	self.timer = nil;
+	[self endThisUserTurn];
+}
+
+// Called when the user finishs its turn (pressing next turn or turn timeout)
+- (void)endThisUserTurn {
 	// Try to add a random bonus if it's the first player
 	BOOL firstPlayer = NO;
 	for (Player* player in self.players)
@@ -193,6 +203,9 @@
 	}
 	
 	if (winner || !self.thisPlayer.totalPopulation) {
+		[self.timer invalidate];
+		self.timer = nil;
+		
 		self.gameEnded = YES;
 		[self.plug close];
 		GameOverScene* nextScene = [[GameOverScene alloc] initWithSize:self.size winner:winner thisPlayer:self.thisPlayer];
@@ -248,6 +261,8 @@
 		self.nextBonus = nil;
 	}
 	[self.map processTurn];
+	
+	self.timer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(endThisUserTurn) userInfo:nil repeats:NO];
 }
 
 - (void)plug:(Plug*)plug hasClosedWithError:(BOOL)error {
