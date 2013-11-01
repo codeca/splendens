@@ -140,4 +140,16 @@
 	return -1;
 }
 
++ (int)productionForCell:(Cell*)cell {
+	return [Economy productionForType:cell.type level:cell.level]+(cell.owner.bonus==BonusPopulation ? 1 : 0);
+}
+
++ (int)armorForCell:(Cell*)cell {
+	return [Economy armorForType:cell.type level:cell.level]+(cell.owner.bonus==BonusArmor ? 1 : 0);
+}
+
++ (int)speedForCell:(Cell*)cell {
+	return [Economy speedForType:cell.type level:cell.level]+(cell.owner.bonus==BonusSpeed ? 2 : 0);
+}
+
 @end

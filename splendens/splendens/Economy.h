@@ -24,4 +24,9 @@
 + (int)upgradePopulationCostForType:(CellType)type level:(int)level;
 + (int)upgradeManaCostForType:(CellType)type level:(int)level;
 
+// Return the value taking into account the owner bonus
++ (int)productionForCell:(Cell*)cell;
++ (int)armorForCell:(Cell*)cell;
++ (int)speedForCell:(Cell*)cell;
+
 @end

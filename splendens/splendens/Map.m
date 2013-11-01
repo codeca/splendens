@@ -96,7 +96,7 @@
 	for (Cell* cell in self.cells) {
 		if (!cell.owner)
 			continue;
-			
+		
 		int maxPop = [Economy maxPopulationForType:cell.type level:cell.level];
 		
 		if (cell.population >= maxPop)
@@ -105,7 +105,7 @@
 		
 		if (cell.type == CellTypeBasic || cell.type == CellTypeCity) {
 			if (cell.population < maxPop) {
-				int newPop = cell.population + [Economy productionForType:cell.type level:cell.level];
+				int newPop = cell.population + [Economy productionForCell:cell];
 				cell.population = newPop>maxPop ? maxPop : newPop;
 			}
 		} else if (cell.type == CellTypeLab){
@@ -350,7 +350,7 @@
 	// Process each troop in order
 	for (Troop* troop in troops) {
 		Cell* destiny = [troop.path lastObject];
-		int destinyArmor = [Economy armorForType:destiny.type level:destiny.level];
+		int destinyArmor = [Economy armorForCell:destiny];
 		
 		if (troop.owner == destiny.owner) {
 			// Reinforcement

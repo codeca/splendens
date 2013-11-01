@@ -140,6 +140,7 @@
 	// Add new bonus
 	if (bonus != BonusNone) {
 		self.bonusNode.alpha = 0;
+		self.bonusNode.color = bonus==BonusPopulation ? [UIColor redColor] : (bonus==BonusArmor ? [UIColor greenColor] : [UIColor blueColor]);
 		[self.bonusNode setScale:0];
 		[self.parent addChild:self.bonusNode];
 		SKAction* grow = [SKAction scaleTo:2 duration:.5];
