@@ -70,6 +70,8 @@
 	self.turnActions = [NSMutableArray array];
 	self.othersTurnActions = [NSMutableArray array];
 	self.userTurn = YES;
+	
+	self.timer = [NSTimer scheduledTimerWithTimeInterval:SKIP_TURN_TIME target:self selector:@selector(endThisUserTurn) userInfo:nil repeats:NO];
 }
 
 - (void)setUserTurn:(BOOL)userTurn {
@@ -262,7 +264,7 @@
 	}
 	[self.map processTurn];
 	
-	self.timer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(endThisUserTurn) userInfo:nil repeats:NO];
+	self.timer = [NSTimer scheduledTimerWithTimeInterval:SKIP_TURN_TIME target:self selector:@selector(endThisUserTurn) userInfo:nil repeats:NO];
 }
 
 - (void)plug:(Plug*)plug hasClosedWithError:(BOOL)error {

@@ -130,7 +130,7 @@
 #pragma mark - plug delegate
 
 - (void)plug:(Plug *)plug hasClosedWithError:(BOOL)error {
-	self.plug = nil;
+	// self.plug = nil;
 	[self hideView:self.waitMatchView];
 	[self hideView:self.prepareMatchView];
 	self.startButton.enabled = NO;

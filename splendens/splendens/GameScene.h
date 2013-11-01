@@ -8,6 +8,8 @@
 
 @class GameScene;
 
+#define SKIP_TURN_TIME 60
+
 typedef enum {
 	TurnActionSendTroop,
 	TurnActionUpgrade,
