@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		98560D201823C71E005A83CD /* FakePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 98560D1F1823C71E005A83CD /* FakePlayer.m */; };
 		98DF309918181E620092E8A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98DF309818181E620092E8A7 /* Foundation.framework */; };
 		98DF309B18181E620092E8A7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98DF309A18181E620092E8A7 /* CoreGraphics.framework */; };
 		98DF309D18181E620092E8A7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98DF309C18181E620092E8A7 /* UIKit.framework */; };
@@ -121,6 +122,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		98560D1E1823C71E005A83CD /* FakePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FakePlayer.h; sourceTree = "<group>"; };
+		98560D1F1823C71E005A83CD /* FakePlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FakePlayer.m; sourceTree = "<group>"; };
 		98DF309518181E620092E8A7 /* splendens.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = splendens.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		98DF309818181E620092E8A7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		98DF309A18181E620092E8A7 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -328,6 +331,8 @@
 				D00114B0181AC576002ED389 /* BottomPanel.m */,
 				D0BB821718214513006ECA83 /* TopPanel.h */,
 				D0BB821818214513006ECA83 /* TopPanel.m */,
+				98560D1E1823C71E005A83CD /* FakePlayer.h */,
+				98560D1F1823C71E005A83CD /* FakePlayer.m */,
 			);
 			path = splendens;
 			sourceTree = "<group>";
@@ -631,6 +636,7 @@
 				98DF30B118181E620092E8A7 /* GameViewController.m in Sources */,
 				D00114B1181AC576002ED389 /* BottomPanel.m in Sources */,
 				98DF312818195A780092E8A7 /* Economy.m in Sources */,
+				98560D201823C71E005A83CD /* FakePlayer.m in Sources */,
 				98DF30AB18181E620092E8A7 /* AppDelegate.m in Sources */,
 				98DF31301819907C0092E8A7 /* Plug.m in Sources */,
 				D05CE05718193C2500827611 /* PathFinder.m in Sources */,
