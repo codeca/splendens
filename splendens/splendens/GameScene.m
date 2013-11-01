@@ -75,7 +75,6 @@
 // Add a random bonus to the strongest neutral cell in the map
 - (void)addRandomBonus {
 	// Find the strongest neutral cell
-	NSLog(@"(void)addRandomBonus");
 	Cell* target = nil;
 	int maxStrength = 0;
 	for (Cell* cell in self.map.cells) {
@@ -107,7 +106,7 @@
 			firstPlayer = player==self.thisPlayer;
 			break;
 		}
-	if (firstPlayer && arc4random_uniform(10) == 7)
+	if (firstPlayer && arc4random_uniform(3) == 1)
 		[self addRandomBonus];
 	
 	// Group all actions and send
@@ -175,7 +174,7 @@
 	
 	// Check if there is only 1 connected player with cells
 	for (Cell* cell in self.map.cells) {
-		if ([cell isCenter] && cell.owner && !cell.owner.disconnected) {
+		if ([cell isCenter] && cell.owner) {
 			if (!winner)
 				winner = cell.owner;
 			else if (winner != cell.owner) {
@@ -268,6 +267,8 @@
 		player.disconnected = YES;
 		[self.topPanel playerDisconnection:player];
 		self.connectedPlayers--;
+		if (self.othersTurnActions.count == self.connectedPlayers-1 && !self.userTurn)
+			[self simulateTurn];
 	}
 }
 

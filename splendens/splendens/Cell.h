@@ -44,7 +44,7 @@ typedef enum {
 @property (nonatomic) BonusType bonus;
 
 // Create a new empty cell with the given position
-- (id)initWithX:(int)x y:(int)y size:(CGSize)size;
+- (id)initWithX:(int)x y:(int)y size:(CGSize)size map:(Map*)map;
 
 - (void) upgradeTo: (CellType)type;
 - (void) upgrade;

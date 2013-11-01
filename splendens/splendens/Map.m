@@ -33,10 +33,8 @@
 		NSMutableArray* cells = [[NSMutableArray alloc] initWithCapacity:self.size*self.size];
 		for (int y=0; y<self.size; y++) {
 			for (int x=0; x<self.size; x++) {
-				Cell* cell = [[Cell alloc] initWithX:x y:y size:CGSizeMake(cellSize, cellSize)];
-				cell.position = CGPointMake(x*cellSize+cellSize/2, y*cellSize+cellSize/2);
+				Cell* cell = [[Cell alloc] initWithX:x y:y size:CGSizeMake(cellSize, cellSize) map:self];
 				[cells addObject:cell];
-				[self addChild:cell];
 			}
 		}
 		self.cells = cells;
