@@ -141,7 +141,7 @@
 }
 
 + (int)productionForCell:(Cell*)cell {
-	return [Economy productionForType:cell.type level:cell.level]+(cell.owner.bonus==BonusPopulation ? 1 : 0);
+	return [Economy productionForType:cell.type level:cell.level]+(cell.owner.bonus==BonusPopulation ? 2 : 0);
 }
 
 + (int)armorForCell:(Cell*)cell {
@@ -149,7 +149,7 @@
 }
 
 + (int)speedForCell:(Cell*)cell {
-	return [Economy speedForType:cell.type level:cell.level]+(cell.owner.bonus==BonusSpeed ? 2 : 0);
+	return [Economy speedForType:cell.type level:cell.level]+(cell.owner.bonus==BonusSpeed ? 3 : 0);
 }
 
 @end

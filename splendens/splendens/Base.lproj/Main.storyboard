@@ -187,8 +187,14 @@
                                             </fragment>
                                             <fragment>
                                                 <string key="content">
-Rodolfo Bitu
-Guilherme Souza</string>
+Guilherme Souza
+</string>
+                                                <attributes>
+                                                    <font key="NSFont" size="20" name="HelveticaNeue"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment content="Rodolfo Bitu">
                                                 <attributes>
                                                     <font key="NSFont" size="20" name="HelveticaNeue"/>
                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
