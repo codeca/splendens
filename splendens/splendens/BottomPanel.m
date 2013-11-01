@@ -138,12 +138,14 @@
 		SKLabelNode* infoCell1 = [[SKLabelNode alloc] initWithFontNamed:@"arial"];
 		infoCell1.fontSize = fontSize;
 		infoCell1.position = CGPointMake(2*da+a+a/2-x/2, da+a/2-y/2);
-		infoCell1.text = [NSString stringWithFormat:@"%d",[Economy productionForType:selectedCell.type level:selectedCell.level]];
+		infoCell1.text = [NSString stringWithFormat:@"%d",[Economy productionForCell: selectedCell]];
+		if ([Economy productionForCell: selectedCell] > [Economy productionForType:selectedCell.type level:selectedCell.level]) infoCell1.fontColor = [UIColor yellowColor];
 		infoCell1.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
 		SKLabelNode* infoCell2 = [[SKLabelNode alloc] initWithFontNamed:@"arial"];
 		infoCell2.fontSize = fontSize;
 		infoCell2.position = CGPointMake(2*da+a+a/2-x/2, da+a/2-y/2);
-		infoCell2.text = [NSString stringWithFormat:@"%d",[Economy armorForType:selectedCell.type level:selectedCell.level]];
+		infoCell2.text = [NSString stringWithFormat:@"%d",[Economy armorForCell:selectedCell]];
+		if ([Economy armorForCell: selectedCell] > [Economy armorForType:selectedCell.type level:selectedCell.level]) infoCell1.fontColor = [UIColor yellowColor];
 		infoCell2.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
 		SKLabelNode* infoCell3 = [[SKLabelNode alloc] initWithFontNamed:@"arial"];
 		infoCell3.fontSize = fontSize;
@@ -153,7 +155,8 @@
 		SKLabelNode* infoCell4 = [[SKLabelNode alloc] initWithFontNamed:@"arial"];
 		infoCell4.fontSize = fontSize;
 		infoCell4.position = CGPointMake(2*da+a+a/2-x/2, da+a/2-y/2);
-		infoCell4.text = [NSString stringWithFormat:@"%d",[Economy speedForType:selectedCell.type level:selectedCell.level]];
+		infoCell4.text = [NSString stringWithFormat:@"%d",[Economy speedForCell:selectedCell]];
+		if ([Economy speedForCell: selectedCell] > [Economy speedForType:selectedCell.type level:selectedCell.level]) infoCell1.fontColor = [UIColor yellowColor];
 		infoCell4.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
 		
 		[tableCell1 addChild:infoCell1];
@@ -324,6 +327,26 @@
 				infoCell8.position = CGPointMake(2*da+a+a/2-x/2, da+a/2-y/2);
 				infoCell8.text = [NSString stringWithFormat:@"%d",[Economy speedForType:selectedCell.type level:selectedCell.level+1]];
 				infoCell8.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
+				
+				if (self.selected == self.city){
+					infoCell5.text = [NSString stringWithFormat:@"%d",[Economy productionForType:CellTypeCity level:1]];
+					infoCell6.text = [NSString stringWithFormat:@"%d",[Economy armorForType:CellTypeCity level:1]];
+					infoCell7.text = [NSString stringWithFormat:@"%d",[Economy maxPopulationForType:CellTypeCity level:1]];
+					infoCell8.text = [NSString stringWithFormat:@"%d",[Economy speedForType:CellTypeCity level:1]];
+				}
+				if (self.selected == self.tower){
+					infoCell5.text = [NSString stringWithFormat:@"%d",[Economy productionForType:CellTypeTower level:1]];
+					infoCell6.text = [NSString stringWithFormat:@"%d",[Economy armorForType:CellTypeTower level:1]];
+					infoCell7.text = [NSString stringWithFormat:@"%d",[Economy maxPopulationForType:CellTypeTower level:1]];
+					infoCell8.text = [NSString stringWithFormat:@"%d",[Economy speedForType:CellTypeTower level:1]];
+				}
+				
+				if (self.selected == self.lab){
+					infoCell5.text = [NSString stringWithFormat:@"%d",[Economy productionForType:CellTypeLab level:1]];
+					infoCell6.text = [NSString stringWithFormat:@"%d",[Economy armorForType:CellTypeLab level:1]];
+					infoCell7.text = [NSString stringWithFormat:@"%d",[Economy maxPopulationForType:CellTypeLab level:1]];
+					infoCell8.text = [NSString stringWithFormat:@"%d",[Economy speedForType:CellTypeLab level:1]];
+				}
 				
 				[tableCell5 addChild:infoCell5];
 				[tableCell6 addChild:infoCell6];
