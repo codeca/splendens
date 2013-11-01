@@ -93,7 +93,7 @@
 		NSDictionary* dic = @{@"type": [NSNumber numberWithInteger:TurnActionBonus],
 							  @"x": [NSNumber numberWithInteger:target.x],
 							  @"y": [NSNumber numberWithInteger:target.y],
-							  @"bonus": [NSNumber numberWithInteger:bonus]}
+							  @"bonus": [NSNumber numberWithInteger:bonus]};
 		self.nextBonus = dic;
 		[self.turnActions addObject:dic];
 	}

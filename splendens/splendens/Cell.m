@@ -116,7 +116,7 @@
 }
 
 - (void)setBonus:(BonusType)bonus {
-	NSLog("added bonus to cell at (%d, %d): %d", self.x, self.y, bonus);
+	NSLog(@"added bonus to cell at (%d, %d): %d", self.x, self.y, bonus);
 	_bonus = bonus;
 }
 

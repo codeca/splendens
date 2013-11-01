@@ -7,12 +7,7 @@
 //  Copyright (c) 2013 Codeca. All rights reserved.
 //
 
-@class cell;
-
-#import <Foundation/Foundation.h>
-#import <SpriteKit/SpriteKit.h>
-#import "Player.h"
-#import "GameScene.h"
+@class Cell;
 
 // Possible cell types
 typedef enum {
@@ -31,6 +26,11 @@ typedef enum {
 	CellPositionLeft,
 	CellPositionBellow,
 } CellPosition;
+
+#import <Foundation/Foundation.h>
+#import <SpriteKit/SpriteKit.h>
+#import "Player.h"
+#import "GameScene.h"
 
 @interface Cell : SKSpriteNode
 
@@ -63,5 +63,8 @@ typedef enum {
 
 // Return a random point near the center of this cell (used to place troops)
 - (CGPoint)randomPointNear: (float) ratio;
+
+// Return whether the cell is not empty nor a wall
+- (BOOL)isCenter;
 
 @end

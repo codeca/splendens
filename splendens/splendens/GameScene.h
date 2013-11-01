@@ -8,15 +8,6 @@
 
 @class GameScene;
 
-#import <SpriteKit/SpriteKit.h>
-#import "Map.h"
-#import "Plug.h"
-#import "BottomPanel.h"
-#import "Player.h"
-#import "TopPanel.h"
-#import "GameOverScene.h"
-#import "Economy.h"
-
 typedef enum {
 	TurnActionSendTroop,
 	TurnActionUpgrade,
@@ -33,6 +24,15 @@ typedef enum {
 	BonusArmor,
 	BonusSpeed
 } BonusType;
+
+#import <SpriteKit/SpriteKit.h>
+#import "Map.h"
+#import "Plug.h"
+#import "BottomPanel.h"
+#import "Player.h"
+#import "TopPanel.h"
+#import "GameOverScene.h"
+#import "Economy.h"
 
 // The main scene, for the game itself
 @interface GameScene : SKScene <PlugDelegate>
