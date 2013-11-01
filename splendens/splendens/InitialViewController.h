@@ -13,15 +13,13 @@
 
 @property (weak, nonatomic) IBOutlet UIView *prepareMatchView;
 @property (weak, nonatomic) IBOutlet UIView *waitMatchView;
-@property (weak, nonatomic) IBOutlet UIButton *multiplayButton;
 @property (weak, nonatomic) IBOutlet UITextField *nameInput;
 @property (strong, nonatomic) IBOutletCollection(UISwitch) NSArray *playersSwitch;
 @property (weak, nonatomic) IBOutlet UIButton *startButton;
 @property (weak, nonatomic) IBOutlet UIProgressView *matchProgress;
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *buttons;
+@property (weak, nonatomic) IBOutlet UIView *credits;
 @property (nonatomic) Plug* plug;
-
-- (void)startMultiplay;
 
 - (void)plug:(Plug *)plug hasClosedWithError:(BOOL)error;
 

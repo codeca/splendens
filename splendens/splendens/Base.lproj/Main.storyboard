@@ -36,7 +36,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Idg-sZ-gCe">
-                                <rect key="frame" x="301" y="483" width="165" height="58"/>
+                                <rect key="frame" x="301.5" y="433" width="165" height="58"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <state key="normal" title="Multiplayer">
@@ -46,7 +46,18 @@
                                     <action selector="startMultiplay:" destination="rYn-3r-ret" eventType="touchUpInside" id="b85-yg-c4W"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="463-jP-upF">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q2j-vW-3dr">
+                                <rect key="frame" x="301" y="533" width="165" height="58"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <state key="normal" title="Credits">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="showCredits:" destination="rYn-3r-ret" eventType="touchUpInside" id="E5V-6i-buM"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="463-jP-upF" userLabel="Prepare Match View">
                                 <rect key="frame" x="134" y="85" width="500" height="300"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
@@ -118,7 +129,7 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KX9-vv-uiJ">
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KX9-vv-uiJ" userLabel="Wait Match View">
                                 <rect key="frame" x="108" y="560" width="550" height="350"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
@@ -146,12 +157,55 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ps8-no-C4g" userLabel="Credits View">
+                                <rect key="frame" x="134" y="303" width="500" height="300"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mmc-ve-zhG">
+                                        <rect key="frame" x="20" y="237" width="74" height="43"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <state key="normal" title="Close">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="hideCredits:" destination="rYn-3r-ret" eventType="touchUpInside" id="A5N-pi-kmz"/>
+                                        </connections>
+                                    </button>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" showsHorizontalScrollIndicator="NO" editable="NO" usesAttributedText="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HqM-GO-rnl">
+                                        <rect key="frame" x="75" y="75" width="350" height="150"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <attributedString key="attributedText">
+                                            <fragment>
+                                                <string key="content">Programmers and (kind of) designers
+</string>
+                                                <attributes>
+                                                    <font key="NSFont" size="20" name="HelveticaNeue-Bold"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                </attributes>
+                                            </fragment>
+                                            <fragment>
+                                                <string key="content">
+Rodolfo Bitu
+Guilherme Souza</string>
+                                                <attributes>
+                                                    <font key="NSFont" size="20" name="HelveticaNeue"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="credits" destination="ps8-no-C4g" id="TsV-Up-Ecq"/>
                         <outlet property="matchProgress" destination="9Qg-WV-XQu" id="cdE-oP-j7S"/>
-                        <outlet property="multiplayButton" destination="Idg-sZ-gCe" id="LlX-zm-xon"/>
                         <outlet property="nameInput" destination="2yT-OE-eq6" id="4Vd-pr-Zi8"/>
                         <outlet property="prepareMatchView" destination="463-jP-upF" id="v9u-bM-NJK"/>
                         <outlet property="startButton" destination="OuK-fj-JE6" id="aQO-rj-FuJ"/>
@@ -163,6 +217,8 @@
                         <outletCollection property="buttons" destination="OuK-fj-JE6" id="cS5-aS-qhj"/>
                         <outletCollection property="buttons" destination="hxc-cN-74b" id="JXb-wc-Vt3"/>
                         <outletCollection property="buttons" destination="Idg-sZ-gCe" id="zjX-DJ-NPl"/>
+                        <outletCollection property="buttons" destination="q2j-vW-3dr" id="euG-Bq-Efh"/>
+                        <outletCollection property="buttons" destination="mmc-ve-zhG" id="VTC-5p-ynQ"/>
                         <segue destination="BV1-FR-VrT" kind="modal" identifier="startGame" id="CzY-4S-7ZZ"/>
                     </connections>
                 </viewController>

@@ -31,9 +31,7 @@
 }
 
 - (void)textButtonClicked:(TextButton *)button {
-	InitialViewController* initialView = (InitialViewController*)self.viewController.presentingViewController;
 	[self.viewController dismissViewControllerAnimated:YES completion:nil];
-	[initialView startMultiplay];
 }
 
 @end

@@ -45,23 +45,26 @@
 	self.outside = CGPointMake(self.view.center.x, self.view.bounds.size.height+height);
 	self.prepareMatchView.center = self.outside;
 	self.waitMatchView.center = self.outside;
-	self.multiplayButton.center = self.view.center;
+	self.credits.center = self.outside;
 }
 
-- (void)startMultiplay {
-	[self startMultiplay:nil];
+- (IBAction)showCredits:(id)sender {
+	[self showView:self.credits];
+}
+- (IBAction)hideCredits:(id)sender {
+	[self hideView:self.credits];
 }
 
 - (IBAction)startMultiplay:(id)sender {
 	// Start the connection
 	self.plug = [Plug plug];
 	self.plug.delegate = self;
-	[self showPrepareMatch];
+	[self showView:self.prepareMatchView];
 }
 
 - (IBAction)startMatching:(id)sender {
 	[self.nameInput resignFirstResponder];
-	[self showWaitMatch];
+	[self showView:self.waitMatchView];
 	self.name = self.nameInput.text;
 	[[NSUserDefaults standardUserDefaults] setObject:self.name forKey:@"name"];
 	self.myId = [[NSUUID UUID] UUIDString];
@@ -83,7 +86,7 @@
 	if (self.plug.readyState == PLUGSTATE_OPEN)
 		[self.plug close];
 	self.plug = nil;
-	[self hidePrepareMatch];
+	[self hideView:self.prepareMatchView];
 	[self.nameInput resignFirstResponder];
 }
 
@@ -91,8 +94,8 @@
 	if (self.plug.readyState == PLUGSTATE_OPEN)
 		[self.plug close];
 	self.plug = nil;
-	[self hideWaitMatch];
-	[self hidePrepareMatch];
+	[self hideView:self.waitMatchView];
+	[self hideView:self.prepareMatchView];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -109,24 +112,14 @@
 }
 
 #pragma mark - animations
-- (void)showPrepareMatch {
+- (void)showView:(UIView*)view {
 	[UIView animateWithDuration:1.5 delay:0 usingSpringWithDamping:.7 initialSpringVelocity:0 options:0 animations:^{
-		self.prepareMatchView.center = self.view.center;
+		view.center = self.view.center;
 	} completion:nil];
 }
-- (void)hidePrepareMatch {
+- (void)hideView:(UIView*)view {
 	[UIView animateWithDuration:1.5 delay:0 usingSpringWithDamping:.7 initialSpringVelocity:0 options:0 animations:^{
-		self.prepareMatchView.center = self.outside;
-	} completion:nil];
-}
-- (void)showWaitMatch {
-	[UIView animateWithDuration:1.5 delay:0 usingSpringWithDamping:.7 initialSpringVelocity:0 options:0 animations:^{
-		self.waitMatchView.center = self.view.center;
-	} completion:nil];
-}
-- (void)hideWaitMatch {
-	[UIView animateWithDuration:1.5 delay:0 usingSpringWithDamping:.7 initialSpringVelocity:0 options:0 animations:^{
-		self.waitMatchView.center = self.outside;
+		view.center = self.outside;
 	} completion:nil];
 }
 
@@ -134,8 +127,8 @@
 
 - (void)plug:(Plug *)plug hasClosedWithError:(BOOL)error {
 	self.plug = nil;
-	[self hideWaitMatch];
-	[self hidePrepareMatch];
+	[self hideView:self.waitMatchView];
+	[self hideView:self.prepareMatchView];
 	self.startButton.enabled = NO;
 	[self.nameInput resignFirstResponder];
 }

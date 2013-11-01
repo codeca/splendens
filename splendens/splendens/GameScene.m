@@ -175,6 +175,10 @@
 - (void)checkVictory {
 	Player* winner = nil;
 	
+	// Avoid checking twice when in a 2-player game, one of them disconnect right after clicking next turn
+	if (self.gameEnded)
+		return;
+	
 	// Check if there is only 1 connected player with cells
 	for (Cell* cell in self.map.cells) {
 		if ([cell isCenter] && cell.owner && !cell.owner.disconnected) {
@@ -200,10 +204,6 @@
 
 // Process all users actions in this turn
 - (void)simulateTurn {
-	if (self.gameEnded)
-		// Avoid checking twice when in a 2-player game, one of them disconnect right after clicking next turn
-		return;
-	
 	for (NSDictionary* turnActions in self.othersTurnActions) {
 		NSArray* actions = turnActions[@"actions"];
 		
