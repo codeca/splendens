@@ -72,7 +72,7 @@
 		[self addChild:self.selectedFocus];
 		
 		// Bonus overlay (children of map)
-		CGSize bonusSize = CGSizeMake(size.width/3, size.height/3);
+		CGSize bonusSize = CGSizeMake(size.width/2, size.height/2);
 		self.bonusNode = [SKSpriteNode spriteNodeWithColor:[UIColor redColor] size:bonusSize];
 		self.bonusNode.position = CGPointMake(self.position.x, self.position.y+size.height/2);
 		self.bonusNode.zPosition = 2;
@@ -140,7 +140,8 @@
 	// Add new bonus
 	if (bonus != BonusNone) {
 		self.bonusNode.alpha = 0;
-		self.bonusNode.color = bonus==BonusPopulation ? [UIColor redColor] : (bonus==BonusArmor ? [UIColor greenColor] : [UIColor blueColor]);
+		NSString* name = bonus==BonusPopulation ? @"maxPopulation" : (bonus==BonusArmor ? @"armor" : @"speed");
+		self.bonusNode.texture = [Cell textureWithName:name];
 		[self.bonusNode setScale:0];
 		[self.parent addChild:self.bonusNode];
 		SKAction* grow = [SKAction scaleTo:2 duration:.5];

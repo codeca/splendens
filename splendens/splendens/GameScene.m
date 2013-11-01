@@ -108,7 +108,7 @@
 			firstPlayer = player==self.thisPlayer;
 			break;
 		}
-	if (firstPlayer && arc4random_uniform(3) == 1)
+	if (firstPlayer && arc4random_uniform(10) == 7)
 		[self addRandomBonus];
 	
 	// Group all actions and send
@@ -176,7 +176,7 @@
 	
 	// Check if there is only 1 connected player with cells
 	for (Cell* cell in self.map.cells) {
-		if ([cell isCenter] && cell.owner) {
+		if ([cell isCenter] && cell.owner && !cell.owner.disconnected) {
 			if (!winner)
 				winner = cell.owner;
 			else if (winner != cell.owner) {
