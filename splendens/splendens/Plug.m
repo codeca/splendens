@@ -27,7 +27,8 @@
 
 - (id)init {
 	if (self = [super init]) {
-		NSURLRequest* req = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://sitegui.com.br/splendens/ip.txt"]];
+		NSString* url = [NSString stringWithFormat:@"http://sitegui.com.br/splendens/ip.txt?random=%d", arc4random()];
+		NSURLRequest* req = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
 		NSOperationQueue* queue = [NSOperationQueue currentQueue];
 		[NSURLConnection sendAsynchronousRequest:req queue:queue completionHandler:^(NSURLResponse* _, NSData* data, NSError* error) {
 			if (error) {
