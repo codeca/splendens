@@ -362,7 +362,7 @@
 					destiny.bonus = troop.owner.bonus;
 				} else {
 					troop.owner.bonus = destiny.bonus;
-					troop.owner.bonusTimeLeft = 5;
+					troop.owner.bonusTimeLeft = 7;
 				}
 			}
 			destiny.population = troop.amount - destiny.population*destinyArmor;

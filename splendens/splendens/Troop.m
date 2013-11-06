@@ -27,6 +27,7 @@
 		self.node.size = CGSizeMake(size, size);
 		self.node.xScale = self.node.yScale = 0;
 		self.node.position = [firstCell randomPointNear: 1];
+		self.node.zPosition = 2;
 		[self.node runAction:[SKAction scaleTo:1 duration:.5]];
 		
 		self.path = path;

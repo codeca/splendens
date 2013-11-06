@@ -75,7 +75,7 @@
 		CGSize bonusSize = CGSizeMake(size.width/2, size.height/2);
 		self.bonusNode = [SKSpriteNode spriteNodeWithColor:[UIColor redColor] size:bonusSize];
 		self.bonusNode.position = CGPointMake(self.position.x, self.position.y+size.height/2);
-		self.bonusNode.zPosition = 2;
+		self.bonusNode.zPosition = 1;
 		
 		self.userInteractionEnabled = YES;
 		_x = x;
@@ -140,7 +140,7 @@
 	// Add new bonus
 	if (bonus != BonusNone) {
 		self.bonusNode.alpha = 0;
-		NSString* name = bonus==BonusPopulation ? @"maxPopulation" : (bonus==BonusArmor ? @"armor" : @"speed");
+		NSString* name = bonus==BonusPopulation ? @"production" : (bonus==BonusArmor ? @"armor" : @"speed");
 		self.bonusNode.texture = [Cell textureWithName:name];
 		[self.bonusNode setScale:0];
 		[self.parent addChild:self.bonusNode];
