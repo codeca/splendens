@@ -28,6 +28,7 @@ typedef enum {
 } BonusType;
 
 #import <SpriteKit/SpriteKit.h>
+#import <AVFoundation/AVFoundation.h>
 #import "Map.h"
 #import "Plug.h"
 #import "BottomPanel.h"
@@ -60,6 +61,8 @@ typedef enum {
 // Store all received user turn actions
 // Each element is a NSDictionary returned by the server
 @property (nonatomic) NSMutableArray* othersTurnActions;
+
+@property AVAudioPlayer* music;
 
 // Create the game map and import the plug
 - (void)loadGame:(id)game myId:(NSString*)myId plug:(Plug*)plug;

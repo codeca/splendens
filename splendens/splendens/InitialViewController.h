@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 Codeca. All rights reserved.
 //
 
+#import <AVFoundation/AVFoundation.h>
 #import <UIKit/UIKit.h>
 #import <SpriteKit/SpriteKit.h>
 #import "Plug.h"
@@ -25,6 +26,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *codeLabel;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *friendsSegment;
 @property (nonatomic) Plug* plug;
+
+@property AVAudioPlayer* music;
 
 - (void)plug:(Plug *)plug hasClosedWithError:(BOOL)error;
 

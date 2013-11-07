@@ -102,6 +102,9 @@
 		D05CE05918198F6400827611 /* path2I@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = D05CE05818198F6400827611 /* path2I@2X.png */; };
 		D0627B14182BB1D500E823D5 /* bell.wav in Resources */ = {isa = PBXBuildFile; fileRef = D0627B12182BB1D500E823D5 /* bell.wav */; };
 		D0627B15182BB1D500E823D5 /* Fontes.rtf in Resources */ = {isa = PBXBuildFile; fileRef = D0627B13182BB1D500E823D5 /* Fontes.rtf */; };
+		D0627B2F182BC26E00E823D5 /* sea.wav in Resources */ = {isa = PBXBuildFile; fileRef = D0627B2C182BC26E00E823D5 /* sea.wav */; };
+		D0627B30182BC26E00E823D5 /* seagull.wav in Resources */ = {isa = PBXBuildFile; fileRef = D0627B2D182BC26E00E823D5 /* seagull.wav */; };
+		D0627B31182BC26E00E823D5 /* stonelake.aiff in Resources */ = {isa = PBXBuildFile; fileRef = D0627B2E182BC26E00E823D5 /* stonelake.aiff */; };
 		D0BB820E182139D4006ECA83 /* armor@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = D0BB8205182139D4006ECA83 /* armor@2X.png */; };
 		D0BB820F182139D4006ECA83 /* arrow@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = D0BB8206182139D4006ECA83 /* arrow@2X.png */; };
 		D0BB8210182139D4006ECA83 /* bottomPanel@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = D0BB8207182139D4006ECA83 /* bottomPanel@2X.png */; };
@@ -237,6 +240,9 @@
 		D05CE05818198F6400827611 /* path2I@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "path2I@2X.png"; sourceTree = "<group>"; };
 		D0627B12182BB1D500E823D5 /* bell.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bell.wav; sourceTree = "<group>"; };
 		D0627B13182BB1D500E823D5 /* Fontes.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Fontes.rtf; sourceTree = "<group>"; };
+		D0627B2C182BC26E00E823D5 /* sea.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = sea.wav; sourceTree = "<group>"; };
+		D0627B2D182BC26E00E823D5 /* seagull.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = seagull.wav; sourceTree = "<group>"; };
+		D0627B2E182BC26E00E823D5 /* stonelake.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = stonelake.aiff; sourceTree = "<group>"; };
 		D0BB8205182139D4006ECA83 /* armor@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "armor@2X.png"; sourceTree = "<group>"; };
 		D0BB8206182139D4006ECA83 /* arrow@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow@2X.png"; sourceTree = "<group>"; };
 		D0BB8207182139D4006ECA83 /* bottomPanel@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bottomPanel@2X.png"; sourceTree = "<group>"; };
@@ -469,6 +475,9 @@
 		D0627B11182BB1D500E823D5 /* sounds */ = {
 			isa = PBXGroup;
 			children = (
+				D0627B2C182BC26E00E823D5 /* sea.wav */,
+				D0627B2D182BC26E00E823D5 /* seagull.wav */,
+				D0627B2E182BC26E00E823D5 /* stonelake.aiff */,
 				D0627B12182BB1D500E823D5 /* bell.wav */,
 				D0627B13182BB1D500E823D5 /* Fontes.rtf */,
 			);
@@ -571,6 +580,7 @@
 				98DF3119181937570092E8A7 /* lab@2X.png in Resources */,
 				98DF318A181EBC310092E8A7 /* wall1d-2@2X.png in Resources */,
 				98DF311D181937570092E8A7 /* path3@2X.png in Resources */,
+				D0627B30182BC26E00E823D5 /* seagull.wav in Resources */,
 				98DF3114181937570092E8A7 /* basic2@2X.png in Resources */,
 				D0627B15182BB1D500E823D5 /* Fontes.rtf in Resources */,
 				98DF317D181EBC310092E8A7 /* wall1a-1@2X.png in Resources */,
@@ -590,6 +600,7 @@
 				98DF3181181EBC310092E8A7 /* wall1b-1@2X.png in Resources */,
 				98DF311E181937570092E8A7 /* path4@2X.png in Resources */,
 				98DF3180181EBC310092E8A7 /* wall1b-0@2X.png in Resources */,
+				D0627B2F182BC26E00E823D5 /* sea.wav in Resources */,
 				98DF3171181EBC310092E8A7 /* wall0c-0@2X.png in Resources */,
 				98DF3183181EBC310092E8A7 /* wall1b-3@2X.png in Resources */,
 				98DF3186181EBC310092E8A7 /* wall1c-2@2X.png in Resources */,
@@ -627,6 +638,7 @@
 				98DF3175181EBC310092E8A7 /* wall0d-0@2X.png in Resources */,
 				98DF3188181EBC310092E8A7 /* wall1d-0@2X.png in Resources */,
 				98DF318B181EBC310092E8A7 /* wall1d-3@2X.png in Resources */,
+				D0627B31182BC26E00E823D5 /* stonelake.aiff in Resources */,
 				98DF3120181937570092E8A7 /* tower2@2X.png in Resources */,
 				98DF3121181937570092E8A7 /* troop@2X.png in Resources */,
 			);
