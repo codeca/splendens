@@ -72,14 +72,6 @@
 	self.userTurn = YES;
 	
 	self.timer = [NSTimer scheduledTimerWithTimeInterval:SKIP_TURN_TIME target:self selector:@selector(endThisUserTurn) userInfo:nil repeats:NO];
-
-	NSString * backgroundPath = [[NSBundle mainBundle] pathForResource:@"sea" ofType:@"wav"];
-	NSURL * pathURL = [[NSURL alloc] initFileURLWithPath:backgroundPath];
-	self.music = [[AVAudioPlayer alloc] initWithContentsOfURL: pathURL error: nil];
-	self.music.numberOfLoops = -1;
-	[self.music play];
-	
-	
 }
 
 - (void)setUserTurn:(BOOL)userTurn {
@@ -117,6 +109,7 @@
 - (void)endMyTurn {
 	[self.timer invalidate];
 	self.timer = nil;
+	
 	[self endThisUserTurn];
 }
 
@@ -221,7 +214,6 @@
 		[self.plug close];
 		GameOverScene* nextScene = [[GameOverScene alloc] initWithSize:self.size winner:winner thisPlayer:self.thisPlayer];
 		nextScene.viewController = self.viewController;
-		[self.music stop];
 		[self.view presentScene:nextScene transition:[SKTransition doorwayWithDuration:1.5]];
 	} else
 		self.userTurn = YES;
