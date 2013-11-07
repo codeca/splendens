@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UIProgressView *matchProgress;
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *buttons;
 @property (weak, nonatomic) IBOutlet UIView *credits;
+@property (weak, nonatomic) IBOutlet UILabel *codeLabel;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *friendsSegment;
 @property (nonatomic) Plug* plug;
 

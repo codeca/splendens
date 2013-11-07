@@ -102,6 +102,7 @@ enum {
 	self.name = self.nameInput.text;
 	[[NSUserDefaults standardUserDefaults] setObject:self.name forKey:@"name"];
 	self.myId = [[NSUUID UUID] UUIDString];
+	self.codeLabel.hidden = YES;
 	
 	if (self.randomMatch) {
 		// Start a random match
@@ -121,7 +122,7 @@ enum {
 		NSString* code = self.codeInput.text;
 		if (code.length) {
 			// Join a friend match
-			[self.plug sendMessage:MSG_FRIEND_MATCH_JOIN data:@{@"key": self.codeInput.text,
+			[self.plug sendMessage:MSG_FRIEND_MATCH_JOIN data:@{@"key": [self.codeInput.text uppercaseString],
 																@"name": self.name,
 																@"id": self.myId}];
 		} else {
@@ -137,7 +138,8 @@ enum {
 																 @"name": self.name,
 																 @"id": self.myId}];
 			self.matchProgress.progress = 1.0/[players floatValue];
-			NSLog(@"%@", code);
+			self.codeLabel.hidden = NO;
+			self.codeLabel.text = [NSString stringWithFormat:@"Tell your friends this code: %@", code];
 		}
 	}
 }
@@ -203,7 +205,6 @@ enum {
 }
 
 - (void)plug:(Plug *)plug receivedMessage:(PlugMsgType)type data:(id)data {
-	NSLog(@"%@", data);
 	if (type == MSG_SIMPLE_MATCH_PROGRESS) {
 		int waitingFor2, waitingFor3, waitingFor4;
 		float progress2, progress3, progress4, maxProgress;

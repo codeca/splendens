@@ -194,7 +194,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KX9-vv-uiJ" userLabel="Wait Match View">
-                                <rect key="frame" x="-251" y="822" width="550" height="350"/>
+                                <rect key="frame" x="134" y="573" width="550" height="350"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" fixedFrame="YES" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="9Qg-WV-XQu">
@@ -218,6 +218,13 @@
                                             <action selector="cancelWait:" destination="rYn-3r-ret" eventType="touchUpInside" id="oan-fK-YdN"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Tell your friends this code: XXXXX" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t9f-F8-lNH">
+                                        <rect key="frame" x="140" y="236" width="258" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
@@ -269,6 +276,7 @@ Rodolfo Bitu</string>
                     </view>
                     <connections>
                         <outlet property="codeInput" destination="V8D-8e-Ghi" id="aBD-rE-iRr"/>
+                        <outlet property="codeLabel" destination="t9f-F8-lNH" id="yEP-O3-W8m"/>
                         <outlet property="credits" destination="ps8-no-C4g" id="TsV-Up-Ecq"/>
                         <outlet property="friendsSegment" destination="855-HR-zgV" id="36b-ty-Zg3"/>
                         <outlet property="matchProgress" destination="9Qg-WV-XQu" id="cdE-oP-j7S"/>
