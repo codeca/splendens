@@ -139,6 +139,7 @@
 				towersAttacked = YES;
 	
 	[self processDeliveredTroops:timer.userInfo];
+	[self.game.topPanel updateTotalPopulation];
 	GameScene* game = (GameScene*)self.parent;
 	
 	if (towersAttacked) {

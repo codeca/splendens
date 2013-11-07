@@ -193,19 +193,17 @@
 	if (self.gameEnded)
 		return;
 	
-	if (self.thisPlayer.totalPopulation)
-		// Check if there is only 1 connected player with cells
-		for (Cell* cell in self.map.cells) {
-			if ([cell isCenter] && cell.owner && !cell.owner.disconnected) {
-				if (!winner)
-					winner = cell.owner;
-				else if (winner != cell.owner) {
-					// No winner yet
-					winner = nil;
-					break;
-				}
+	for (Player* player in self.players) {
+		if (player.totalPopulation > 0) {
+			if (!winner)
+				winner = player;
+			else {
+				// No winner yet
+				winner = nil;
+				break;
 			}
 		}
+	}
 	
 	if (winner || !self.thisPlayer.totalPopulation) {
 		[self.timer invalidate];
