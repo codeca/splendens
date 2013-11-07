@@ -43,19 +43,19 @@
 }
 
 + (int)speedForType:(CellType)type level:(int)level {
-	if (type == CellTypeBasic) return 1;
-	if (type == CellTypeCity && level == 1) return 3;
-	if (type == CellTypeCity && level == 2) return 3;
-	if (type == CellTypeCity && level == 3) return 3;
-	if (type == CellTypeCity && level == 4) return 3;
-	if (type == CellTypeTower && level == 1) return 2;
-	if (type == CellTypeTower && level == 2) return 2;
-	if (type == CellTypeTower && level == 3) return 2;
-	if (type == CellTypeTower && level == 4) return 2;
-	if (type == CellTypeLab && level == 1) return 4;
-	if (type == CellTypeLab && level == 2) return 5;
-	if (type == CellTypeLab && level == 3) return 6;
-	if (type == CellTypeLab && level == 4) return 7;
+	if (type == CellTypeBasic) return 2;
+	if (type == CellTypeCity && level == 1) return 4;
+	if (type == CellTypeCity && level == 2) return 4;
+	if (type == CellTypeCity && level == 3) return 4;
+	if (type == CellTypeCity && level == 4) return 4;
+	if (type == CellTypeTower && level == 1) return 3;
+	if (type == CellTypeTower && level == 2) return 3;
+	if (type == CellTypeTower && level == 3) return 3;
+	if (type == CellTypeTower && level == 4) return 3;
+	if (type == CellTypeLab && level == 1) return 5;
+	if (type == CellTypeLab && level == 2) return 6;
+	if (type == CellTypeLab && level == 3) return 7;
+	if (type == CellTypeLab && level == 4) return 8;
 	return -1;
 }
 
