@@ -11,12 +11,6 @@
 #import "Economy.h"
 #import "BottomPanel.h"
 
-@interface Map()
-
-@property (nonatomic) NSMutableArray* troops;
-
-@end
-
 @implementation Map
 
 - (id)initWithDefinition:(id)def myId:(NSString *)myId game:(GameScene*)game {

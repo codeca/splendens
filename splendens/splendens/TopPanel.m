@@ -124,6 +124,10 @@
 			totalPopulation += i.population;
 		}
 	}
+	for (Troop* troop in map.troops) {
+		troop.owner.totalPopulation += troop.amount;
+		totalPopulation += troop.amount;
+	}
 	int	dxbar = 5;
 	int lastPosition = 0;
 	int lastWidth = 0;

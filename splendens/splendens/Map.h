@@ -32,6 +32,7 @@
 @property (nonatomic) Cell* selected;
 @property (nonatomic) NSArray* lastPath;
 @property (nonatomic, weak) GameScene* game;
+@property (nonatomic) NSMutableArray* troops;
 
 // Create a new map from a JSON string (see the structure in the project wiki)
 - (id)initWithDefinition:(id)def myId:(NSString*)myId game:(GameScene*)game;
