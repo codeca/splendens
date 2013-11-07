@@ -132,6 +132,8 @@
 	self.userTurn = NO;
 	[self.topPanel playerTurnReady:self.thisPlayer];
 	
+	
+	
 	if (self.othersTurnActions.count == self.connectedPlayers-1)
 		[self simulateTurn];
 }

@@ -174,6 +174,7 @@
 	SKNode* ready = [cell childNodeWithName:@"ready"];
 	[ready removeAllActions];
 	[ready runAction: [SKAction fadeInWithDuration:0.5]];
+	if (player != game.thisPlayer)[ready runAction: [SKAction playSoundFileNamed:@"bell.wav" waitForCompletion:NO]];
 }
 
 - (void) playersTurnReset {
