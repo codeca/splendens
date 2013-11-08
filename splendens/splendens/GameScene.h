@@ -35,6 +35,7 @@ typedef enum {
 #import "TopPanel.h"
 #import "GameOverScene.h"
 #import "Economy.h"
+#import "Sounds.h"
 
 // The main scene, for the game itself
 @interface GameScene : SKScene <PlugDelegate>
@@ -60,6 +61,8 @@ typedef enum {
 // Store all received user turn actions
 // Each element is a NSDictionary returned by the server
 @property (nonatomic) NSMutableArray* othersTurnActions;
+
+@property Sounds* sounds;
 
 // Create the game map and import the plug
 - (void)loadGame:(id)game myId:(NSString*)myId plug:(Plug*)plug;

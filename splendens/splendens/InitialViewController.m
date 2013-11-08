@@ -42,6 +42,7 @@ enum {
     AnimatedBackgroundScene* scene = [AnimatedBackgroundScene sceneWithSize:view.bounds.size];
     [view presentScene:scene];
 	
+	
 }
 
 - (void)viewWillAppear:(BOOL)animated {

@@ -27,7 +27,6 @@
 @property (weak, nonatomic) IBOutlet UISegmentedControl *friendsSegment;
 @property (nonatomic) Plug* plug;
 
-@property AVAudioPlayer* music;
 
 - (void)plug:(Plug *)plug hasClosedWithError:(BOOL)error;
 

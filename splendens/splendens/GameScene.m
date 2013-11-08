@@ -71,6 +71,12 @@
 	self.othersTurnActions = [NSMutableArray array];
 	self.userTurn = YES;
 	
+	self.sounds = [[Sounds alloc]init];
+	[self.sounds addMusic:@"sea.wav"];
+	[self.sounds addSound:@"seagull.wav"];
+	self.sounds.ratio = 5;
+	[self.sounds start];
+	
 	self.timer = [NSTimer scheduledTimerWithTimeInterval:SKIP_TURN_TIME target:self selector:@selector(endThisUserTurn) userInfo:nil repeats:NO];
 }
 

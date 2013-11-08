@@ -15,9 +15,12 @@
 @property NSMutableArray* sounds;
 @property AVAudioPlayer* music;
 @property AVAudioPlayer* sound;
+@property NSTimer* timer;
+@property int ratio;
 
--(void) addMusic: (NSURL*) url;
--(void) addSound: (NSURL*) url;
-
+- (void)addMusic: (NSString*) music;
+- (void)addSound: (NSString*) sound;
+- (void)start;
+- (void)stop;
 
 @end
