@@ -34,6 +34,7 @@
 	if (self.musics.count > 0){
 		index = arc4random_uniform(self.musics.count);
 		self.music = [[AVAudioPlayer alloc] initWithContentsOfURL:self.musics[index] error:nil];
+		self.music.delegate = self;
 		[self.music play];
 	}
 	
@@ -46,6 +47,7 @@
 		if (self.musics.count > 0){
 			index = arc4random_uniform(self.musics.count);
 			self.music = [[AVAudioPlayer alloc] initWithContentsOfURL:self.musics[index] error:nil];
+			self.music.delegate = self;
 			[self.music play];
 		}
 	}
@@ -58,6 +60,7 @@
 			if (self.sounds.count > 0){
 				index = arc4random_uniform(self.sounds.count);
 				self.sound = [[AVAudioPlayer alloc]initWithContentsOfURL:self.sounds[index] error:nil];
+				self.sound.delegate = self;
 				[self.sound play];
 			}
 		}
@@ -67,6 +70,7 @@
 		if (self.musics.count > 0){
 			index = arc4random_uniform(self.musics.count);
 			self.music = [[AVAudioPlayer alloc] initWithContentsOfURL:self.musics[index] error:nil];
+			self.music.delegate = self;
 			[self.music play];
 		}
 	}

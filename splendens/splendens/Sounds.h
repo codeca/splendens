@@ -9,7 +9,7 @@
 #import <SpriteKit/SpriteKit.h>
 #import <AVFoundation/AVFoundation.h>
 
-@interface Sounds : SKSpriteNode
+@interface Sounds : SKSpriteNode<AVAudioPlayerDelegate>
 
 @property NSMutableArray* musics;
 @property NSMutableArray* sounds;
