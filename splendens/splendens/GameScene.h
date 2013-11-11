@@ -29,6 +29,12 @@ typedef enum {
 
 #define MSG_TURN_DATA 0
 
+typedef enum{
+	UserWaitPlayers = 0,
+	UserWaitAnimation,
+	UserTurn
+} UserTurnState;
+
 #import <SpriteKit/SpriteKit.h>
 #import "Map.h"
 #import "MultiPlug.h"
@@ -51,7 +57,7 @@ typedef enum {
 @property (nonatomic) TopPanel* topPanel;
 
 // Indicate whether the game is ready and waiting for user movements
-@property (nonatomic) BOOL userTurn;
+@property (nonatomic) UserTurnState userTurn;
 
 // Store a reference to the view controller to dismiss the segue
 @property (nonatomic, weak) UIViewController* viewController;
@@ -87,7 +93,7 @@ typedef enum {
 // If it does, go to game over scene
 - (void)checkVictory;
 
-- (void)setUserTurn:(BOOL)userTurn;
+- (void)setUserTurn:(UserTurnState)userTurn;
 
 - (void)multiPlug:(MultiPlug*)plug receivedMessage:(int)type data:(id)data player:(NSString*)playerId;
 

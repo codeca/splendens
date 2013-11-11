@@ -30,12 +30,16 @@
 		[self addChild:self.table];
 		
 		self.nextTurn = [[TextButton alloc] initWithText:@"Next turn"];
-		self.nextTurn.position = CGPointMake(self.size.width/2-100, 0);
+		self.nextTurn.position = CGPointMake(self.size.width/2-100, -self.size.height/2+self.nextTurn.size.height/2+(self.size.height/2 - self.nextTurn.size.height)/2);
 		self.nextTurn.hidden = YES;
 		self.nextTurn.userInteractionEnabled = NO;
 		[self addChild:self.nextTurn];
 		self.nextTurnDisabled = YES;
 		self.nextTurn.delegate = self;
+		
+		self.powerBar = [SKSpriteNode spriteNodeWithColor:[UIColor brownColor] size:CGSizeMake(self.size.width/2-200, self.size.height/2-30)];
+		self.powerBar.position = CGPointMake(self.size.width/2-self.powerBar.size.width/2-100, self.size.height/2 - self.powerBar.size.height/2-(self.size.height/2 - self.powerBar.size.height)/2);
+		[self addChild:self.powerBar];
 		
 		self.upgradeButton = [[TextButton alloc] initWithImage:@"arrow"];
 		self.upgradeButton.colorBlendFactor = 1;
@@ -56,19 +60,20 @@
 	GameScene* game = (GameScene*)self.scene;
 	Cell* cell = game.map.selected;
 	if (button == self.upgradeButton) {
-		if (!game.userTurn)
+		if (game.userTurn != UserTurn)
 			return;
 		
 		if (self.selected == nil)
 			[game upgradeCell:cell toType:cell.type];
 		else {
+			int temp = cell.level;
 			if (self.selected == self.city)
 				[game upgradeCell:cell toType:CellTypeCity];
 			else if (self.selected == self.tower)
 				[game upgradeCell:cell toType:CellTypeTower];
 			else if (self.selected == self.lab)
 				[game upgradeCell:cell toType:CellTypeLab];
-			self.selected = nil;
+			if (temp != cell.level) self.selected = nil;
 		}
 		if (self.selected == self.lab || cell.type == CellTypeLab){
 			TopPanel* topPanel = (TopPanel*) [game childNodeWithName:@"topPanel"];
@@ -139,7 +144,7 @@
 		infoCell1.fontSize = fontSize;
 		infoCell1.position = CGPointMake(2*da+a+a/2-x/2, da+a/2-y/2);
 		infoCell1.text = [NSString stringWithFormat:@"%d",[Economy productionForCell: selectedCell]];
-		if (selectedCell.bonus == BonusPopulation) infoCell1.fontColor = [UIColor yellowColor];
+		if (selectedCell.bonus == BonusPopulation && selectedCell.type == CellTypeCity) infoCell1.fontColor = [UIColor yellowColor];
 		infoCell1.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
 		SKLabelNode* infoCell2 = [[SKLabelNode alloc] initWithFontNamed:@"arial"];
 		infoCell2.fontSize = fontSize;
@@ -191,8 +196,14 @@
 					[self.upgradeButton addChild:manaCost];
 					manaCost.position = CGPointMake(0, - self.upgradeButton.size.height/2-dy2-manaCost.frame.size.height/2);
 				}
-				if (popCostValue<selectedCell.population && (manaCostValue == -1 || manaCostValue < game.thisPlayer.mana)) self.upgradeButton.color = [UIColor colorWithRed:0 green:0.5 blue:0 alpha:1];
-				else self.upgradeButton.color = [UIColor colorWithRed:0.5 green:0 blue:0 alpha:1];
+				if (popCostValue<selectedCell.population && (manaCostValue == -1 || manaCostValue < game.thisPlayer.mana)) {
+					self.upgradeButton.color = [UIColor colorWithRed:0 green:0.5 blue:0 alpha:1];
+					self.upgradeButton.userInteractionEnabled = YES;
+				}
+				else {
+					self.upgradeButton.color = [UIColor colorWithRed:0.5 green:0 blue:0 alpha:1];
+					self.upgradeButton.userInteractionEnabled = NO;
+				}
 			}
 			if (selectedCell.type == CellTypeBasic){
 				
