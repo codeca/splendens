@@ -69,7 +69,7 @@
 	
 	self.turnActions = [NSMutableArray array];
 	self.othersTurnActions = [NSMutableArray array];
-	self.userTurn = YES;
+	self.userTurn = UserTurn;
 	
 	self.sounds = [[Sounds alloc]init];
 	[self.sounds addMusic:@"sea.wav"];
@@ -80,9 +80,12 @@
 	self.timer = [NSTimer scheduledTimerWithTimeInterval:SKIP_TURN_TIME target:self selector:@selector(endThisUserTurn) userInfo:nil repeats:NO];
 }
 
-- (void)setUserTurn:(BOOL)userTurn {
+- (void)setUserTurn:(UserTurnState) userTurn {
 	_userTurn = userTurn;
-	self.bottomPanel.nextTurnDisabled = !userTurn;
+	if (userTurn != UserTurn)
+		self.bottomPanel.nextTurnDisabled = YES;
+	else
+		self.bottomPanel.nextTurnDisabled = NO;
 }
 
 // Add a random bonus to the strongest neutral cell in the map
@@ -136,7 +139,7 @@
 	
 	// Set turn state to done
 	self.turnActions = [NSMutableArray array];
-	self.userTurn = NO;
+	self.userTurn = UserWaitPlayers;
 	[self.topPanel playerTurnReady:self.thisPlayer];
 	
 	
@@ -222,11 +225,12 @@
 		nextScene.viewController = self.viewController;
 		[self.view presentScene:nextScene transition:[SKTransition doorwayWithDuration:1.5]];
 	} else
-		self.userTurn = YES;
+		self.userTurn = UserTurn;
 }
 
 // Process all users actions in this turn
 - (void)simulateTurn {
+	self.userTurn = UserWaitAnimation;
 	for (NSDictionary* turnActions in self.othersTurnActions) {
 		NSArray* actions = turnActions[@"actions"];
 		
@@ -261,7 +265,7 @@
 	
 	// Reset all player turnReady flags
 	[self.topPanel playersTurnReset];
-	
+	self.userTurn = UserTurn;
 	if (self.nextBonus) {
 		int x = [self.nextBonus[@"x"] integerValue];
 		int y = [self.nextBonus[@"y"] integerValue];
@@ -292,14 +296,14 @@
 	if (type == MSG_TURN_DATA) {
 		[self.othersTurnActions addObject:data];
 		[self.topPanel playerTurnReady:[self playerById:data[@"player"]]];
-		if (self.othersTurnActions.count == self.connectedPlayers-1 && !self.userTurn)
+		if (self.othersTurnActions.count == self.connectedPlayers-1 && self.userTurn == UserWaitPlayers)
 			[self simulateTurn];
 	} else if (type == MSG_PLAYER_DISCONNECTED) {
 		Player* player = [self playerById:data];
 		player.disconnected = YES;
 		[self.topPanel playerDisconnection:player];
 		self.connectedPlayers--;
-		if (self.othersTurnActions.count == self.connectedPlayers-1 && !self.userTurn)
+		if (self.othersTurnActions.count == self.connectedPlayers-1 && self.userTurn == UserWaitPlayers)
 			[self simulateTurn];
 	}
 }

@@ -27,6 +27,12 @@ typedef enum {
 	BonusSpeed
 } BonusType;
 
+typedef enum{
+	UserWaitPlayers = 0,
+	UserWaitAnimation,
+	UserTurn
+} UserTurnState;
+
 #import <SpriteKit/SpriteKit.h>
 #import "Map.h"
 #import "Plug.h"
@@ -49,7 +55,7 @@ typedef enum {
 @property (nonatomic) TopPanel* topPanel;
 
 // Indicate whether the game is ready and waiting for user movements
-@property (nonatomic) BOOL userTurn;
+@property (nonatomic) UserTurnState userTurn;
 
 // Store a reference to the view controller to dismiss the segue
 @property (nonatomic, weak) UIViewController* viewController;
@@ -85,7 +91,7 @@ typedef enum {
 // If it does, go to game over scene
 - (void)checkVictory;
 
-- (void)setUserTurn:(BOOL)userTurn;
+- (void)setUserTurn:(UserTurnState)userTurn;
 
 - (void)plug:(Plug*)plug hasClosedWithError:(BOOL)error;
 
