@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		984F6ED91831320600257514 /* MultiPlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 984F6ED81831320600257514 /* MultiPlug.m */; };
 		98560D221823D8EE005A83CD /* star@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 98560D211823D8EE005A83CD /* star@2X.png */; };
 		98560D2518240C3B005A83CD /* AnimatedBackgroundScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 98560D2418240C3B005A83CD /* AnimatedBackgroundScene.m */; };
 		98DF309918181E620092E8A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98DF309818181E620092E8A7 /* Foundation.framework */; };
@@ -128,6 +129,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		984F6ED71831320600257514 /* MultiPlug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiPlug.h; sourceTree = "<group>"; };
+		984F6ED81831320600257514 /* MultiPlug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiPlug.m; sourceTree = "<group>"; };
 		98560D211823D8EE005A83CD /* star@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star@2X.png"; sourceTree = "<group>"; };
 		98560D2318240C3B005A83CD /* AnimatedBackgroundScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedBackgroundScene.h; sourceTree = "<group>"; };
 		98560D2418240C3B005A83CD /* AnimatedBackgroundScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimatedBackgroundScene.m; sourceTree = "<group>"; };
@@ -317,6 +320,8 @@
 		98DF30A018181E620092E8A7 /* splendens */ = {
 			isa = PBXGroup;
 			children = (
+				984F6ED71831320600257514 /* MultiPlug.h */,
+				984F6ED81831320600257514 /* MultiPlug.m */,
 				D0627B11182BB1D500E823D5 /* sounds */,
 				98DF3134181992BC0092E8A7 /* scenes */,
 				98DF30E21819317B0092E8A7 /* sprites */,
@@ -674,6 +679,7 @@
 				D05CE05718193C2500827611 /* PathFinder.m in Sources */,
 				98DF3137181994760092E8A7 /* TextButton.m in Sources */,
 				98560D2518240C3B005A83CD /* AnimatedBackgroundScene.m in Sources */,
+				984F6ED91831320600257514 /* MultiPlug.m in Sources */,
 				98DF30D6181825820092E8A7 /* Cell.m in Sources */,
 				D0627B34182BCEB700E823D5 /* Sounds.m in Sources */,
 				D0BB821918214513006ECA83 /* TopPanel.m in Sources */,
