@@ -27,9 +27,11 @@ typedef enum {
 	BonusSpeed
 } BonusType;
 
+#define MSG_TURN_DATA 0
+
 #import <SpriteKit/SpriteKit.h>
 #import "Map.h"
-#import "Plug.h"
+#import "MultiPlug.h"
 #import "BottomPanel.h"
 #import "Player.h"
 #import "TopPanel.h"
@@ -38,9 +40,9 @@ typedef enum {
 #import "Sounds.h"
 
 // The main scene, for the game itself
-@interface GameScene : SKScene <PlugDelegate>
+@interface GameScene : SKScene <MultiPlugDelegate>
 
-@property (nonatomic) Plug* plug;
+@property (nonatomic) MultiPlug* plug;
 @property (nonatomic) Map* map;
 @property (nonatomic) NSArray* players;
 @property (nonatomic) Player* thisPlayer;
@@ -65,7 +67,7 @@ typedef enum {
 @property Sounds* sounds;
 
 // Create the game map and import the plug
-- (void)loadGame:(id)game myId:(NSString*)myId plug:(Plug*)plug;
+- (void)loadGame:(id)game myId:(NSString*)myId plug:(MultiPlug*)plug;
 
 // Called when this player press the NextTurn button
 // Send the user turn to other players
@@ -87,10 +89,8 @@ typedef enum {
 
 - (void)setUserTurn:(BOOL)userTurn;
 
-- (void)plug:(Plug*)plug hasClosedWithError:(BOOL)error;
+- (void)multiPlug:(MultiPlug*)plug receivedMessage:(int)type data:(id)data player:(NSString*)playerId;
 
-- (void)plug:(Plug*)plug receivedMessage:(PlugMsgType)type data:(id)data;
-
-- (void)plugHasConnected:(Plug*)plug;
+- (void)multiPlugClosedWithError:(MultiPlug*)plug;
 
 @end

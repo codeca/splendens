@@ -19,6 +19,8 @@
 
 @protocol MultiPlugDelegate <NSObject>
 
+@optional
+
 // Called when the connection is open and ready for matching (MULTIPLUGSTATE_OPEN)
 - (void)multiPlugConnected:(MultiPlug*)plug;
 
@@ -41,7 +43,10 @@
 // Called whenever any player sends a message (in a game)
 // type and data are the same sent by the original player
 // playerId is the player id (as present in the players array in the initial match data)
-- (void)muliPlug:(MultiPlug*)plug receivedMessage:(int)type data:(id)data player:(NSString*)playerId;
+- (void)multiPlug:(MultiPlug*)plug receivedMessage:(int)type data:(id)data player:(NSString*)playerId;
+
+// Called whenever a player in the same game room disconnects
+- (void)multiPlug:(MultiPlug*)plug playerDisconnected:(NSString*)player;
 
 // Called when the connection has closed with error
 - (void)multiPlugClosedWithError:(MultiPlug*)plug;

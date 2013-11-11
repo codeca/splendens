@@ -23,7 +23,7 @@
 
 @implementation GameScene
 
-- (void)loadGame:(id)game myId:(NSString*)myId plug:(Plug*)plug {
+- (void)loadGame:(id)game myId:(NSString*)myId plug:(MultiPlug*)plug {
 	// Create the players
 	NSArray* gamePlayers = game[@"players"];
 	
@@ -275,12 +275,6 @@
 	self.timer = [NSTimer scheduledTimerWithTimeInterval:SKIP_TURN_TIME target:self selector:@selector(endThisUserTurn) userInfo:nil repeats:NO];
 }
 
-- (void)plug:(Plug*)plug hasClosedWithError:(BOOL)error {
-	if (!self.gameEnded)
-		// If the game has ended, it is normal to have the connection closed
-		[self.viewController dismissViewControllerAnimated:YES completion:nil];
-}
-
 - (Player*)playerById:(NSString*)playerId {
 	for (Player* player in self.players)
 		if ([player.playerId isEqualToString:playerId])
@@ -288,7 +282,7 @@
 	return nil;
 }
 
-- (void)plug:(Plug*)plug receivedMessage:(PlugMsgType)type data:(id)data {
+- (void)multiPlug:(MultiPlug*)plug receivedMessage:(int)type data:(id)data player:(NSString*)playerId {
 	if (type == MSG_TURN_DATA) {
 		[self.othersTurnActions addObject:data];
 		[self.topPanel playerTurnReady:[self playerById:data[@"player"]]];
@@ -302,10 +296,13 @@
 		if (self.othersTurnActions.count == self.connectedPlayers-1 && !self.userTurn)
 			[self simulateTurn];
 	}
+	
 }
 
-- (void)plugHasConnected:(Plug*)plug {
-	
+- (void)multiPlugClosedWithError:(MultiPlug*)plug {
+	if (!self.gameEnded)
+		// If the game has ended, it is normal to have the connection closed
+		[self.viewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

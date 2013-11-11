@@ -36,7 +36,7 @@
 
 - (id)init {
 	if (self = [super init]) {
-		NSString* url = [MULTIPLUG_EXTERNAL_HOST stringByAppendingFormat:@"/multiPlug/get.php?key=%@&noCache=%d", [[NSBundle mainBundle] bundleIdentifier], arc4random()];
+		NSString* url = [MULTIPLUG_EXTERNAL_HOST stringByAppendingFormat:@"/get.php?key=%@&noCache=%d", [[NSBundle mainBundle] bundleIdentifier], arc4random()];
 		if (MULTIPLUG_DEBUG) NSLog(@"Getting server ip in %@", url);
 		NSURLRequest* req = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
 		NSOperationQueue* queue = [NSOperationQueue currentQueue];
@@ -254,7 +254,7 @@
 	if (self.state == MULTIPLUGSTATE_INGAME) {
 		NSString* player = data[@"player"];
 		id userData = data[@"data"];
-		[self.delegate muliPlug:self receivedMessage:type data:userData player:player];
+		[self.delegate multiPlug:self receivedMessage:type data:userData player:player];
 	} else if (type == MSG_IN_SIMPLE_MATCH_PROGRESS) {
 		// Pick the best waiting/wanted ratio
 		float bestWanted = 1;

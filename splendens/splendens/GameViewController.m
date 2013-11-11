@@ -11,7 +11,7 @@
 
 @implementation GameViewController
 
-- (void)loadGame:(id)game myId:(NSString*)myId plug:(Plug*)plug {
+- (void)loadGame:(id)game myId:(NSString*)myId plug:(MultiPlug*)plug {
     // Configure the game view
     SKView* view = (SKView*)self.view;
     view.showsFPS = YES;

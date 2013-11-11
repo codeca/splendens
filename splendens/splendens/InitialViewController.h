@@ -9,10 +9,10 @@
 #import <AVFoundation/AVFoundation.h>
 #import <UIKit/UIKit.h>
 #import <SpriteKit/SpriteKit.h>
-#import "Plug.h"
+#import "MultiPlug.h"
 #import "AnimatedBackgroundScene.h"
 
-@interface InitialViewController : UIViewController<PlugDelegate>
+@interface InitialViewController : UIViewController<MultiPlugDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *prepareMatchView;
 @property (weak, nonatomic) IBOutlet UIView *waitMatchView;
@@ -25,13 +25,18 @@
 @property (weak, nonatomic) IBOutlet UIView *credits;
 @property (weak, nonatomic) IBOutlet UILabel *codeLabel;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *friendsSegment;
-@property (nonatomic) Plug* plug;
+@property (nonatomic) MultiPlug* plug;
 
+- (void)multiPlugConnected:(MultiPlug*)plug;
 
-- (void)plug:(Plug *)plug hasClosedWithError:(BOOL)error;
+- (void)multiPlug:(MultiPlug*)plug matchStatus:(float)current max:(float)max;
 
-- (void)plug:(Plug *)plug receivedMessage:(PlugMsgType)type data:(id)data;
+- (void)multiPlugFriendMatchNotFound:(MultiPlug*)plug;
 
-- (void)plugHasConnected:(Plug *)plug;
+- (void)multiPlugFriendMatchCanceled:(MultiPlug*)plug;
+
+- (void)multiPlug:(MultiPlug*)plug matched:(NSDictionary*)data;
+
+- (void)multiPlugClosedWithError:(MultiPlug*)plug;
 
 @end
