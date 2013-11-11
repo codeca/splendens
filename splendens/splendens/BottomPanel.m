@@ -30,15 +30,16 @@
 		[self addChild:self.table];
 		
 		self.nextTurn = [[TextButton alloc] initWithText:@"Next turn"];
-		self.nextTurn.position = CGPointMake(self.size.width/2-100, 0);
+		self.nextTurn.position = CGPointMake(self.size.width/2-100, -self.size.height/2+self.nextTurn.size.height/2+(self.size.height/2 - self.nextTurn.size.height)/2);
 		self.nextTurn.hidden = YES;
 		self.nextTurn.userInteractionEnabled = NO;
 		[self addChild:self.nextTurn];
 		self.nextTurnDisabled = YES;
 		self.nextTurn.delegate = self;
 		
-		self.powerBar = [[SKNode alloc] init];
-		
+		self.powerBar = [SKSpriteNode spriteNodeWithColor:[UIColor brownColor] size:CGSizeMake(self.size.width/2-200, self.size.height/2-30)];
+		self.powerBar.position = CGPointMake(self.size.width/2-self.powerBar.size.width/2-100, self.size.height/2 - self.powerBar.size.height/2-(self.size.height/2 - self.powerBar.size.height)/2);
+		[self addChild:self.powerBar];
 		
 		self.upgradeButton = [[TextButton alloc] initWithImage:@"arrow"];
 		self.upgradeButton.colorBlendFactor = 1;
