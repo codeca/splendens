@@ -291,6 +291,7 @@
 		[self close];
 		[self.delegate multiPlugFriendMatchCanceled:self];
 	} else if (type == MSG_IN_MATCH_DONE) {
+		self.state = MULTIPLUGSTATE_INGAME;
 		[self.delegate multiPlug:self matched:data];
 	}
 }
