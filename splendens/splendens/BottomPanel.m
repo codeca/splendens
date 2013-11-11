@@ -60,19 +60,20 @@
 	GameScene* game = (GameScene*)self.scene;
 	Cell* cell = game.map.selected;
 	if (button == self.upgradeButton) {
-		if (!game.userTurn)
+		if (game.userTurn != UserTurn)
 			return;
 		
 		if (self.selected == nil)
 			[game upgradeCell:cell toType:cell.type];
 		else {
+			int temp = cell.level;
 			if (self.selected == self.city)
 				[game upgradeCell:cell toType:CellTypeCity];
 			else if (self.selected == self.tower)
 				[game upgradeCell:cell toType:CellTypeTower];
 			else if (self.selected == self.lab)
 				[game upgradeCell:cell toType:CellTypeLab];
-			self.selected = nil;
+			if (temp != cell.level) self.selected = nil;
 		}
 		if (self.selected == self.lab || cell.type == CellTypeLab){
 			TopPanel* topPanel = (TopPanel*) [game childNodeWithName:@"topPanel"];
@@ -195,8 +196,14 @@
 					[self.upgradeButton addChild:manaCost];
 					manaCost.position = CGPointMake(0, - self.upgradeButton.size.height/2-dy2-manaCost.frame.size.height/2);
 				}
-				if (popCostValue<selectedCell.population && (manaCostValue == -1 || manaCostValue < game.thisPlayer.mana)) self.upgradeButton.color = [UIColor colorWithRed:0 green:0.5 blue:0 alpha:1];
-				else self.upgradeButton.color = [UIColor colorWithRed:0.5 green:0 blue:0 alpha:1];
+				if (popCostValue<selectedCell.population && (manaCostValue == -1 || manaCostValue < game.thisPlayer.mana)) {
+					self.upgradeButton.color = [UIColor colorWithRed:0 green:0.5 blue:0 alpha:1];
+					self.upgradeButton.userInteractionEnabled = YES;
+				}
+				else {
+					self.upgradeButton.color = [UIColor colorWithRed:0.5 green:0 blue:0 alpha:1];
+					self.upgradeButton.userInteractionEnabled = NO;
+				}
 			}
 			if (selectedCell.type == CellTypeBasic){
 				
