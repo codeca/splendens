@@ -17,6 +17,7 @@
 @property (nonatomic) SKNode* table;
 @property (nonatomic) TextButton* upgradeButton;
 @property (nonatomic) TextButton* nextTurn;
+@property (nonatomic) SKNode* powerBar;
 @property (nonatomic) BOOL nextTurnDisabled;
 
 - (void)update;

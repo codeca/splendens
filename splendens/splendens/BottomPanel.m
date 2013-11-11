@@ -37,6 +37,9 @@
 		self.nextTurnDisabled = YES;
 		self.nextTurn.delegate = self;
 		
+		self.powerBar = [[SKNode alloc] init];
+		
+		
 		self.upgradeButton = [[TextButton alloc] initWithImage:@"arrow"];
 		self.upgradeButton.colorBlendFactor = 1;
 		self.upgradeButton.delegate = self;
@@ -139,7 +142,7 @@
 		infoCell1.fontSize = fontSize;
 		infoCell1.position = CGPointMake(2*da+a+a/2-x/2, da+a/2-y/2);
 		infoCell1.text = [NSString stringWithFormat:@"%d",[Economy productionForCell: selectedCell]];
-		if (selectedCell.bonus == BonusPopulation) infoCell1.fontColor = [UIColor yellowColor];
+		if (selectedCell.bonus == BonusPopulation && selectedCell.type == CellTypeCity) infoCell1.fontColor = [UIColor yellowColor];
 		infoCell1.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
 		SKLabelNode* infoCell2 = [[SKLabelNode alloc] initWithFontNamed:@"arial"];
 		infoCell2.fontSize = fontSize;

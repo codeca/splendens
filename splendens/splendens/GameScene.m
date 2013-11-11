@@ -204,7 +204,7 @@
 		return;
 	
 	for (Player* player in self.players) {
-		if (player.totalPopulation > 0) {
+		if (player.totalPopulation > 0 && !player.disconnected) {
 			if (!winner)
 				winner = player;
 			else {
@@ -218,7 +218,7 @@
 	if (winner || !self.thisPlayer.totalPopulation) {
 		[self.timer invalidate];
 		self.timer = nil;
-		
+		[self.sounds stop];
 		self.gameEnded = YES;
 		[self.plug close];
 		GameOverScene* nextScene = [[GameOverScene alloc] initWithSize:self.size winner:winner thisPlayer:self.thisPlayer];
@@ -300,6 +300,7 @@
 			[self simulateTurn];
 	} else if (type == MSG_PLAYER_DISCONNECTED) {
 		Player* player = [self playerById:data];
+		[self checkVictory]; //test
 		player.disconnected = YES;
 		[self.topPanel playerDisconnection:player];
 		self.connectedPlayers--;
