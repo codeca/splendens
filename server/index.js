@@ -80,7 +80,7 @@ function onmessage(type, data) {
 
 // Treat a player disconnection
 function onclose() {
-	if (this.state == Player.STATE_INGAME)
+	if (this.game)
 		// Tell other players in the same room this one has disconnected
 		this.broadcast(MSG_OUT_PLAYER_DISCONNECTED, this.id)
 	else if (this.state == Player.STATE_MATCHING_SIMPLE)
