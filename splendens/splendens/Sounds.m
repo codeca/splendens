@@ -74,11 +74,6 @@
 			[self.music play];
 		}
 	}
-	//NSString * backgroundPath = [[NSBundle mainBundle] pathForResource:@"sea" ofType:@"wav"];
-	//NSURL * pathURL = [[NSURL alloc] initFileURLWithPath:backgroundPath];
-	//self.music = [[AVAudioPlayer alloc] initWithContentsOfURL: pathURL error: nil];
-	//self.music.numberOfLoops = -1;
-	//[self.music play];
 }
 
 - (void)stop{
