@@ -93,4 +93,6 @@ typedef enum {
 
 - (void)multiPlugClosedWithError:(MultiPlug*)plug;
 
+- (void)multiPlug:(MultiPlug*)plug playerDisconnected:(NSString*)player;
+
 @end

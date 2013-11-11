@@ -1,0 +1,16 @@
+{
+	"scripts": {
+		"start": "node index.js"
+	},
+	"name": "multiPlug",
+	"version": "0.0.0",
+	"description": "A socket connection for multiplayer in iOS",
+	"keywords": ["iOS", "multiplayer"],
+	"issues": "https://github.com/codeca/multiPlug/issues",
+	"license": "MIT",
+	"author": "Guilherme Souza (http://sitegui.com.br)",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/codeca/multiPlug.git"
+	}
+}

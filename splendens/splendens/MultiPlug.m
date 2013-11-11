@@ -18,7 +18,7 @@
 
 @end
 
-#define MSG_IN_PLAYER_DISCONNECTED 0
+#define MSG_IN_PLAYER_DISCONNECTED -1
 #define MSG_IN_SIMPLE_MATCH_PROGRESS 1
 #define MSG_IN_FRIEND_MATCH_NOT_FOUND 2
 #define MSG_IN_FRIEND_MATCH_PROGRESS 3
@@ -91,7 +91,7 @@
 	[self sendRawMessage:MSG_OUT_FRIEND_MATCH_START data:@{@"name": userName,
 														   @"id": self.myId,
 														   @"key": code,
-														   @"num": [NSNumber numberWithInt:num]}];
+														   @"players": [NSNumber numberWithInt:num]}];
 	self.state = MULTIPLUGSTATE_MATCHING;
 	return code;
 }
@@ -107,6 +107,8 @@
 - (void)sendMessage:(int)type data:(id)data {
 	if (self.state != MULTIPLUGSTATE_INGAME)
 		@throw @"Invalid plug state";
+	if (type < 0)
+		@throw @"Invalid type value";
 	[self sendRawMessage:type data:@{@"player": self.myId, @"data": data}];
 }
 
@@ -252,17 +254,21 @@
 // Initial message process
 - (void)processRawMessage:(int)type data:(id)data {
 	if (self.state == MULTIPLUGSTATE_INGAME) {
-		NSString* player = data[@"player"];
-		id userData = data[@"data"];
-		[self.delegate multiPlug:self receivedMessage:type data:userData player:player];
+		if (type == MSG_IN_PLAYER_DISCONNECTED) {
+			[self.delegate multiPlug:self playerDisconnected:data];
+		} else {
+			NSString* player = data[@"player"];
+			id userData = data[@"data"];
+			[self.delegate multiPlug:self receivedMessage:type data:userData player:player];
+		}
 	} else if (type == MSG_IN_SIMPLE_MATCH_PROGRESS) {
 		// Pick the best waiting/wanted ratio
 		float bestWanted = 1;
 		float bestWaiting = 0;
 		for (NSDictionary* each in data) {
 			// Only consider rooms that this player is in
-			NSNumber* wanted = data[@"wanted"];
-			NSNumber* waiting = data[@"waiting"];
+			NSNumber* wanted = each[@"wanted"];
+			NSNumber* waiting = each[@"waiting"];
 			if ([self.wishes indexOfObject:wanted] != NSNotFound) {
 				float fWaiting = [waiting floatValue];
 				float fWanted = [wanted floatValue];

@@ -89,6 +89,7 @@ typedef enum {
 // Send a given message to all players (in a game)
 // type and data will be delivered to everybody's delegate
 // data is anything that can be transformed into JSON
+// don't use a negative type
 - (void)sendMessage:(int)type data:(id)data;
 
 // Close the given connection and prevent future messages to be processed

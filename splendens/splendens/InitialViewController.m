@@ -117,7 +117,7 @@ enum {
 			[self.plug joinFriendMatch:self.name withKey:code];
 		} else {
 			// Start a friend match
-			[self.plug startFriendMatch:self.name numPlayers:self.friendsSegment.selectedSegmentIndex+2];
+			code = [self.plug startFriendMatch:self.name numPlayers:self.friendsSegment.selectedSegmentIndex+2];
 			self.matchProgress.progress = 0;
 			self.codeLabel.hidden = NO;
 			self.codeLabel.text = [NSString stringWithFormat:@"Tell your friends this code: %@", code];

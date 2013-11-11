@@ -1,54 +1,71 @@
-﻿// Module to handle friend matching
+"use strict"
+// Module to handle friend matching
 
 var Game = require("./Game.js")
-var getRandomMap = require("./maps.js").getRandomMap
+var config = require("./config.js")
 
-var MSG_FRIEND_MATCH_START = -200
-var MSG_FRIEND_MATCH_JOIN = -201
-var MSG_FRIEND_MATCH_NOT_FOUND = -202
-var MSG_FRIEND_MATCH_PROGRESS = -203
-var MSG_FRIEND_MATCH_DONE = -204
-var MSG_FRIEND_MATCH_CANCELED = -205
+var MSG_OUT_FRIEND_MATCH_NOT_FOUND = 2
+var MSG_OUT_FRIEND_MATCH_PROGRESS = 3
+var MSG_OUT_FRIEND_MATCH_CANCELED = 4
 
 // Store all created rooms
-var g_rooms = {}
+var _rooms = {}
 
-// Try to handle a message from the player
-// Return whether the message was handled by this module
-module.exports.handleMessage = function handleMessage(player, type, data) {
-	if (type == MSG_FRIEND_MATCH_START) {
-		// Gather the data
-		player.name = String(data.name)
-		player.id = String(data.id)
-
-		// Create the room
-		g_rooms[data.key] = {num: Number(data.players), players: [player]}
-	} else if (type == MSG_FRIEND_MATCH_JOIN) {
-		if (data.key in g_rooms) {
-			player.name = String(data.name)
-			player.id = String(data.id)
-			g_rooms[data.key].players.push(player)
-			tryToMatch(data.key)
-		} else
-			player.sendMessage(MSG_FRIEND_MATCH_NOT_FOUND)
+// Create a new match room
+module.exports.start = function (player, data) {
+	var num = data.players
+	if (typeof data.key != "string" || typeof num != "number" || Math.round(num) != num || num < config.minPlayers || num > config.maxPlayers) {
+		log("Invalid start friend match data, closing connection")
+		player.close()
+		return
 	}
-	return false
+	log("New friend match room "+data.key)
+	_rooms[data.key] = {num: num, players: [player]}
+	player.sendMessage(MSG_OUT_FRIEND_MATCH_PROGRESS, {wanted: num, waiting: 1})
+	player.friendMatch = {key: data.key, owner: true}
+}
+
+// Try to join a match
+module.exports.join = function (player, data) {
+	if (typeof data.key != "string") {
+		log("Invalid join friend match data, closing connection")
+		player.close()
+		return
+	}
+	if (data.key in _rooms) {
+		log("Joined friend match room "+data.key)
+		_rooms[data.key].players.push(player)
+		tryToMatch(data.key)
+		player.friendMatch = {key: data.key, owner: false}
+	} else {
+		log("Friend match room not found "+data.key)
+		player.sendMessage(MSG_OUT_FRIEND_MATCH_NOT_FOUND)
+	}
 }
 
 // Remove a given player from the matching system
-module.exports.removePlayer = function (p) {
+module.exports.remove = function (player) {
 	var match
-
-	// Try to find the player in any room
-	for (key in g_rooms) {
-		match = g_rooms[key]
-		if (match.players.indexOf(p) != -1) {
-			match.players.forEach(function (p2) {
-				if (p2 != p)
-					p2.sendMessage(MSG_FRIEND_MATCH_CANCELED)
-			})
-			delete g_rooms[key]
-			break
+	
+	// Find the matching room
+	if (player.friendMatch) {
+		log("Leaving friend match room "+player.friendMatch.key)
+		match = _rooms[player.friendMatch.key]
+		if (match && match.players.indexOf(player) != -1) {
+			if (player.friendMatch.owner) {
+				// Dismiss the matching room
+				match.players.forEach(function (p) {
+					if (p != player)
+						p.sendMessage(MSG_OUT_FRIEND_MATCH_CANCELED)
+				})
+				delete _rooms[player.friendMatch.key]
+			} else {
+				// Remove this player and update the status
+				match.players = match.players.filter(function (p) {
+					return p != player
+				})
+				tryMatch(player.friendMatch.key)
+			}
 		}
 	}
 }
@@ -56,23 +73,24 @@ module.exports.removePlayer = function (p) {
 // Try to finish the match with the given key
 // If there isn't enough players, report the status to them
 function tryToMatch(key) {
-	var match = g_rooms[key], data
+	var match = _rooms[key], data
+	if (!match)
+		return
 	if (match.players.length == match.num) {
 		// Start the game
-		delete g_rooms[key]
+		log("Friend match done with "+match.num+" players")
+		delete _rooms[key]
 		new Game(match.players)
-		data = {map: getRandomMap(match.num), players: []}
-		match.players.forEach(function (p) {
-			data.players.push({name: p.name, id: p.id})
-		})
-		match.players.forEach(function (p) {
-			p.sendMessage(MSG_FRIEND_MATCH_DONE, data)
-		})
 	} else {
 		// Update the status
 		data = {wanted: match.num, waiting: match.players.length}
 		match.players.forEach(function (p) {
-			p.sendMessage(MSG_FRIEND_MATCH_PROGRESS, data)
+			p.sendMessage(MSG_OUT_FRIEND_MATCH_PROGRESS, data)
 		})
 	}
+}
+
+function log(str) {
+	if (config.logConnections)
+		console.log("> "+str)
 }

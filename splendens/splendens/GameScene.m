@@ -288,13 +288,6 @@
 		[self.topPanel playerTurnReady:[self playerById:data[@"player"]]];
 		if (self.othersTurnActions.count == self.connectedPlayers-1 && !self.userTurn)
 			[self simulateTurn];
-	} else if (type == MSG_PLAYER_DISCONNECTED) {
-		Player* player = [self playerById:data];
-		player.disconnected = YES;
-		[self.topPanel playerDisconnection:player];
-		self.connectedPlayers--;
-		if (self.othersTurnActions.count == self.connectedPlayers-1 && !self.userTurn)
-			[self simulateTurn];
 	}
 	
 }
@@ -303,6 +296,15 @@
 	if (!self.gameEnded)
 		// If the game has ended, it is normal to have the connection closed
 		[self.viewController dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)multiPlug:(MultiPlug*)plug playerDisconnected:(NSString*)player {
+	Player* p = [self playerById:player];
+	p.disconnected = YES;
+	[self.topPanel playerDisconnection:p];
+	self.connectedPlayers--;
+	if (self.othersTurnActions.count == self.connectedPlayers-1 && !self.userTurn)
+		[self simulateTurn];
 }
 
 @end
