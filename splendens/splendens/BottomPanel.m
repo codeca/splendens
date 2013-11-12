@@ -37,24 +37,23 @@
 		self.nextTurnDisabled = YES;
 		self.nextTurn.delegate = self;
 		
-		self.powerBar = [SKSpriteNode spriteNodeWithColor:[UIColor brownColor] size:CGSizeMake(self.size.width/2-100, self.size.height/2-30)];
+		self.powerBar = [SKSpriteNode spriteNodeWithColor:[UIColor brownColor] size:CGSizeMake(self.size.width/2-150, self.size.height/2-15)];
 		self.powerBar.position = CGPointMake(self.size.width/2-self.powerBar.size.width/2-20, self.size.height/2 - self.powerBar.size.height/2-10-(self.size.height/2 - self.powerBar.size.height - 10)/2);
 		[self addChild:self.powerBar];
 		
 		int a = (self.powerBar.size.width - 5*(self.powerBar.size.height-6))/6;
 		for (int i=0;i<5;i++){
-			SKSpriteNode* power;
-			power = [SKSpriteNode spriteNodeWithColor:[UIColor magentaColor] size:CGSizeMake(self.powerBar.size.height-6, self.powerBar.size.height-6)];
+			TextButton* power;
+			power = [[TextButton alloc] initWithColor:[UIColor magentaColor] size:CGSizeMake(self.powerBar.size.height-6, self.powerBar.size.height-6)];
 			power.position = CGPointMake(-self.powerBar.size.width/2+(i+1)*a+i*power.size.width+power.size.width/2, 0);
 			[self.powerBar addChild:power];
-			NSLog(@"size: h%f w%f pos: x%f y%f",power.size.height,power.size.width,power.position.x,power.position.y);
+			power.name = [NSString stringWithFormat:@"power%d",i];
 		}
 		
 		self.upgradeButton = [[TextButton alloc] initWithImage:@"arrow"];
 		self.upgradeButton.colorBlendFactor = 1;
 		self.upgradeButton.delegate = self;
 		
-
 	}
 	return self;
 }
@@ -98,7 +97,19 @@
 	} else if(button == self.lab) {
 		self.selected = self.lab;
 	}
+	else if([button.name isEqualToString:@"power0"]){
+		NSLog(@"poder0");
+	} else if([button.name isEqualToString:@"power1"]){
+		NSLog(@"poder1");
+	} else if([button.name isEqualToString:@"power2"]){
+		NSLog(@"poder2");
+	} else if([button.name isEqualToString:@"power3"]){
+		NSLog(@"poder3");
+	} else if([button.name isEqualToString:@"power4"]){
+		NSLog(@"poder4");
+	}
 	[self update];
+	
 }
 
 - (void)update {
