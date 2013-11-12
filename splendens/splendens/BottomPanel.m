@@ -30,16 +30,25 @@
 		[self addChild:self.table];
 		
 		self.nextTurn = [[TextButton alloc] initWithText:@"Next turn"];
-		self.nextTurn.position = CGPointMake(self.size.width/2-100, -self.size.height/2+self.nextTurn.size.height/2+(self.size.height/2 - self.nextTurn.size.height)/2);
+		self.nextTurn.position = CGPointMake(self.size.width/2-self.nextTurn.size.width/2-20, -self.size.height/2+self.nextTurn.size.height/2+10+(self.size.height/2 - self.nextTurn.size.height - 10)/2);
 		self.nextTurn.hidden = YES;
 		self.nextTurn.userInteractionEnabled = NO;
 		[self addChild:self.nextTurn];
 		self.nextTurnDisabled = YES;
 		self.nextTurn.delegate = self;
 		
-		self.powerBar = [SKSpriteNode spriteNodeWithColor:[UIColor brownColor] size:CGSizeMake(self.size.width/2-200, self.size.height/2-30)];
-		self.powerBar.position = CGPointMake(self.size.width/2-self.powerBar.size.width/2-100, self.size.height/2 - self.powerBar.size.height/2-(self.size.height/2 - self.powerBar.size.height)/2);
+		self.powerBar = [SKSpriteNode spriteNodeWithColor:[UIColor brownColor] size:CGSizeMake(self.size.width/2-100, self.size.height/2-30)];
+		self.powerBar.position = CGPointMake(self.size.width/2-self.powerBar.size.width/2-20, self.size.height/2 - self.powerBar.size.height/2-10-(self.size.height/2 - self.powerBar.size.height - 10)/2);
 		[self addChild:self.powerBar];
+		
+		int a = (self.powerBar.size.width - 5*(self.powerBar.size.height-6))/6;
+		for (int i=0;i<5;i++){
+			SKSpriteNode* power;
+			power = [SKSpriteNode spriteNodeWithColor:[UIColor magentaColor] size:CGSizeMake(self.powerBar.size.height-6, self.powerBar.size.height-6)];
+			power.position = CGPointMake(-self.powerBar.size.width/2+(i+1)*a+i*power.size.width+power.size.width/2, 0);
+			[self.powerBar addChild:power];
+			NSLog(@"size: h%f w%f pos: x%f y%f",power.size.height,power.size.width,power.position.x,power.position.y);
+		}
 		
 		self.upgradeButton = [[TextButton alloc] initWithImage:@"arrow"];
 		self.upgradeButton.colorBlendFactor = 1;
