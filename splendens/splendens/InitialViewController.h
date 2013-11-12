@@ -12,6 +12,8 @@
 #import "MultiPlug.h"
 #import "AnimatedBackgroundScene.h"
 
+#define DEBUG_BUTTON YES
+
 @interface InitialViewController : UIViewController<MultiPlugDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *prepareMatchView;
@@ -25,6 +27,7 @@
 @property (weak, nonatomic) IBOutlet UIView *credits;
 @property (weak, nonatomic) IBOutlet UILabel *codeLabel;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *friendsSegment;
+@property (weak, nonatomic) IBOutlet UIButton *debugButton;
 @property (nonatomic) MultiPlug* plug;
 
 - (void)multiPlugConnected:(MultiPlug*)plug;

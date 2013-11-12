@@ -66,7 +66,7 @@ Player.prototype.broadcast = function (type, data) {
 		lenBuffer = new Buffer([len>>16, (len>>8)%256, len%256])
 		
 		this.game.players.forEach(function (player) {
-			if (player != that && player.state != Player.STATE_DISCONNECTED) {
+			if (player._conn && player != that && player.state != Player.STATE_DISCONNECTED) {
 				player._conn.write(lenBuffer)
 				player._conn.write(buffer)
 			}

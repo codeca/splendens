@@ -8,6 +8,7 @@
 
 #import "InitialViewController.h"
 #import "GameViewController.h"
+#import "DebugPlayer.h"
 
 // Tag values for view in the storyboard
 enum {
@@ -36,6 +37,7 @@ enum {
 	[self.view insertSubview:view atIndex:0];
     AnimatedBackgroundScene* scene = [AnimatedBackgroundScene sceneWithSize:view.bounds.size];
     [view presentScene:scene];
+	self.debugButton.hidden = !DEBUG_BUTTON;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -55,6 +57,11 @@ enum {
 	self.prepareMatchView.center = self.outside;
 	self.waitMatchView.center = self.outside;
 	self.credits.center = self.outside;
+}
+
+- (IBAction)startDebug:(id)sender {
+	DebugPlayer* temp = [[DebugPlayer alloc] init];
+	temp.me = temp;
 }
 
 - (IBAction)showCredits:(id)sender {

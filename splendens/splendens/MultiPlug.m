@@ -130,14 +130,15 @@
 			// Connected
 			self.halfOpen = NO;
 			self.state = MULTIPLUGSTATE_OPEN;
-			[self.delegate multiPlugConnected:self];
+			if ([self.delegate respondsToSelector:@selector(multiPlugConnected:)])
+				[self.delegate multiPlugConnected:self];
 		} else
 			// Wait for both streams to open
 			self.halfOpen = YES;
 	} else if (eventCode & NSStreamEventEndEncountered || eventCode & NSStreamEventErrorOccurred) {
 		// Stream closed
 		if (self.state != MULTIPLUGSTATE_CLOSED) {
-			[self.delegate multiPlugClosedWithError:self];
+			[self closeWithError];
 			self.state = MULTIPLUGSTATE_CLOSED;
 		}
 	} else if (aStream == self.outputStream && eventCode & NSStreamEventHasSpaceAvailable) {
@@ -231,7 +232,8 @@
 // Close the current connection sending the error flag
 - (void)closeWithError {
 	self.state = MULTIPLUGSTATE_CLOSED;
-	[self.delegate multiPlugClosedWithError:self];
+	if ([self.delegate respondsToSelector:@selector(multiPlugClosedWithError:)])
+		[self.delegate multiPlugClosedWithError:self];
 }
 
 // Directly send a message
@@ -255,11 +257,13 @@
 - (void)processRawMessage:(int)type data:(id)data {
 	if (self.state == MULTIPLUGSTATE_INGAME) {
 		if (type == MSG_IN_PLAYER_DISCONNECTED) {
-			[self.delegate multiPlug:self playerDisconnected:data];
+			if ([self.delegate respondsToSelector:@selector(multiPlug:playerDisconnected:)])
+				[self.delegate multiPlug:self playerDisconnected:data];
 		} else {
 			NSString* player = data[@"player"];
 			id userData = data[@"data"];
-			[self.delegate multiPlug:self receivedMessage:type data:userData player:player];
+			if ([self.delegate respondsToSelector:@selector(multiPlug:receivedMessage:data:player:)])
+				[self.delegate multiPlug:self receivedMessage:type data:userData player:player];
 		}
 	} else if (type == MSG_IN_SIMPLE_MATCH_PROGRESS) {
 		// Pick the best waiting/wanted ratio
@@ -279,20 +283,25 @@
 			}
 		}
 		
-		[self.delegate multiPlug:self matchStatus:bestWaiting max:bestWanted];
+		if ([self.delegate respondsToSelector:@selector(multiPlug:matchStatus:max:)])
+			[self.delegate multiPlug:self matchStatus:bestWaiting max:bestWanted];
 	} else if (type == MSG_IN_FRIEND_MATCH_NOT_FOUND) {
 		[self close];
-		[self.delegate multiPlugFriendMatchNotFound:self];
+		if ([self.delegate respondsToSelector:@selector(multiPlugFriendMatchNotFound:)])
+			[self.delegate multiPlugFriendMatchNotFound:self];
 	} else if (type == MSG_IN_FRIEND_MATCH_PROGRESS) {
 		float wanted = [data[@"wanted"] floatValue];
 		float waiting = [data[@"waiting"] floatValue];
-		[self.delegate multiPlug:self matchStatus:waiting max:wanted];
+		if ([self.delegate respondsToSelector:@selector(multiPlug:matchStatus:max:)])
+			[self.delegate multiPlug:self matchStatus:waiting max:wanted];
 	} else if (type == MSG_IN_FRIEND_MATCH_CANCELED) {
 		[self close];
-		[self.delegate multiPlugFriendMatchCanceled:self];
+		if ([self.delegate respondsToSelector:@selector(multiPlugFriendMatchCanceled:)])
+			[self.delegate multiPlugFriendMatchCanceled:self];
 	} else if (type == MSG_IN_MATCH_DONE) {
 		self.state = MULTIPLUGSTATE_INGAME;
-		[self.delegate multiPlug:self matched:data];
+		if ([self.delegate respondsToSelector:@selector(multiPlug:matched:)])
+			[self.delegate multiPlug:self matched:data];
 	}
 }
 

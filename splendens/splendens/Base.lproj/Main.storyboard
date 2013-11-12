@@ -57,6 +57,17 @@
                                     <action selector="showCredits:" destination="rYn-3r-ret" eventType="touchUpInside" id="E5V-6i-buM"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Eg-kt-OQu">
+                                <rect key="frame" x="-25" y="71" width="250" height="58"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <state key="normal" title="Debug">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="startDebug:" destination="rYn-3r-ret" eventType="touchUpInside" id="yzE-71-nta"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EbM-bE-sh5">
                                 <rect key="frame" x="259" y="483" width="250" height="58"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -278,6 +289,7 @@ Rodolfo Bitu</string>
                         <outlet property="codeInput" destination="V8D-8e-Ghi" id="aBD-rE-iRr"/>
                         <outlet property="codeLabel" destination="t9f-F8-lNH" id="yEP-O3-W8m"/>
                         <outlet property="credits" destination="ps8-no-C4g" id="TsV-Up-Ecq"/>
+                        <outlet property="debugButton" destination="0Eg-kt-OQu" id="cEW-Fo-qLA"/>
                         <outlet property="friendsSegment" destination="855-HR-zgV" id="36b-ty-Zg3"/>
                         <outlet property="matchProgress" destination="9Qg-WV-XQu" id="cdE-oP-j7S"/>
                         <outlet property="nameInput" destination="2yT-OE-eq6" id="4Vd-pr-Zi8"/>
