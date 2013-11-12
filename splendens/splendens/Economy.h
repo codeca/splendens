@@ -6,8 +6,11 @@
 //  Copyright (c) 2013 Codeca. All rights reserved.
 //
 
+@class Economy;
+
 #import <Foundation/Foundation.h>
 #import "Cell.h"
+#import "Powers.h"
 
 @interface Economy : NSObject
 
@@ -23,6 +26,7 @@
 + (int)bonusMaxManaForLabLevel:(int)level;
 + (int)upgradePopulationCostForType:(CellType)type level:(int)level;
 + (int)upgradeManaCostForType:(CellType)type level:(int)level;
++ (int)manaCostForPower:(PowerType)type;
 
 // Return the value taking into account the owner bonus
 + (int)productionForCell:(Cell*)cell;

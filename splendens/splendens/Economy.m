@@ -140,6 +140,15 @@
 	return -1;
 }
 
++ (int)manaCostForPower:(PowerType)type {
+	if (type == PowerInfect) return 5;
+	else if (type == PowerClearMap) return 10;
+	else if (type == PowerDowngrade) return 15;
+	else if (type == PowerNeutralize) return 20;
+	else if (type == PowerConquer) return 25;
+	return -1;
+}
+
 + (int)productionForCell:(Cell*)cell {
 	return [Economy productionForType:cell.type level:cell.level]+(cell.owner.bonus==BonusPopulation ? 2 : 0);
 }

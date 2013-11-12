@@ -16,7 +16,8 @@ typedef enum {
 	TurnActionUpgradeToCity,
 	TurnActionUpgradeToTower,
 	TurnActionUpgradeToLab,
-	TurnActionBonus
+	TurnActionBonus,
+	TurnActionPower
 } TurnActionType;
 
 // Possible cell bonus
@@ -70,6 +71,9 @@ typedef enum{
 // Each element is a NSDictionary returned by the server
 @property (nonatomic) NSMutableArray* othersTurnActions;
 
+// Store all used powers by the current player in this turn
+@property (nonatomic) NSMutableArray* usedPowers;
+
 @property Sounds* sounds;
 
 // Create the game map and import the plug
@@ -88,6 +92,10 @@ typedef enum{
 // The action MUST be valid
 // Save the action in turnActiond and call upgrade in the cell
 - (void)upgradeCell:(Cell*)cell toType:(CellType)type;
+
+// Apply all powers used in this turn
+// Called at the end of every turn
+- (void)applyPowers;
 
 // Check if someone won the game
 // If it does, go to game over scene

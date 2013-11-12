@@ -69,6 +69,7 @@
 	
 	self.turnActions = [NSMutableArray array];
 	self.othersTurnActions = [NSMutableArray array];
+	self.usedPowers = [NSMutableArray array];
 	self.userTurn = UserTurn;
 	
 	self.sounds = [[Sounds alloc]init];
@@ -139,6 +140,7 @@
 	
 	// Set turn state to done
 	self.turnActions = [NSMutableArray array];
+	self.usedPowers = [NSMutableArray array];
 	self.userTurn = UserWaitPlayers;
 	[self.topPanel playerTurnReady:self.thisPlayer];
 	
@@ -194,6 +196,11 @@
 	return [self.map cellAtX:x y:y];
 }
 
+- (void)applyPowers {
+	self.usedPowers = [NSMutableArray array];
+	[self checkVictory];
+}
+
 - (void)checkVictory {
 	Player* winner = nil;
 	
@@ -238,7 +245,9 @@
 		for (NSDictionary* action in turnActions) {
 			TurnActionType type = [action[@"type"] integerValue];
 			
-			if (type == TurnActionSendTroop) {
+			if (type == TurnActionPower)
+				continue;
+			else if (type == TurnActionSendTroop) {
 				// Create the path array (each element is a cell)
 				NSArray* path = action[@"path"];
 				NSMutableArray* path2 = [NSMutableArray array];
