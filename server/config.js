@@ -19,7 +19,7 @@ module.exports = {
 	logConnections: true,
 	
 	// Show information about broadcasts in the console
-	logBroadcasts: false,
+	logBroadcasts: true,
 	
 	// Minimum number of player to form a match
 	minPlayers: 2,

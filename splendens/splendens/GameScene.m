@@ -135,7 +135,7 @@
 		[self addRandomBonus];
 	
 	// Group all actions and send
-	[self.plug sendMessage:MSG_TURN_DATA data:@{@"player": self.thisPlayer.playerId, @"actions":self.turnActions}];
+	[self.plug sendMessage:MSG_TURN_DATA data:self.turnActions];
 	
 	// Set turn state to done
 	self.turnActions = [NSMutableArray array];
@@ -235,10 +235,9 @@
 	
 	self.userTurn = UserWaitAnimation;
 	for (NSDictionary* turnActions in self.othersTurnActions) {
-		NSArray* actions = turnActions[@"actions"];
 		
 		// Process each turn action
-		for (NSDictionary* action in actions) {
+		for (NSDictionary* action in turnActions) {
 			TurnActionType type = [action[@"type"] integerValue];
 			
 			if (type == TurnActionSendTroop) {
@@ -290,7 +289,7 @@
 - (void)multiPlug:(MultiPlug*)plug receivedMessage:(int)type data:(id)data player:(NSString*)playerId {
 	if (type == MSG_TURN_DATA) {
 		[self.othersTurnActions addObject:data];
-		[self.topPanel playerTurnReady:[self playerById:data[@"player"]]];
+		[self.topPanel playerTurnReady:[self playerById:playerId]];
 		if (self.othersTurnActions.count == self.connectedPlayers-1 && self.userTurn == UserWaitPlayers)
 			[self simulateTurn];
 	}
