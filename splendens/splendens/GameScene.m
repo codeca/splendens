@@ -230,6 +230,9 @@
 
 // Process all users actions in this turn
 - (void)simulateTurn {
+	// Reset the timer
+	self.timer = [NSTimer scheduledTimerWithTimeInterval:SKIP_TURN_TIME target:self selector:@selector(endThisUserTurn) userInfo:nil repeats:NO];
+	
 	self.userTurn = UserWaitAnimation;
 	for (NSDictionary* turnActions in self.othersTurnActions) {
 		NSArray* actions = turnActions[@"actions"];
@@ -275,8 +278,6 @@
 		self.nextBonus = nil;
 	}
 	[self.map processTurn];
-	
-	self.timer = [NSTimer scheduledTimerWithTimeInterval:SKIP_TURN_TIME target:self selector:@selector(endThisUserTurn) userInfo:nil repeats:NO];
 }
 
 - (Player*)playerById:(NSString*)playerId {
