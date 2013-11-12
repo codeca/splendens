@@ -44,10 +44,15 @@
 		int a = (self.powerBar.size.width - 5*(self.powerBar.size.height-6))/6;
 		for (int i=0;i<5;i++){
 			TextButton* power;
+			
 			power = [[TextButton alloc] initWithColor:[UIColor magentaColor] size:CGSizeMake(self.powerBar.size.height-6, self.powerBar.size.height-6)];
+			power.userInteractionEnabled = YES; //TO DO: remove when using a sprite;
+			
 			power.position = CGPointMake(-self.powerBar.size.width/2+(i+1)*a+i*power.size.width+power.size.width/2, 0);
 			[self.powerBar addChild:power];
 			power.name = [NSString stringWithFormat:@"power%d",i];
+			power.delegate = self;
+			
 		}
 		
 		self.upgradeButton = [[TextButton alloc] initWithImage:@"arrow"];
@@ -67,6 +72,7 @@
 - (void)textButtonClicked:(TextButton *)button {
 	GameScene* game = (GameScene*)self.scene;
 	Cell* cell = game.map.selected;
+	NSLog(@"akii");
 	if (button == self.upgradeButton) {
 		if (game.userTurn != UserTurn)
 			return;
