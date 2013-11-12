@@ -142,9 +142,7 @@
 	self.userTurn = UserWaitPlayers;
 	[self.topPanel playerTurnReady:self.thisPlayer];
 	
-	
-	
-	if (self.othersTurnActions.count == self.connectedPlayers-1)
+	if (self.othersTurnActions.count >= self.connectedPlayers-1)
 		[self simulateTurn];
 }
 
@@ -267,7 +265,6 @@
 	
 	// Reset all player turnReady flags
 	[self.topPanel playersTurnReset];
-	self.userTurn = UserTurn;
 	if (self.nextBonus) {
 		int x = [self.nextBonus[@"x"] integerValue];
 		int y = [self.nextBonus[@"y"] integerValue];
@@ -290,7 +287,7 @@
 	if (type == MSG_TURN_DATA) {
 		[self.othersTurnActions addObject:data];
 		[self.topPanel playerTurnReady:[self playerById:playerId]];
-		if (self.othersTurnActions.count == self.connectedPlayers-1 && self.userTurn == UserWaitPlayers)
+		if (self.othersTurnActions.count >= self.connectedPlayers-1 && self.userTurn == UserWaitPlayers)
 			[self simulateTurn];
 	}
 	
@@ -304,11 +301,10 @@
 
 - (void)multiPlug:(MultiPlug*)plug playerDisconnected:(NSString*)player {
 	Player* p = [self playerById:player];
-	[self checkVictory]; // TODO: test
 	p.disconnected = YES;
 	[self.topPanel playerDisconnection:p];
 	self.connectedPlayers--;
-	if (self.othersTurnActions.count == self.connectedPlayers-1 && self.userTurn == UserWaitPlayers)
+	if (self.othersTurnActions.count >= self.connectedPlayers-1 && self.userTurn == UserWaitPlayers)
 		[self simulateTurn];
 }
 
