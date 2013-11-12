@@ -41,6 +41,7 @@
 		player.name = gamePlayers[i][@"name"];
 		player.playerId = playerId;
 		player.game = self;
+		player.usedPowers = [NSMutableArray array];
 		[players addObject:player];
 		if ([playerId isEqualToString:myId])
 			me = i;
@@ -69,7 +70,6 @@
 	
 	self.turnActions = [NSMutableArray array];
 	self.othersTurnActions = [NSMutableArray array];
-	self.usedPowers = [NSMutableArray array];
 	self.userTurn = UserTurn;
 	
 	self.sounds = [[Sounds alloc]init];
@@ -140,7 +140,6 @@
 	
 	// Set turn state to done
 	self.turnActions = [NSMutableArray array];
-	self.usedPowers = [NSMutableArray array];
 	self.userTurn = UserWaitPlayers;
 	[self.topPanel playerTurnReady:self.thisPlayer];
 	
@@ -197,7 +196,16 @@
 }
 
 - (void)applyPowers {
-	self.usedPowers = [NSMutableArray array];
+	// Apply all powers, ordered by player
+	for (Player* player in self.players) {
+		for (NSDictionary* action in player.usedPowers) {
+			Cell* cell = [self.map cellAtX:[action[@"x"] integerValue] y:[action[@"y"] integerValue]];
+			[Powers applyPower:[action[@"power"] integerValue] onCell:cell game:self];
+		}
+		player.usedPowers = [NSMutableArray array];
+	}
+	
+	// Clean and end the turn logic
 	[self checkVictory];
 }
 
@@ -294,8 +302,16 @@
 
 - (void)multiPlug:(MultiPlug*)plug receivedMessage:(int)type data:(id)data player:(NSString*)playerId {
 	if (type == MSG_TURN_DATA) {
+		// Save all actions
+		NSMutableArray* usedPowers = [NSMutableArray array];
+		Player* player = [self playerById:playerId];
 		[self.othersTurnActions addObject:data];
-		[self.topPanel playerTurnReady:[self playerById:playerId]];
+		for (NSDictionary* action in data)
+			if ([action[@"type"] integerValue] == TurnActionPower)
+				[usedPowers addObject:action];
+		player.usedPowers = usedPowers;
+		
+		[self.topPanel playerTurnReady:player];
 		if (self.othersTurnActions.count >= self.connectedPlayers-1 && self.userTurn == UserWaitPlayers)
 			[self simulateTurn];
 	}

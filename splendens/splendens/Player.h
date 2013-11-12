@@ -24,6 +24,9 @@
 @property (nonatomic) int bonusTimeLeft;
 @property (nonatomic, weak) GameScene* game;
 
+// Store all used powers by the current player in this turn
+@property (nonatomic) NSMutableArray* usedPowers;
+
 - (void)setBonus:(BonusType)bonus;
 
 @end

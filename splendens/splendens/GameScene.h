@@ -71,9 +71,6 @@ typedef enum{
 // Each element is a NSDictionary returned by the server
 @property (nonatomic) NSMutableArray* othersTurnActions;
 
-// Store all used powers by the current player in this turn
-@property (nonatomic) NSMutableArray* usedPowers;
-
 @property Sounds* sounds;
 
 // Create the game map and import the plug

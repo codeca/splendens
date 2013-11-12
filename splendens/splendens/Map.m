@@ -124,7 +124,7 @@
 		[NSTimer scheduledTimerWithTimeInterval:TOTAL_MOV_TIME target:self selector:@selector(processTowerAttacksAndTroopsDelivery:) userInfo:deliveredTroops repeats:NO];
 	} else {
 		// No need to wait to troop movements or tower attacks
-		[self.game checkVictory];
+		[self.game applyPowers];
 	}
 }
 
@@ -145,9 +145,9 @@
 	if (towersAttacked) {
 		// Wait for tower attacks animation to end
 		[NSTimer scheduledTimerWithTimeInterval:TOTAL_ATTACK_TIME target:self selector:@selector(updateTroopsAmount) userInfo:nil repeats:NO];
-		[NSTimer scheduledTimerWithTimeInterval:TOTAL_ATTACK_TIME target:game selector:@selector(checkVictory) userInfo:nil repeats:NO];
+		[NSTimer scheduledTimerWithTimeInterval:TOTAL_ATTACK_TIME target:game selector:@selector(applyPowers) userInfo:nil repeats:NO];
 	} else
-		[game checkVictory];
+		[game applyPowers];
 }
 
 // Process the attacks made by the given tower
