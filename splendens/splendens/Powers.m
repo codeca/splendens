@@ -17,7 +17,7 @@
 						   @"y": [NSNumber numberWithInt:cell.y],
 						   @"power": [NSNumber numberWithInt:type]};
 	[game.turnActions addObject:data];
-	[game.usedPowers addObject:data];
+	//[game.usedPowers addObject:data];
 	game.thisPlayer.mana -= [Economy manaCostForPower:type];
 	[game.topPanel updateMaxMana];
 	
