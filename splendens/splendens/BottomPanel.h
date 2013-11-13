@@ -11,6 +11,7 @@
 #import <SpriteKit/SpriteKit.h>
 #import "Cell.h"
 #import "TextButton.h"
+#import "Powers.h"
 
 @interface BottomPanel : SKSpriteNode<TextButtonDelegate>
 
@@ -19,7 +20,9 @@
 @property (nonatomic) TextButton* nextTurn;
 @property (nonatomic) SKSpriteNode* powerBar;
 @property (nonatomic) BOOL nextTurnDisabled;
-
+@property (nonatomic) PowerType selectedPower;
+@property (nonatomic) TextButton* selectedPowerButton;
+@property (nonatomic) NSMutableArray* powers;
 - (void)update;
 
 - (void)textButtonClicked:(TextButton *)button;

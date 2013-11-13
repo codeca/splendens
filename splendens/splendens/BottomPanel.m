@@ -24,6 +24,8 @@
 
 - (id)init{
 	if (self = [super initWithImageNamed:@"bottomPanel"]) {
+		self.selectedPower = PowerNone;
+		self.powers = [[NSMutableArray alloc]init];
 		self.position = CGPointMake(768/2, (1024-self.size.height-MAP_SIZE-25)/2);
 		self.name = @"bottomPanel";
 		self.table = [[SKNode alloc]init];
@@ -41,18 +43,20 @@
 		self.powerBar.position = CGPointMake(self.size.width/2-self.powerBar.size.width/2-20, self.size.height/2 - self.powerBar.size.height/2-10-(self.size.height/2 - self.powerBar.size.height - 10)/2);
 		[self addChild:self.powerBar];
 		
-		int a = (self.powerBar.size.width - 5*(self.powerBar.size.height-6))/6;
+		float a = (self.powerBar.size.width - 5*(self.powerBar.size.height-6))/6;
+		NSLog(@"%f",a);
 		for (int i=0;i<5;i++){
 			TextButton* power;
 			
 			power = [[TextButton alloc] initWithColor:[UIColor magentaColor] size:CGSizeMake(self.powerBar.size.height-6, self.powerBar.size.height-6)];
+			power.used = NO;
 			power.userInteractionEnabled = YES; //TO DO: remove when using a sprite;
 			
 			power.position = CGPointMake(-self.powerBar.size.width/2+(i+1)*a+i*power.size.width+power.size.width/2, 0);
 			[self.powerBar addChild:power];
 			power.name = [NSString stringWithFormat:@"power%d",i];
 			power.delegate = self;
-			
+			[self.powers addObject:power];
 		}
 		
 		self.upgradeButton = [[TextButton alloc] initWithImage:@"arrow"];
@@ -103,16 +107,47 @@
 	} else if(button == self.lab) {
 		self.selected = self.lab;
 	}
-	else if([button.name isEqualToString:@"power0"]){
-		NSLog(@"poder0");
-	} else if([button.name isEqualToString:@"power1"]){
-		NSLog(@"poder1");
-	} else if([button.name isEqualToString:@"power2"]){
-		NSLog(@"poder2");
-	} else if([button.name isEqualToString:@"power3"]){
-		NSLog(@"poder3");
-	} else if([button.name isEqualToString:@"power4"]){
-		NSLog(@"poder4");
+	else{
+		if ([self.powers containsObject:button]){
+			for (TextButton* i in self.powers){
+				if (i.used == NO) i.color = [UIColor magentaColor];
+			}
+			if (button.used != YES){				
+				if([button.name isEqualToString:@"power0"]){
+					self.selectedPower = (self.selectedPower == PowerInfect) ? PowerNone : PowerInfect;
+					if (self.selectedPower != PowerNone) self.selectedPowerButton = button;
+					else self.selectedPowerButton = nil;
+					NSLog(@"poder0");
+				} else if([button.name isEqualToString:@"power1"]){
+					self.selectedPower = (self.selectedPower == PowerClearMap) ? PowerNone : PowerClearMap;
+					if (self.selectedPower != PowerNone) self.selectedPowerButton = button;
+					else self.selectedPowerButton = nil;
+					NSLog(@"poder1");
+				} else if([button.name isEqualToString:@"power2"]){
+					self.selectedPower = (self.selectedPower == PowerDowngrade) ? PowerNone : PowerDowngrade;
+					if (self.selectedPower != PowerNone) self.selectedPowerButton = button;
+					else self.selectedPowerButton = nil;
+					NSLog(@"poder2");
+				} else if([button.name isEqualToString:@"power3"]){
+					self.selectedPower = (self.selectedPower == PowerNeutralize) ? PowerNone : PowerNeutralize;
+					if (self.selectedPower != PowerNone) self.selectedPowerButton = button;
+					else self.selectedPowerButton = nil;
+					NSLog(@"poder3");
+				} else if([button.name isEqualToString:@"power4"]){
+					self.selectedPower = (self.selectedPower == PowerConquer) ? PowerNone : PowerConquer;
+					if (self.selectedPower != PowerNone) self.selectedPowerButton = button;
+					else self.selectedPowerButton = nil;
+					NSLog(@"poder4");
+				}
+				if (self.selectedPowerButton != nil){
+					self.selectedPowerButton.color = [UIColor redColor];
+				}
+			}
+			else{
+				self.selectedPower = PowerNone;
+				self.selectedPowerButton = nil;
+			}
+		}
 	}
 	[self update];
 	

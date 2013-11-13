@@ -237,8 +237,13 @@
 		GameOverScene* nextScene = [[GameOverScene alloc] initWithSize:self.size winner:winner thisPlayer:self.thisPlayer];
 		nextScene.viewController = self.viewController;
 		[self.view presentScene:nextScene transition:[SKTransition doorwayWithDuration:1.5]];
-	} else
+	} else{
 		self.userTurn = UserTurn;
+		for (TextButton* i in self.bottomPanel.powers){
+			i.used = NO;
+			i.color = [UIColor magentaColor];
+		}
+	}
 }
 
 // Process all users actions in this turn

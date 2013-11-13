@@ -13,6 +13,7 @@
 #import "BottomPanel.h"
 #import "GameScene.h"
 
+
 @interface Cell()
 
 // Visual nodes
@@ -23,6 +24,7 @@
 @property (nonatomic) SKLabelNode* populationLabel;
 @property (nonatomic) SKSpriteNode* pathFocus;
 @property (nonatomic) SKSpriteNode* selectedFocus;
+@property (nonatomic) SKSpriteNode* powerOverlay;
 @property (nonatomic) SKSpriteNode* bonusNode; // A node to represent the cell bonus, child of map, but managed by the cell
 
 @end
@@ -70,6 +72,12 @@
 		self.selectedFocus.colorBlendFactor = 1;
 		self.selectedFocus.hidden = YES;
 		[self addChild:self.selectedFocus];
+		
+		// powerOverlay
+		self.powerOverlay = [SKSpriteNode spriteNodeWithTexture:[Cell textureWithName:@"path4"] size:CGSizeMake(size.width-5, size.height-5)];
+		self.powerOverlay.colorBlendFactor = 1;
+		self.powerOverlay.hidden = YES;
+		[self addChild:self.powerOverlay];
 		
 		// Bonus overlay (children of map)
 		CGSize bonusSize = CGSizeMake(size.width/2, size.height/2);
@@ -337,6 +345,15 @@
 // Remove the last selection and select this cell (if possible)
 - (void)cellClicked {
 	Map* map = (Map*)self.parent;
+	GameScene* game = (GameScene*) map.scene;
+	TextButton* powerButton = game.bottomPanel.selectedPowerButton;
+	if (game.bottomPanel.selectedPower != PowerNone){
+		NSLog(@"Verrifica e usar poder %@",powerButton.name);
+		game.bottomPanel.selectedPower = PowerNone;
+		game.bottomPanel.selectedPowerButton.color = [UIColor blackColor];
+		game.bottomPanel.selectedPowerButton.used = YES;
+		game.bottomPanel.selectedPowerButton = nil;
+	}
 	
 	// Clear focused cells
 	for (Cell* cell in map.cells)
