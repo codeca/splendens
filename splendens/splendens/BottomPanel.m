@@ -203,7 +203,7 @@
 		int da = 2*y-x;
 		
 		NSString* image;
-		image = [NSString stringWithFormat:@"Production"];
+		image = [NSString stringWithFormat:@"production"];
 
 		SKSpriteNode* attributeCell1 = [SKSpriteNode spriteNodeWithImageNamed:image];
 		attributeCell1.position = CGPointMake(da+a/2-x/2, da+a/2-y/2);
@@ -382,7 +382,7 @@
 				tableCell7.position = CGPointMake(dx3+dy1+x/2-self.size.width/2+dy2+2*x+dy2+self.upgradeButton.size.width+dy2, dy1+y/2-self.size.height/2);
 				tableCell8.position = CGPointMake(dx3+dy1+x+dy2+x/2-self.size.width/2+dy2+2*x+dy2+self.upgradeButton.size.width+dy2, dy1+y/2-self.size.height/2);
 				
-				image = [NSString stringWithFormat:@"Production"];
+				image = [NSString stringWithFormat:@"production"];
 				
 				SKSpriteNode* attributeCell5 = [SKSpriteNode spriteNodeWithImageNamed:image];
 				attributeCell5.position = CGPointMake(da+a/2-x/2, da+a/2-y/2);
