@@ -101,7 +101,7 @@
 		@throw @"Invalid plug state";
 	[self sendRawMessage:MSG_OUT_FRIEND_MATCH_JOIN data:@{@"name": userName,
 														  @"id": self.myId,
-														  @"key": key}];
+														  @"key": [key uppercaseString]}];
 }
 
 - (void)sendMessage:(int)type data:(id)data {
