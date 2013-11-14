@@ -97,7 +97,7 @@
 
 - (void)setType:(CellType)type {
 	_type = type;
-	if (type == CellTypeCity || type == CellTypeTower || type == CellTypeLab)
+	if (type == CellTypeBasic || type == CellTypeCity || type == CellTypeTower || type == CellTypeLab)
 		// Avoid recalculation of wall textures
 		[self updateOverlay];
 	_cellsInRange = nil;
@@ -124,6 +124,7 @@
 	float iniY = -self.size.height/2;
 	for (int i=0; i<level-1; i++) {
 		SKSpriteNode* star = [SKSpriteNode spriteNodeWithTexture:[Cell textureWithName:@"star"]];
+		star.name = @"star";
 		float w = star.size.width;
 		float h = star.size.height;
 		star.position = CGPointMake(iniX+w*i+w/2, iniY+h/2);

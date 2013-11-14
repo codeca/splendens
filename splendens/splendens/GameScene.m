@@ -209,6 +209,9 @@
 		player.usedPowers = [NSMutableArray array];
 	}
 	
+	// Updata the mana (possibly altered by the used powers)
+	[self.topPanel updateMaxMana];
+	
 	// Clean and end the turn logic
 	[self checkVictory];
 }

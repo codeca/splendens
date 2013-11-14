@@ -23,6 +23,9 @@
 }
 
 + (void)applyPower:(PowerType)type forPlayer:(Player*)player onCell:(Cell *)cell game:(GameScene *)game {
+	if (player != game.thisPlayer)
+		player.mana -= [Economy manaCostForPower:type];
+	
 	if (type == PowerInfect)
 		[self applyInfectOnCell:cell];
 	else if (type == PowerClearMap)
