@@ -10,8 +10,8 @@
 
 typedef enum {
 	PowerInfect,
-	PowerClearMap,
 	PowerDowngrade,
+	PowerClearMap,
 	PowerNeutralize,
 	PowerConquer,
 	PowerNone

@@ -44,8 +44,8 @@
 
 + (void)applyClearMap:(Map*)map {
 	for (Troop* troop in map.troops) {
-		SKAction* grow = [SKAction scaleTo:1.5 duration:TOTAL_ATTACK_TIME/2];
-		SKAction* fade = [SKAction fadeOutWithDuration:TOTAL_ATTACK_TIME/2];
+		SKAction* grow = [SKAction scaleTo:1.5 duration:TOTAL_ATTACK_TIME];
+		SKAction* fade = [SKAction fadeOutWithDuration:TOTAL_ATTACK_TIME];
 		SKAction* pop = [SKAction group:@[grow, fade]];
 		SKAction* remove = [SKAction removeFromParent];
 		[troop.node runAction:[SKAction sequence:@[pop, remove]]];
@@ -70,6 +70,7 @@
 + (void)applyConquerOnCell:(Cell*)cell byPlayer:(Player*)player {
 	cell.owner = player;
 	cell.bonus = player.bonus;
+	cell.population = 0;
 }
 
 @end
