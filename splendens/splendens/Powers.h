@@ -28,6 +28,6 @@ typedef enum {
 + (void)planPower:(PowerType)type onCell:(Cell*)cell game:(GameScene*)game;
 
 // Apply a given power in the given cell (the action must be valid)
-+ (void)applyPower:(PowerType)type onCell:(Cell*)cell game:(GameScene*)game;
++ (void)applyPower:(PowerType)type forPlayer:(Player*)player onCell:(Cell*)cell game:(GameScene*)game;
 
 @end

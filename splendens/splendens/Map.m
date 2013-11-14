@@ -206,7 +206,7 @@
 			
 			// Create the "pop" animation
 			SKAction* wait = [SKAction waitForDuration:TOTAL_ATTACK_TIME];
-			SKAction* grow = [SKAction scaleTo:1.5 duration:TOTAL_ATTACK_TIME/2];
+			SKAction* grow = [SKAction scaleTo:2 duration:TOTAL_ATTACK_TIME/2];
 			SKAction* fade = [SKAction fadeOutWithDuration:TOTAL_ATTACK_TIME/2];
 			SKAction* pop = [SKAction group:@[grow, fade]];
 			SKAction* remove = [SKAction removeFromParent];

@@ -200,7 +200,7 @@
 	for (Player* player in self.players) {
 		for (NSDictionary* action in player.usedPowers) {
 			Cell* cell = [self.map cellAtX:[action[@"x"] integerValue] y:[action[@"y"] integerValue]];
-			[Powers applyPower:[action[@"power"] integerValue] onCell:cell game:self];
+			[Powers applyPower:[action[@"power"] integerValue] forPlayer:player onCell:cell game:self];
 		}
 		player.usedPowers = [NSMutableArray array];
 	}
@@ -308,13 +308,12 @@
 - (void)multiPlug:(MultiPlug*)plug receivedMessage:(int)type data:(id)data player:(NSString*)playerId {
 	if (type == MSG_TURN_DATA) {
 		// Save all actions
-		NSMutableArray* usedPowers = [NSMutableArray array];
 		Player* player = [self playerById:playerId];
+		player.usedPowers = [NSMutableArray array];
 		[self.othersTurnActions addObject:data];
 		for (NSDictionary* action in data)
 			if ([action[@"type"] integerValue] == TurnActionPower)
-				[usedPowers addObject:action];
-		player.usedPowers = usedPowers;
+				[player.usedPowers addObject:action];
 		
 		[self.topPanel playerTurnReady:player];
 		if (self.othersTurnActions.count >= self.connectedPlayers-1 && self.userTurn == UserWaitPlayers)
