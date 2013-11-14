@@ -29,6 +29,8 @@
 
 - (void)setNextTurnDisabled:(BOOL)nextTurnDisabled;
 
+// Remove all cooldowns and re-enable all powers to be used
+// Called right before the powers are applyed
 - (void)resetPowersBar;
 
 + (UIColor*)colorForPower: (PowerType) powerType;

@@ -197,9 +197,8 @@
 
 - (void)applyPowers {
 	// Clear all powers overlay
-	for (Cell* cell in self.map.cells) {
+	for (Cell* cell in self.map.cells)
 		[cell clearPowerOverlay];
-	}
 	
 	// Apply all powers, ordered by player
 	for (Player* player in self.players) {

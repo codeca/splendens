@@ -51,6 +51,10 @@ typedef enum {
 
 - (void)setBonus:(BonusType)bonus;
 
+// Hide the planned power overlay
+// Called right before applying the powers
+- (void)clearPowerOverlay;
+
 // Force the texture update
 - (void)updateOverlay;
 
