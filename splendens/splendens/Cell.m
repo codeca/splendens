@@ -209,6 +209,11 @@
 	}
 }
 
+- (void)clearPowerOverlay{
+	self.powerOverlay.hidden = YES;
+	self.powerOverlay.color = nil;
+}
+
 #pragma mark - internal methods
 
 // Reconstruct the cellsInRange array
@@ -347,12 +352,23 @@
 	Map* map = (Map*)self.parent;
 	GameScene* game = (GameScene*) map.scene;
 	TextButton* powerButton = game.bottomPanel.selectedPowerButton;
-	if (game.bottomPanel.selectedPower != PowerNone){
-		//Verifica e usa o poder TODO TO DO
-		game.bottomPanel.selectedPower = PowerNone;
-		game.bottomPanel.selectedPowerButton.color = [UIColor blackColor];
-		game.bottomPanel.selectedPowerButton.used = YES;
-		game.bottomPanel.selectedPowerButton = nil;
+	PowerType selectedPower = game.bottomPanel.selectedPower;
+	if (selectedPower != PowerNone){
+		if (selectedPower == PowerClearMap || [self isCenter]){
+			if (selectedPower != PowerClearMap){
+				self.powerOverlay.hidden = NO;
+				[Powers planPower:selectedPower onCell:self game:game];
+			}
+			else [Powers planPower:selectedPower onCell:nil game:game];
+			powerButton.used = YES;
+			self.powerOverlay.color = [BottomPanel colorForPower:selectedPower];
+			game.bottomPanel.selectedPower = PowerNone;
+			powerButton.color = [UIColor blackColor];
+
+		}
+		else{
+			game.bottomPanel.selectedPower = PowerNone;
+		}
 	}
 	
 	// Clear focused cells

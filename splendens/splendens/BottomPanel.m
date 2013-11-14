@@ -12,6 +12,7 @@
 #import "TextButton.h"
 #import "GameScene.h"
 #import "TopPanel.h"
+//#import "Powers.h"
 
 @interface BottomPanel()
 @property TextButton* city;
@@ -72,6 +73,19 @@
 	_nextTurnDisabled = nextTurnDisabled;
 }
 
+- (void)setSelectedPower:(PowerType)selectedPower{
+	if (selectedPower == PowerNone){
+		[self clearPowersBar];
+	}
+	if (selectedPower != PowerNone){
+		self.selectedPowerButton = self.powers[selectedPower];
+	}
+	else{
+		self.selectedPowerButton = nil;
+	}
+	_selectedPower = selectedPower;
+}
+
 - (void)textButtonClicked:(TextButton *)button {
 	GameScene* game = (GameScene*)self.scene;
 	Cell* cell = game.map.selected;
@@ -97,7 +111,9 @@
 		}
 	}
 	else if(button == self.nextTurn) {
+		self.selectedPower = PowerNone;
 		[game endMyTurn];
+		
 	} else if(button == self.city) {
 		self.selected = self.city;
 	} else if(button == self.tower) {
@@ -106,31 +122,19 @@
 		self.selected = self.lab;
 	}
 	else{
-		if ([self.powers containsObject:button]){
-			for (TextButton* i in self.powers){
-				if (i.used == NO) i.color = [UIColor magentaColor];
-			}
+		if ([self.powers containsObject:button] && game.userTurn == UserTurn){
+			[self clearPowersBar];
 			if (button.used != YES){				
 				if([button.name isEqualToString:@"power0"]){
 					self.selectedPower = (self.selectedPower == PowerInfect) ? PowerNone : PowerInfect;
-					if (self.selectedPower != PowerNone) self.selectedPowerButton = button;
-					else self.selectedPowerButton = nil;
 				} else if([button.name isEqualToString:@"power1"]){
 					self.selectedPower = (self.selectedPower == PowerClearMap) ? PowerNone : PowerClearMap;
-					if (self.selectedPower != PowerNone) self.selectedPowerButton = button;
-					else self.selectedPowerButton = nil;
 				} else if([button.name isEqualToString:@"power2"]){
 					self.selectedPower = (self.selectedPower == PowerDowngrade) ? PowerNone : PowerDowngrade;
-					if (self.selectedPower != PowerNone) self.selectedPowerButton = button;
-					else self.selectedPowerButton = nil;
 				} else if([button.name isEqualToString:@"power3"]){
 					self.selectedPower = (self.selectedPower == PowerNeutralize) ? PowerNone : PowerNeutralize;
-					if (self.selectedPower != PowerNone) self.selectedPowerButton = button;
-					else self.selectedPowerButton = nil;
 				} else if([button.name isEqualToString:@"power4"]){
 					self.selectedPower = (self.selectedPower == PowerConquer) ? PowerNone : PowerConquer;
-					if (self.selectedPower != PowerNone) self.selectedPowerButton = button;
-					else self.selectedPowerButton = nil;
 				}
 				if (self.selectedPowerButton != nil){
 					self.selectedPowerButton.color = [UIColor redColor];
@@ -138,12 +142,34 @@
 			}
 			else{
 				self.selectedPower = PowerNone;
-				self.selectedPowerButton = nil;
 			}
 		}
 	}
 	[self update];
 	
+}
+
+- (void) clearPowersBar{
+	for (TextButton* i in self.powers){
+		if (i.used == NO) i.color = [UIColor magentaColor];
+	}
+}
+
+- (void) resetPowersBar{
+	for (TextButton* i in self.powers){
+		i.used = NO;
+	}
+	[self clearPowersBar];
+}
+
++ (UIColor*) colorForPower: (PowerType) powerType{
+	if (powerType == PowerNone) return nil;
+	if (powerType == PowerInfect) return [UIColor greenColor];
+	if (powerType == PowerClearMap) return [UIColor blackColor];
+	if (powerType == PowerDowngrade) return [UIColor blueColor];
+	if (powerType == PowerNeutralize) return [UIColor yellowColor];
+	if (powerType == PowerConquer) return [UIColor redColor];
+	return nil;
 }
 
 - (void)update {

@@ -29,4 +29,8 @@
 
 - (void)setNextTurnDisabled:(BOOL)nextTurnDisabled;
 
+- (void)resetPowersBar;
+
++ (UIColor*)colorForPower: (PowerType) powerType;
+
 @end

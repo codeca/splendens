@@ -239,10 +239,7 @@
 		[self.view presentScene:nextScene transition:[SKTransition doorwayWithDuration:1.5]];
 	} else{
 		self.userTurn = UserTurn;
-		for (TextButton* i in self.bottomPanel.powers){
-			i.used = NO;
-			i.color = [UIColor magentaColor];
-		}
+		[self.bottomPanel resetPowersBar];
 	}
 }
 
