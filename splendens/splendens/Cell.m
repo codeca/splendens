@@ -348,7 +348,7 @@
 	GameScene* game = (GameScene*) map.scene;
 	TextButton* powerButton = game.bottomPanel.selectedPowerButton;
 	if (game.bottomPanel.selectedPower != PowerNone){
-		NSLog(@"Verrifica e usar poder %@",powerButton.name);
+		//Verifica e usa o poder TODO TO DO
 		game.bottomPanel.selectedPower = PowerNone;
 		game.bottomPanel.selectedPowerButton.color = [UIColor blackColor];
 		game.bottomPanel.selectedPowerButton.used = YES;

@@ -44,7 +44,6 @@
 		[self addChild:self.powerBar];
 		
 		float a = (self.powerBar.size.width - 5*(self.powerBar.size.height-6))/6;
-		NSLog(@"%f",a);
 		for (int i=0;i<5;i++){
 			TextButton* power;
 			
@@ -76,7 +75,6 @@
 - (void)textButtonClicked:(TextButton *)button {
 	GameScene* game = (GameScene*)self.scene;
 	Cell* cell = game.map.selected;
-	NSLog(@"akii");
 	if (button == self.upgradeButton) {
 		if (game.userTurn != UserTurn)
 			return;
@@ -117,27 +115,22 @@
 					self.selectedPower = (self.selectedPower == PowerInfect) ? PowerNone : PowerInfect;
 					if (self.selectedPower != PowerNone) self.selectedPowerButton = button;
 					else self.selectedPowerButton = nil;
-					NSLog(@"poder0");
 				} else if([button.name isEqualToString:@"power1"]){
 					self.selectedPower = (self.selectedPower == PowerClearMap) ? PowerNone : PowerClearMap;
 					if (self.selectedPower != PowerNone) self.selectedPowerButton = button;
 					else self.selectedPowerButton = nil;
-					NSLog(@"poder1");
 				} else if([button.name isEqualToString:@"power2"]){
 					self.selectedPower = (self.selectedPower == PowerDowngrade) ? PowerNone : PowerDowngrade;
 					if (self.selectedPower != PowerNone) self.selectedPowerButton = button;
 					else self.selectedPowerButton = nil;
-					NSLog(@"poder2");
 				} else if([button.name isEqualToString:@"power3"]){
 					self.selectedPower = (self.selectedPower == PowerNeutralize) ? PowerNone : PowerNeutralize;
 					if (self.selectedPower != PowerNone) self.selectedPowerButton = button;
 					else self.selectedPowerButton = nil;
-					NSLog(@"poder3");
 				} else if([button.name isEqualToString:@"power4"]){
 					self.selectedPower = (self.selectedPower == PowerConquer) ? PowerNone : PowerConquer;
 					if (self.selectedPower != PowerNone) self.selectedPowerButton = button;
 					else self.selectedPowerButton = nil;
-					NSLog(@"poder4");
 				}
 				if (self.selectedPowerButton != nil){
 					self.selectedPowerButton.color = [UIColor redColor];
@@ -257,7 +250,7 @@
 					[self.upgradeButton addChild:manaCost];
 					manaCost.position = CGPointMake(0, - self.upgradeButton.size.height/2-dy2-manaCost.frame.size.height/2);
 				}
-				if (popCostValue<selectedCell.population && (manaCostValue == -1 || manaCostValue < game.thisPlayer.mana)) {
+				if (popCostValue <= selectedCell.population && (manaCostValue == -1 || manaCostValue <= game.thisPlayer.mana)) {
 					self.upgradeButton.color = [UIColor colorWithRed:0 green:0.5 blue:0 alpha:1];
 					self.upgradeButton.userInteractionEnabled = YES;
 				}
