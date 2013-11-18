@@ -44,6 +44,12 @@
 		D0627B30182BC26E00E823D5 /* seagull.wav in Resources */ = {isa = PBXBuildFile; fileRef = D0627B2D182BC26E00E823D5 /* seagull.wav */; };
 		D0627B31182BC26E00E823D5 /* stonelake.aiff in Resources */ = {isa = PBXBuildFile; fileRef = D0627B2E182BC26E00E823D5 /* stonelake.aiff */; };
 		D0627B34182BCEB700E823D5 /* Sounds.m in Sources */ = {isa = PBXBuildFile; fileRef = D0627B33182BCEB700E823D5 /* Sounds.m */; };
+		D09E80BE183A865B0023C3EC /* clearMap.atlas in Resources */ = {isa = PBXBuildFile; fileRef = D09E80B8183A865B0023C3EC /* clearMap.atlas */; };
+		D09E80BF183A865B0023C3EC /* conquer.atlas in Resources */ = {isa = PBXBuildFile; fileRef = D09E80B9183A865B0023C3EC /* conquer.atlas */; };
+		D09E80C0183A865B0023C3EC /* downgrade.atlas in Resources */ = {isa = PBXBuildFile; fileRef = D09E80BA183A865B0023C3EC /* downgrade.atlas */; };
+		D09E80C1183A865B0023C3EC /* infect.atlas in Resources */ = {isa = PBXBuildFile; fileRef = D09E80BB183A865B0023C3EC /* infect.atlas */; };
+		D09E80C2183A865B0023C3EC /* mapCells.atlas in Resources */ = {isa = PBXBuildFile; fileRef = D09E80BC183A865B0023C3EC /* mapCells.atlas */; };
+		D09E80C3183A865B0023C3EC /* neutrilize.atlas in Resources */ = {isa = PBXBuildFile; fileRef = D09E80BD183A865B0023C3EC /* neutrilize.atlas */; };
 		D0BB821918214513006ECA83 /* TopPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = D0BB821818214513006ECA83 /* TopPanel.m */; };
 /* End PBXBuildFile section */
 
@@ -117,6 +123,12 @@
 		D0627B2E182BC26E00E823D5 /* stonelake.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = stonelake.aiff; sourceTree = "<group>"; };
 		D0627B32182BCEB700E823D5 /* Sounds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sounds.h; sourceTree = "<group>"; };
 		D0627B33182BCEB700E823D5 /* Sounds.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Sounds.m; sourceTree = "<group>"; };
+		D09E80B8183A865B0023C3EC /* clearMap.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; name = clearMap.atlas; path = Images.xcassets/clearMap.atlas; sourceTree = "<group>"; };
+		D09E80B9183A865B0023C3EC /* conquer.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; name = conquer.atlas; path = Images.xcassets/conquer.atlas; sourceTree = "<group>"; };
+		D09E80BA183A865B0023C3EC /* downgrade.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; name = downgrade.atlas; path = Images.xcassets/downgrade.atlas; sourceTree = "<group>"; };
+		D09E80BB183A865B0023C3EC /* infect.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; name = infect.atlas; path = Images.xcassets/infect.atlas; sourceTree = "<group>"; };
+		D09E80BC183A865B0023C3EC /* mapCells.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; name = mapCells.atlas; path = Images.xcassets/mapCells.atlas; sourceTree = "<group>"; };
+		D09E80BD183A865B0023C3EC /* neutrilize.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; name = neutrilize.atlas; path = Images.xcassets/neutrilize.atlas; sourceTree = "<group>"; };
 		D0BB821718214513006ECA83 /* TopPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopPanel.h; sourceTree = "<group>"; };
 		D0BB821818214513006ECA83 /* TopPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopPanel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -180,6 +192,7 @@
 		98DF30A018181E620092E8A7 /* splendens */ = {
 			isa = PBXGroup;
 			children = (
+				D09E80B7183A86330023C3EC /* Atlas */,
 				984F6ED71831320600257514 /* MultiPlug.h */,
 				984F6ED81831320600257514 /* MultiPlug.m */,
 				D0627B11182BB1D500E823D5 /* sounds */,
@@ -277,6 +290,19 @@
 			path = sounds;
 			sourceTree = "<group>";
 		};
+		D09E80B7183A86330023C3EC /* Atlas */ = {
+			isa = PBXGroup;
+			children = (
+				D09E80B8183A865B0023C3EC /* clearMap.atlas */,
+				D09E80B9183A865B0023C3EC /* conquer.atlas */,
+				D09E80BA183A865B0023C3EC /* downgrade.atlas */,
+				D09E80BB183A865B0023C3EC /* infect.atlas */,
+				D09E80BC183A865B0023C3EC /* mapCells.atlas */,
+				D09E80BD183A865B0023C3EC /* neutrilize.atlas */,
+			);
+			name = Atlas;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -354,13 +380,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				D0627B14182BB1D500E823D5 /* bell.wav in Resources */,
+				D09E80BE183A865B0023C3EC /* clearMap.atlas in Resources */,
 				98DF30A518181E620092E8A7 /* InfoPlist.strings in Resources */,
 				D0627B30182BC26E00E823D5 /* seagull.wav in Resources */,
+				D09E80C3183A865B0023C3EC /* neutrilize.atlas in Resources */,
+				D09E80C1183A865B0023C3EC /* infect.atlas in Resources */,
 				D0627B15182BB1D500E823D5 /* Fontes.rtf in Resources */,
+				D09E80C0183A865B0023C3EC /* downgrade.atlas in Resources */,
 				D0627B2F182BC26E00E823D5 /* sea.wav in Resources */,
 				98DF30B818181E620092E8A7 /* Images.xcassets in Resources */,
 				98DF30AE18181E620092E8A7 /* Main.storyboard in Resources */,
+				D09E80C2183A865B0023C3EC /* mapCells.atlas in Resources */,
 				D0627B31182BC26E00E823D5 /* stonelake.aiff in Resources */,
+				D09E80BF183A865B0023C3EC /* conquer.atlas in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -37,26 +37,28 @@
 		self.table = [[SKNode alloc]init];
 		[self addChild:self.table];
 		
+		int d = 20;
 		self.nextTurn = [[TextButton alloc] initWithText:@"Next turn"];
-		self.nextTurn.position = CGPointMake(self.size.width/2-self.nextTurn.size.width/2-20, -self.size.height/2+self.nextTurn.size.height/2+10+(self.size.height/2 - self.nextTurn.size.height - 10)/2);
+		self.nextTurn.position = CGPointMake(self.size.width/2-self.nextTurn.size.width/2-d, 0);
 		self.nextTurn.hidden = YES;
 		self.nextTurn.userInteractionEnabled = NO;
 		[self addChild:self.nextTurn];
 		self.nextTurnDisabled = YES;
 		self.nextTurn.delegate = self;
 		
-		self.powerBar = [SKSpriteNode spriteNodeWithColor:[UIColor brownColor] size:CGSizeMake(self.size.width/2-150, self.size.height/2-15)];
-		self.powerBar.position = CGPointMake(self.size.width/2-self.powerBar.size.width/2-20, self.size.height/2 - self.powerBar.size.height/2-10-(self.size.height/2 - self.powerBar.size.height - 10)/2);
+		
+		float a = 5;
+		int n = 5;
+		UIColor* powerBarBrown = [UIColor colorWithRed:.6 green:.4 blue:.2 alpha:0.5];
+		self.powerBar = [SKSpriteNode spriteNodeWithColor:powerBarBrown size:CGSizeMake(a*(n+1)+64*n, 64+2*a)];
+		float d2 = (self.size.width - self.nextTurn.size.width - self.powerBar.size.width - d)/2;
+		self.powerBar.position = CGPointMake(-self.size.width/2+self.powerBar.size.width/2+d2, 0);
 		[self addChild:self.powerBar];
 		
-		float a = (self.powerBar.size.width - 5*(self.powerBar.size.height-6))/6;
-		for (int i=0;i<5;i++){
+		for (int i=0;i<n;i++){
 			PowerButton* power;
-			
-			power = [[PowerButton alloc] initWithColor:[UIColor magentaColor] size:CGSizeMake(self.powerBar.size.height-6, self.powerBar.size.height-6)];
-			power.used = NO;
-			power.userInteractionEnabled = YES; //TO DO: remove when using a sprite;
-			
+			power = [[PowerButton alloc] initWithImage:@"infect0"];
+
 			power.position = CGPointMake(-self.powerBar.size.width/2+(i+1)*a+i*power.size.width+power.size.width/2, 0);
 			[self.powerBar addChild:power];
 			power.name = [NSString stringWithFormat:@"power%d",i];
