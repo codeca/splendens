@@ -12,13 +12,16 @@
 #import "TextButton.h"
 #import "GameScene.h"
 #import "TopPanel.h"
-//#import "Powers.h"
 
 @interface BottomPanel()
 @property TextButton* city;
 @property TextButton* tower;
 @property TextButton* lab;
+
+// Store the selected option for basic cell uptade
+// Possible values are self.city, self.tower, self.lab or nil
 @property TextButton* selected;
+
 @end
 
 @implementation BottomPanel
@@ -202,8 +205,7 @@
 		int a = 2*x-3*y;
 		int da = 2*y-x;
 		
-		NSString* image;
-		image = [NSString stringWithFormat:@"production"];
+		NSString* image = selectedCell.type==CellTypeTower ? @"attack" : @"production";
 
 		SKSpriteNode* attributeCell1 = [SKSpriteNode spriteNodeWithImageNamed:image];
 		attributeCell1.position = CGPointMake(da+a/2-x/2, da+a/2-y/2);
@@ -382,7 +384,7 @@
 				tableCell7.position = CGPointMake(dx3+dy1+x/2-self.size.width/2+dy2+2*x+dy2+self.upgradeButton.size.width+dy2, dy1+y/2-self.size.height/2);
 				tableCell8.position = CGPointMake(dx3+dy1+x+dy2+x/2-self.size.width/2+dy2+2*x+dy2+self.upgradeButton.size.width+dy2, dy1+y/2-self.size.height/2);
 				
-				image = [NSString stringWithFormat:@"production"];
+				image = selectedCell.type==CellTypeTower || self.selected==self.tower ? @"attack" : @"production";
 				
 				SKSpriteNode* attributeCell5 = [SKSpriteNode spriteNodeWithImageNamed:image];
 				attributeCell5.position = CGPointMake(da+a/2-x/2, da+a/2-y/2);

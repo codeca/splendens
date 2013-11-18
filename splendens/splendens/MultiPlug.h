@@ -15,7 +15,7 @@
 #define MULTIPLUG_PORT 8081
 
 // Show information about connections and matching in the console
-#define MULTIPLUG_DEBUG YES
+#define MULTIPLUG_DEBUG NO
 
 @protocol MultiPlugDelegate <NSObject>
 

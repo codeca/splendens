@@ -383,16 +383,20 @@
 		self.selectedFocus.hidden = NO;
 		
 		// Show the range for a tower
-		if (self.type == CellTypeTower) {
-			for (Cell* cell in self.cellsInRange) {
-				if (cell != self) {
-					cell.selectedFocus.color = [UIColor yellowColor];
-					cell.selectedFocus.hidden = NO;
-				}
-			}
-		}
+		if (self.type == CellTypeTower)
+			[self updateRangeDisplayForTower];
 	} else
 		map.selected = nil;
+}
+
+// Update the tower range display in the map
+- (void)updateRangeDisplayForTower {
+	for (Cell* cell in self.cellsInRange) {
+		if (cell != self) {
+			cell.selectedFocus.color = [UIColor yellowColor];
+			cell.selectedFocus.hidden = NO;
+		}
+	}
 }
 
 - (void)draggedToCell:(Cell*)cell {
@@ -449,6 +453,8 @@
 			((GameScene*)self.parent.parent).thisPlayer.mana -= manaCost;
 			self.type = type;
 			self.level = 1;
+			if (type == CellTypeTower)
+				[self updateRangeDisplayForTower];
 		}
 	}
 }
@@ -461,7 +467,8 @@
 			self.population -= popCost;
 			self.owner.mana -= manaCost;
 			self.level += 1;
-			
+			if (self.type == CellTypeTower)
+				[self updateRangeDisplayForTower];
 		}
 	}
 	

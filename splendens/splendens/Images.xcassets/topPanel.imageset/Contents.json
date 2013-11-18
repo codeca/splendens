@@ -2,6 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
+      "scale" : "1x",
+      "filename" : "topPanel.png"
+    },
+    {
+      "idiom" : "universal",
       "scale" : "2x",
       "filename" : "topPanel@2X.png"
     }

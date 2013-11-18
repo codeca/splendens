@@ -2,6 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
+      "scale" : "1x",
+      "filename" : "path2L.png"
+    },
+    {
+      "idiom" : "universal",
       "scale" : "2x",
       "filename" : "path2L@2X.png"
     }

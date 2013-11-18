@@ -2,6 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
+      "scale" : "1x",
+      "filename" : "troop.png"
+    },
+    {
+      "idiom" : "universal",
       "scale" : "2x",
       "filename" : "troop@2X.png"
     }

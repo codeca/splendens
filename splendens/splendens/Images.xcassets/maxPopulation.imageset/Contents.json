@@ -2,6 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
+      "scale" : "1x",
+      "filename" : "maxPopulation.png"
+    },
+    {
+      "idiom" : "universal",
       "scale" : "2x",
       "filename" : "maxPopulation@2X.png"
     }
