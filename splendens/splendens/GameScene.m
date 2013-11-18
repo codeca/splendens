@@ -38,7 +38,7 @@
 		player.maxMana = 10;
 		player.totalPopulation = 0;
 		player.color = colors[i];
-		player.name = gamePlayers[i][@"name"];
+		player.name = gamePlayers[i][@"data"];
 		player.playerId = playerId;
 		player.game = self;
 		player.usedPowers = [NSMutableArray array];

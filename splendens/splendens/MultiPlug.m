@@ -1,5 +1,5 @@
 //
-//  Plug.m
+//  MultiPlug.m
 //
 //  Created by Guilherme Souza on 10/17/13.
 //
@@ -71,24 +71,24 @@
 	return self;
 }
 
-- (void)startSimpleMatch:(NSString*)userName wishes:(NSArray*)wishes {
+- (void)startSimpleMatch:(id)playerData wishes:(NSArray*)wishes {
 	if (self.state != MULTIPLUGSTATE_OPEN)
 		@throw @"Invalid plug state";
-	[self sendRawMessage:MSG_OUT_SIMPLE_MATCH data:@{@"name": userName,
+	[self sendRawMessage:MSG_OUT_SIMPLE_MATCH data:@{@"data": playerData,
 													 @"id": self.myId,
 													 @"wishes": wishes}];
 	self.wishes = wishes;
 	self.state = MULTIPLUGSTATE_MATCHING;
 }
 
-- (NSString*)startFriendMatch:(NSString*)userName numPlayers:(int)num {
+- (NSString*)startFriendMatch:(id)playerData numPlayers:(int)num {
 	if (self.state != MULTIPLUGSTATE_OPEN)
 		@throw @"Invalid plug state";
 	NSString* alphabet = @"ABCDEFGHJKMNPQRSTUVWXYZ23456789";
 	NSMutableString* code = [NSMutableString string];
 	for (int i=0; i<5; i++)
 		[code appendString:[alphabet substringWithRange:NSMakeRange(arc4random_uniform(alphabet.length), 1)]];
-	[self sendRawMessage:MSG_OUT_FRIEND_MATCH_START data:@{@"name": userName,
+	[self sendRawMessage:MSG_OUT_FRIEND_MATCH_START data:@{@"data": playerData,
 														   @"id": self.myId,
 														   @"key": code,
 														   @"players": [NSNumber numberWithInt:num]}];
@@ -96,10 +96,10 @@
 	return code;
 }
 
-- (void)joinFriendMatch:(NSString*)userName withKey:(NSString*)key {
+- (void)joinFriendMatch:(id)playerData withKey:(NSString*)key {
 	if (self.state != MULTIPLUGSTATE_OPEN)
 		@throw @"Invalid plug state";
-	[self sendRawMessage:MSG_OUT_FRIEND_MATCH_JOIN data:@{@"name": userName,
+	[self sendRawMessage:MSG_OUT_FRIEND_MATCH_JOIN data:@{@"data": playerData,
 														  @"id": self.myId,
 														  @"key": [key uppercaseString]}];
 }

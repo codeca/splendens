@@ -1,5 +1,5 @@
 //
-//  Plug.h
+//  MultiPlug.h
 //
 //  Created by Guilherme Souza on 10/17/13.
 
@@ -37,7 +37,9 @@
 // Called when a match is successfully created
 // data contains all the match data sent by the server
 // By default, it only has one key "players": a NSArray in which all elements are
-// NSDictionary with two keys: "name" and "id"
+// NSDictionary with two keys:
+// "data" (the custom value set at the beginning of the match) and
+// "id" (a unique string to identify each player)
 - (void)multiPlug:(MultiPlug*)plug matched:(NSDictionary*)data;
 
 // Called whenever any player sends a message (in a game)
@@ -74,17 +76,17 @@ typedef enum {
 - (id)init;
 
 // Start a simple match
-// userName is the name for this player
+// player is any object to send to all player after the match (can be nil)
 // wishes represent the desired number of players in a game
 // Example of wishes: @[@2, @3] : accept a game with 2 or 3 players
-- (void)startSimpleMatch:(NSString*)userName wishes:(NSArray*)wishes;
+- (void)startSimpleMatch:(id)playerData wishes:(NSArray*)wishes;
 
 // Start a match with friends
 // Return the key (5-char string) this player should tell his friends
-- (NSString*)startFriendMatch:(NSString*)userName numPlayers:(int)num;
+- (NSString*)startFriendMatch:(id)playerData numPlayers:(int)num;
 
 // Try to join a match created by a friend
-- (void)joinFriendMatch:(NSString*)userName withKey:(NSString*)key;
+- (void)joinFriendMatch:(id)playerData withKey:(NSString*)key;
 
 // Send a given message to all players (in a game)
 // type and data will be delivered to everybody's delegate

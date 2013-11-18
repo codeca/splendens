@@ -15,6 +15,9 @@ module.exports = {
 	// Port to listen to
 	port: 8081,
 	
+	// Default network interface (used with ifconfig)
+	networkInterface: "en0",
+	
 	// Show information about connections and matching in the console
 	logConnections: true,
 	
@@ -53,10 +56,11 @@ module.exports = {
 	// Executed when a match is found
 	// data is the object that will be broadcasted to all players
 	// It contains only a property, "players":
-	// an array of elements with the format {name: "", id: ""}
+	// an array of elements with the format {data: <the custom player data>, id: ""}
 	// This callback can put more fields in this object, to return more data to all players 
 	onmatch: function (data) {
+        console.log(data)
         var maps = _maps[data.players.length]
-	   data.map = maps[Math.floor(Math.random()*maps.length)]
+        data.map = maps[Math.floor(Math.random()*maps.length)]
 	}
 }

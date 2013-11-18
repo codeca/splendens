@@ -6,8 +6,7 @@ var config = require("./config.js")
 var _totalConnections = 0
 
 // Get the local ip for this machine and save in an external host
-// TODO: debug in mac
-require("child_process").exec("ifconfig en0", function (error, stdout, stderr) {
+require("child_process").exec("ifconfig "+config.networkInterface, function (error, stdout, stderr) {
 	var ips, localIpIndex, options
 	if (error)
 		throw new Error("Error")
@@ -40,14 +39,14 @@ var MSG_IN_FRIEND_MATCH_JOIN = 2
 // Treat each new message from a device
 function onmessage(type, data) {
 	if (this.state == Player.STATE_NONE) {
-		if (!data || typeof data.name != "string" || typeof data.id != "string") {
+		if (!data || !("data" in data) || typeof data.id != "string") {
 			// Invalid data
 			if (config.logConnections)
 				console.log("> Invalid match data, closing connection")
 			this.close()
 			return
 		}
-		this.name = data.name
+		this.data = data.data
 		this.id = data.id
 		
 		if (type == MSG_IN_SIMPLE_MATCH) {

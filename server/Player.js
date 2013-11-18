@@ -10,8 +10,8 @@ function Player(conn) {
 	// The current player state (see Player.STATE_* constants)
 	this.state = Player.STATE_NONE
 	
-	// The player name (sent by the iOS)
-	this.name = ""
+	// Custom player data, sent by the iOS
+	this.data = null
 	
 	// An unique id for the player (sent by the iOS)
 	this.id = ""
