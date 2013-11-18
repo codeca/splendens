@@ -14,9 +14,12 @@
 #import "TopPanel.h"
 
 @interface BottomPanel()
-@property TextButton* city;
-@property TextButton* tower;
-@property TextButton* lab;
+
+@property (nonatomic) BOOL powerBarHidden;
+
+@property (nonatomic) TextButton* city;
+@property (nonatomic) TextButton* tower;
+@property (nonatomic) TextButton* lab;
 
 // Store the selected option for basic cell uptade
 // Possible values are self.city, self.tower, self.lab or nil
@@ -55,9 +58,11 @@
 		self.powerBar.position = CGPointMake(-self.size.width/2+self.powerBar.size.width/2+d2, 0);
 		[self addChild:self.powerBar];
 		
+		NSArray* powerImageName = [Powers powerNames];
+		
 		for (int i=0;i<n;i++){
 			PowerButton* power;
-			power = [[PowerButton alloc] initWithImage:@"infect0"];
+			power = [[PowerButton alloc] initWithImage:powerImageName[i]];
 
 			power.position = CGPointMake(-self.powerBar.size.width/2+(i+1)*a+i*power.size.width+power.size.width/2, 0);
 			[self.powerBar addChild:power];
@@ -82,7 +87,7 @@
 
 - (void)setSelectedPower:(PowerType)selectedPower{
 	if (selectedPower == PowerNone){
-		[self clearPowersBar];
+		[self clearpowerBar];
 	}
 	if (selectedPower != PowerNone){
 		self.selectedPowerButton = self.powers[selectedPower];
@@ -140,9 +145,9 @@
 				if([pwBt.name isEqualToString:@"power0"]){
 					self.selectedPower = (self.selectedPower == PowerInfect) ? PowerNone : PowerInfect;
 				} else if([pwBt.name isEqualToString:@"power1"]){
-					self.selectedPower = (self.selectedPower == PowerClearMap) ? PowerNone : PowerClearMap;
-				} else if([pwBt.name isEqualToString:@"power2"]){
 					self.selectedPower = (self.selectedPower == PowerDowngrade) ? PowerNone : PowerDowngrade;
+				} else if([pwBt.name isEqualToString:@"power2"]){
+					self.selectedPower = (self.selectedPower == PowerClearMap) ? PowerNone : PowerClearMap;
 				} else if([pwBt.name isEqualToString:@"power3"]){
 					self.selectedPower = (self.selectedPower == PowerNeutralize) ? PowerNone : PowerNeutralize;
 				} else if([pwBt.name isEqualToString:@"power4"]){
@@ -161,17 +166,17 @@
 	
 }
 
-- (void) clearPowersBar{
+- (void) clearpowerBar{
 	// TODO: review this logic
 	for (PowerButton* bt in self.powers)
 		if (bt.used == NO)
 			bt.color = [UIColor magentaColor];
 }
 
-- (void)resetPowersBar {
+- (void)resetPowerBar {
 	for (PowerButton* bt in self.powers)
 		bt.used = NO;
-	[self clearPowersBar];
+	[self clearpowerBar];
 }
 
 + (UIColor*) colorForPower: (PowerType) powerType{
@@ -184,13 +189,36 @@
 	return nil;
 }
 
+- (void)setPowerBarHidden:(BOOL)powerBarHidden{
+	if (powerBarHidden == YES){
+		self.powerBar.userInteractionEnabled = NO;
+		self.powerBar.hidden = YES;
+		PowerButton* power;
+		for (power in self.powerBar.children){
+			power.userInteractionEnabled = NO;
+		}
+	}
+	else{
+		self.powerBar.userInteractionEnabled = YES;
+		self.powerBar.hidden = NO;
+		PowerButton* power;
+		for (power in self.powerBar.children){
+			power.userInteractionEnabled = YES;
+		}
+	}
+	_powerBarHidden = powerBarHidden;
+}
+
 - (void)update {
 	GameScene* game = (GameScene*)self.parent;
 	Cell* selectedCell = game.map.selected;
 	[self.table removeAllChildren];
 	[self.upgradeButton removeAllChildren];
-	if (selectedCell == nil);
+	if (selectedCell == nil){
+		self.powerBarHidden = NO;
+	}
 	else{
+		self.powerBarHidden = YES;
 		int x = 76; // Width of each table cell
 		int y = 40; // Height of each table cell
 		int dy2 = 10; // Space between table cells

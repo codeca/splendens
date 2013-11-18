@@ -31,7 +31,7 @@
 
 // Remove all cooldowns and re-enable all powers to be used
 // Called right before the powers are applyed
-- (void)resetPowersBar;
+- (void)resetPowerBar;
 
 // Tell the power bar the current power was used
 - (void)usePower;

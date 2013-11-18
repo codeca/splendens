@@ -247,7 +247,7 @@
 		[self.view presentScene:nextScene transition:[SKTransition doorwayWithDuration:1.5]];
 	} else{
 		self.userTurn = UserTurn;
-		[self.bottomPanel resetPowersBar];
+		[self.bottomPanel resetPowerBar];
 	}
 }
 
