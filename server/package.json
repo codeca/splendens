@@ -3,7 +3,7 @@
 		"start": "node index.js"
 	},
 	"name": "multiPlug",
-	"version": "0.0.0",
+	"version": "0.1.0",
 	"description": "A socket connection for multiplayer in iOS",
 	"keywords": ["iOS", "multiplayer"],
 	"issues": "https://github.com/codeca/multiPlug/issues",

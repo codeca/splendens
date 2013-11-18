@@ -19,7 +19,7 @@ function Game(players) {
 		
 		players[i].game = this
 		players[i].state = Player.STATE_INGAME
-		data.players.push({name: players[i].name, id: players[i].id})
+		data.players.push({data: players[i].data, id: players[i].id})
 	}
 	this.players = players
 	
