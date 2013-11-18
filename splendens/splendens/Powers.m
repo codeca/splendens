@@ -56,6 +56,27 @@
 		[self applyNeutralizeOnCell:cell];
 	else if (type == PowerConquer)
 		[self applyConquerOnCell:cell byPlayer:player];
+	
+	// Show visual feedback
+	if (type != PowerClearMap) {
+		SKSpriteNode* node = [SKSpriteNode spriteNodeWithImageNamed:[Powers powerNames][type]];
+		float size = cell.size.width;
+		node.position = cell.position;
+		node.size = CGSizeMake(size*.6, size*.6);
+		node.zPosition = 1;
+		[node setScale:3];
+		node.alpha = 0;
+		[game.map addChild:node];
+		
+		// Animate the feedback (auto-remove the node afterwards)
+		SKAction* fadeIn = [SKAction fadeInWithDuration:.5];
+		SKAction* fall = [SKAction scaleTo:1 duration:1];
+		SKAction* move = [SKAction moveTo:[cell randomPointNear:1] duration:1];
+		SKAction* appear = [SKAction group:@[fadeIn, fall, move]];
+		SKAction* singleBlink = [SKAction sequence:@[[SKAction fadeInWithDuration:.4], [SKAction fadeOutWithDuration:.4]]];
+		SKAction* blink = [SKAction repeatAction:singleBlink count:4];
+		[node runAction:[SKAction sequence:@[appear, blink, [SKAction removeFromParent]]]];
+	}
 }
 
 + (NSArray*)powerNames {
