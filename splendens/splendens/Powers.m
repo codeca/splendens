@@ -8,6 +8,7 @@
 
 #import "Powers.h"
 #import "Economy.h"
+#import <SpriteKit/SpriteKit.h>
 
 @implementation Powers
 
@@ -20,6 +21,25 @@
 	[game.thisPlayer.usedPowers addObject:data];
 	game.thisPlayer.mana -= [Economy manaCostForPower:type];
 	[game.topPanel updateMaxMana];
+	
+	// Show visual feedback
+	if (type != PowerClearMap) {
+		SKSpriteNode* node = [SKSpriteNode spriteNodeWithImageNamed:[Powers powerNames][type]];
+		float size = cell.size.width;
+		node.name = @"powerOverlay";
+		node.position = cell.position;
+		node.size = CGSizeMake(size*.6, size*.6);
+		node.zPosition = 1;
+		[node setScale:3];
+		node.alpha = 0;
+		[game.map addChild:node];
+		
+		// Animate the feedback
+		SKAction* fadeIn = [SKAction fadeInWithDuration:.5];
+		SKAction* fall = [SKAction scaleTo:1 duration:1];
+		SKAction* move = [SKAction moveTo:[cell randomPointNear:1] duration:1];
+		[node runAction:[SKAction group:@[fadeIn, fall, move]]];
+	}
 }
 
 + (void)applyPower:(PowerType)type forPlayer:(Player*)player onCell:(Cell *)cell game:(GameScene *)game {
@@ -36,6 +56,13 @@
 		[self applyNeutralizeOnCell:cell];
 	else if (type == PowerConquer)
 		[self applyConquerOnCell:cell byPlayer:player];
+}
+
++ (NSArray*)powerNames {
+	static NSArray* r;
+	if (!r)
+		r = @[@"infect0", @"downgrade0", @"clearMap0", @"neutrilize0", @"conquer0"];
+	return r;
 }
 
 + (void)applyInfectOnCell:(Cell*)cell {

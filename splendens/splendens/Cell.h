@@ -51,10 +51,6 @@ typedef enum {
 
 - (void)setBonus:(BonusType)bonus;
 
-// Hide the planned power overlay
-// Called right before applying the powers
-- (void)clearPowerOverlay;
-
 // Force the texture update
 - (void)updateOverlay;
 
@@ -65,8 +61,9 @@ typedef enum {
 - (CellPosition)relativePositionToCell:(Cell*)cell;
 - (float)relativeAngleToCell:(Cell*)cell;
 
-// Return a random point near the center of this cell (used to place troops)
-- (CGPoint)randomPointNear: (float) ratio;
+// Return a random point near the center of this cell
+// ratio is a value between 0 (at center) and 1 (at edges)
+- (CGPoint)randomPointNear:(float)ratio;
 
 // Return whether the cell is not empty nor a wall
 - (BOOL)isCenter;

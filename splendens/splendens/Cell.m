@@ -203,12 +203,6 @@
 	}
 }
 
-- (void)clearPowerOverlay {
-	[self enumerateChildNodesWithName:@"powerOverlay" usingBlock:^(SKNode* node, BOOL* stop) {
-		[node removeFromParent];
-	}];
-}
-
 #pragma mark - internal methods
 
 // Reconstruct the cellsInRange array
@@ -350,11 +344,8 @@
 	// Try to apply a selected power in this cell
 	PowerType selectedPower = game.bottomPanel.selectedPower;
 	if (selectedPower != PowerNone) {
-		if (selectedPower == PowerClearMap || [self isCenter]){
-			if (selectedPower != PowerClearMap) {
-				// TODO: Show a visual feedback the power was applied in this cell
-			}
-			[Powers planPower:selectedPower onCell:nil game:game];
+		if (selectedPower == PowerClearMap || [self isCenter]) {
+			[Powers planPower:selectedPower onCell:self game:game];
 			[game.bottomPanel usePower];
 		} else {
 			// TODO: give audio feedback the click was invalid
