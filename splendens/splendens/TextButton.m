@@ -16,7 +16,6 @@
 		SKLabelNode* label = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
 		label.text = text;
 		label.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
-		self.used = NO;
 		self.centerRect = CGRectMake(18./36, 18./36, 0./36, 0./36); // Not working, why?
 		self.size = CGSizeMake(label.frame.size.width+30, label.frame.size.height+10);
 		self.userInteractionEnabled = YES;
@@ -27,8 +26,7 @@
 
 
 - (id)initWithImage:(NSString*)image{
-	if (self = [super initWithImageNamed:image]){
-		self.used = NO;
+	if (self = [super initWithImageNamed:image]) {
 		self.userInteractionEnabled = YES;
 	}
 	return self;

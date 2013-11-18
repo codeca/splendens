@@ -22,6 +22,8 @@
 // Possible values are self.city, self.tower, self.lab or nil
 @property TextButton* selected;
 
+@property (nonatomic) PowerButton* selectedPowerButton;
+
 @end
 
 @implementation BottomPanel
@@ -49,9 +51,9 @@
 		
 		float a = (self.powerBar.size.width - 5*(self.powerBar.size.height-6))/6;
 		for (int i=0;i<5;i++){
-			TextButton* power;
+			PowerButton* power;
 			
-			power = [[TextButton alloc] initWithColor:[UIColor magentaColor] size:CGSizeMake(self.powerBar.size.height-6, self.powerBar.size.height-6)];
+			power = [[PowerButton alloc] initWithColor:[UIColor magentaColor] size:CGSizeMake(self.powerBar.size.height-6, self.powerBar.size.height-6)];
 			power.used = NO;
 			power.userInteractionEnabled = YES; //TO DO: remove when using a sprite;
 			
@@ -87,6 +89,11 @@
 		self.selectedPowerButton = nil;
 	}
 	_selectedPower = selectedPower;
+}
+
+- (void)usePower {
+	self.selectedPowerButton.used = YES;
+	self.selectedPower = PowerNone;
 }
 
 - (void)textButtonClicked:(TextButton *)button {
@@ -125,18 +132,18 @@
 		self.selected = self.lab;
 	}
 	else{
-		if ([self.powers containsObject:button] && game.userTurn == UserTurn){
-			[self clearPowersBar];
-			if (button.used != YES){				
-				if([button.name isEqualToString:@"power0"]){
+		if ([self.powers containsObject:button] && game.userTurn == UserTurn) {
+			PowerButton* pwBt = (PowerButton*)button;
+			if (pwBt.used != YES){
+				if([pwBt.name isEqualToString:@"power0"]){
 					self.selectedPower = (self.selectedPower == PowerInfect) ? PowerNone : PowerInfect;
-				} else if([button.name isEqualToString:@"power1"]){
+				} else if([pwBt.name isEqualToString:@"power1"]){
 					self.selectedPower = (self.selectedPower == PowerClearMap) ? PowerNone : PowerClearMap;
-				} else if([button.name isEqualToString:@"power2"]){
+				} else if([pwBt.name isEqualToString:@"power2"]){
 					self.selectedPower = (self.selectedPower == PowerDowngrade) ? PowerNone : PowerDowngrade;
-				} else if([button.name isEqualToString:@"power3"]){
+				} else if([pwBt.name isEqualToString:@"power3"]){
 					self.selectedPower = (self.selectedPower == PowerNeutralize) ? PowerNone : PowerNeutralize;
-				} else if([button.name isEqualToString:@"power4"]){
+				} else if([pwBt.name isEqualToString:@"power4"]){
 					self.selectedPower = (self.selectedPower == PowerConquer) ? PowerNone : PowerConquer;
 				}
 				if (self.selectedPowerButton != nil){
@@ -153,15 +160,15 @@
 }
 
 - (void) clearPowersBar{
-	for (TextButton* i in self.powers){
-		if (i.used == NO) i.color = [UIColor magentaColor];
-	}
+	// TODO: review this logic
+	for (PowerButton* bt in self.powers)
+		if (bt.used == NO)
+			bt.color = [UIColor magentaColor];
 }
 
-- (void) resetPowersBar{
-	for (TextButton* i in self.powers){
-		i.used = NO;
-	}
+- (void)resetPowersBar {
+	for (PowerButton* bt in self.powers)
+		bt.used = NO;
 	[self clearPowersBar];
 }
 

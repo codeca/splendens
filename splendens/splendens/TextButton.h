@@ -19,7 +19,6 @@
 @interface TextButton : SKSpriteNode
 
 @property (nonatomic, weak) id<TextButtonDelegate> delegate;
-@property (nonatomic) BOOL used;
 
 - (id)initWithText:(NSString*)text;
 - (id)initWithImage:(NSString*)image;

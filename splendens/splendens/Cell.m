@@ -24,7 +24,6 @@
 @property (nonatomic) SKLabelNode* populationLabel;
 @property (nonatomic) SKSpriteNode* pathFocus;
 @property (nonatomic) SKSpriteNode* selectedFocus;
-@property (nonatomic) SKSpriteNode* powerOverlay;
 @property (nonatomic) SKSpriteNode* bonusNode; // A node to represent the cell bonus, child of map, but managed by the cell
 
 @end
@@ -72,12 +71,6 @@
 		self.selectedFocus.colorBlendFactor = 1;
 		self.selectedFocus.hidden = YES;
 		[self addChild:self.selectedFocus];
-		
-		// powerOverlay
-		self.powerOverlay = [SKSpriteNode spriteNodeWithTexture:[Cell textureWithName:@"path4"] size:CGSizeMake(size.width-5, size.height-5)];
-		self.powerOverlay.colorBlendFactor = 1;
-		self.powerOverlay.hidden = YES;
-		[self addChild:self.powerOverlay];
 		
 		// Bonus overlay (children of map)
 		CGSize bonusSize = CGSizeMake(size.width/2, size.height/2);
@@ -210,9 +203,10 @@
 	}
 }
 
-- (void)clearPowerOverlay{
-	self.powerOverlay.hidden = YES;
-	self.powerOverlay.color = nil;
+- (void)clearPowerOverlay {
+	[self enumerateChildNodesWithName:@"powerOverlay" usingBlock:^(SKNode* node, BOOL* stop) {
+		[node removeFromParent];
+	}];
 }
 
 #pragma mark - internal methods
@@ -352,24 +346,21 @@
 - (void)cellClicked {
 	Map* map = (Map*)self.parent;
 	GameScene* game = (GameScene*) map.scene;
-	TextButton* powerButton = game.bottomPanel.selectedPowerButton;
+	
+	// Try to apply a selected power in this cell
 	PowerType selectedPower = game.bottomPanel.selectedPower;
-	if (selectedPower != PowerNone){
+	if (selectedPower != PowerNone) {
 		if (selectedPower == PowerClearMap || [self isCenter]){
-			if (selectedPower != PowerClearMap){
-				self.powerOverlay.hidden = NO;
-				[Powers planPower:selectedPower onCell:self game:game];
+			if (selectedPower != PowerClearMap) {
+				// TODO: Show a visual feedback the power was applied in this cell
 			}
-			else [Powers planPower:selectedPower onCell:nil game:game];
-			powerButton.used = YES;
-			self.powerOverlay.color = [BottomPanel colorForPower:selectedPower];
-			game.bottomPanel.selectedPower = PowerNone;
-			powerButton.color = [UIColor blackColor];
-
-		}
-		else{
+			[Powers planPower:selectedPower onCell:nil game:game];
+			[game.bottomPanel usePower];
+		} else {
+			// TODO: give audio feedback the click was invalid
 			game.bottomPanel.selectedPower = PowerNone;
 		}
+		return;
 	}
 	
 	// Clear focused cells
