@@ -25,9 +25,7 @@
 // Possible values are self.city, self.tower, self.lab or nil
 @property TextButton* selected;
 
-@property NSMutableArray* powerAction;
-@property NSMutableArray* animationsTextures;
-
+@property NSMutableArray* powerActions;
 
 @property (nonatomic) PowerButton* selectedPowerButton;
 
@@ -81,31 +79,33 @@
 		self.upgradeButton.colorBlendFactor = 1;
 		self.upgradeButton.delegate = self;
 		
-		self.powerAction = [[NSMutableArray alloc]init];
-		self.animationsTextures = [[NSMutableArray alloc]init];
+		self.powerActions = [[NSMutableArray alloc]init];
+		NSMutableArray* animationTextures = [[NSMutableArray alloc]init];
+		NSMutableArray* atlases = [NSMutableArray array];
 
-		for (NSString* power in @[@"infect",@"downgrade",@"clearMap",@"neutrilize",@"conquer"]){
-			SKTextureAtlas* atlas;
-			atlas = [SKTextureAtlas atlasNamed:power];
+		for (NSString* powerName in @[@"infect", @"downgrade", @"clearMap", @"neutrilize", @"conquer"]) {
+			SKTextureAtlas* atlas = [SKTextureAtlas atlasNamed:powerName];
+			[atlases addObject:atlas];
+			
 			NSArray* textureNames = atlas.textureNames;
 			NSMutableArray* textures = [[NSMutableArray alloc] init];
-			for (int i=0; i < textureNames.count/2; i++){
-				NSString* name = [NSString stringWithFormat:@"%@%d",power,i];
-				SKTexture* texture;
-				texture = [SKTexture textureWithImageNamed:name];
-				[texture preloadWithCompletionHandler:^{
-					NSLog(@"load em %@",name);
-				}];
-				[textures addObject:texture];
+			for (int i=0; i < textureNames.count/2; i++) {
+				NSString* name = [NSString stringWithFormat:@"%@%d", powerName, i];
+				[textures addObject:[atlas textureNamed:name]];
 			}
-			[self.animationsTextures addObject:textures];
-			SKAction* animation = [SKAction animateWithTextures: textures timePerFrame:0.1 resize:YES restore:YES];
-			SKAction* wait = [SKAction waitForDuration:1];
-			NSArray* animationArray = @[animation,wait];
-			SKAction* animationSequence = [SKAction sequence:animationArray];
-			animationSequence = [SKAction repeatActionForever:animationSequence];
-			[self.powerAction addObject:animationSequence];
+			[animationTextures addObject:textures];
 		}
+		
+		[SKTextureAtlas preloadTextureAtlases:atlases withCompletionHandler:^{
+			for (int i=0; i<animationTextures.count; i++) {
+				SKAction* animation = [SKAction animateWithTextures:animationTextures[i] timePerFrame:0.1 resize:YES restore:YES];
+				SKAction* wait = [SKAction waitForDuration:1];
+				NSArray* animationArray = @[animation,wait];
+				SKAction* animationSequence = [SKAction sequence:animationArray];
+				animationSequence = [SKAction repeatActionForever:animationSequence];
+				[self.powerActions addObject:animationSequence];
+			}
+		}];
 		
 	}
 	return self;
@@ -222,7 +222,7 @@
 
 - (void)animatePower{
 
-	[self.selectedPowerButton runAction:self.powerAction[self.selectedPower]];
+	[self.selectedPowerButton runAction:self.powerActions[self.selectedPower]];
 	 
 }
 
