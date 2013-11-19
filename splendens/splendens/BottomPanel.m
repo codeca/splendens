@@ -90,7 +90,7 @@
 			NSArray* textureNames = atlas.textureNames;
 			NSMutableArray* textures = [[NSMutableArray alloc] init];
 			for (int i=0; i < textureNames.count/2; i++){
-				NSString* name = [NSString stringWithFormat:@"%@%d@",power,i];
+				NSString* name = [NSString stringWithFormat:@"%@%d",power,i];
 				SKTexture* texture;
 				texture = [SKTexture textureWithImageNamed:name];
 				[texture preloadWithCompletionHandler:^{
@@ -213,33 +213,10 @@
 	[self clearPowerBar];
 }
 
-+ (UIColor*) colorForPower: (PowerType) powerType{
-	if (powerType == PowerNone) return nil;
-	if (powerType == PowerInfect) return [UIColor greenColor];
-	if (powerType == PowerClearMap) return [UIColor blackColor];
-	if (powerType == PowerDowngrade) return [UIColor blueColor];
-	if (powerType == PowerNeutralize) return [UIColor yellowColor];
-	if (powerType == PowerConquer) return [UIColor redColor];
-	return nil;
-}
-
-- (void)setPowerBarHidden:(BOOL)powerBarHidden{
-	if (powerBarHidden == YES){
-		self.powerBar.userInteractionEnabled = NO;
-		self.powerBar.hidden = YES;
-		PowerButton* power;
-		for (power in self.powerBar.children){
-			power.userInteractionEnabled = NO;
-		}
-	}
-	else{
-		self.powerBar.userInteractionEnabled = YES;
-		self.powerBar.hidden = NO;
-		PowerButton* power;
-		for (power in self.powerBar.children){
-			power.userInteractionEnabled = YES;
-		}
-	}
+- (void)setPowerBarHidden:(BOOL)powerBarHidden {
+	[self.powerBar removeFromParent];
+	if (!powerBarHidden)
+		[self addChild:self.powerBar];
 	_powerBarHidden = powerBarHidden;
 }
 

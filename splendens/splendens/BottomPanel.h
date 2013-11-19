@@ -36,6 +36,4 @@
 // Tell the power bar the current power was used
 - (void)usePower;
 
-+ (UIColor*)colorForPower: (PowerType) powerType;
-
 @end
