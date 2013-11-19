@@ -26,7 +26,7 @@
 }
 
 - (void)multiPlugConnected:(MultiPlug*)plug {
-	[self.plug startSimpleMatch:@"quiter" wishes:@[@2, @3, @4]];
+	[self.plug startSimpleMatch:@{@"name": @"quiter", @"level": @1} wishes:@[@2, @3, @4]];
 }
 
 - (void)multiPlug:(MultiPlug*)plug matched:(NSDictionary*)data {

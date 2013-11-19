@@ -34,11 +34,13 @@
 	for (int i=0; i<gamePlayers.count; i++) {
 		Player* player = [[Player alloc] init];
 		NSString* playerId = gamePlayers[i][@"id"];
+		NSDictionary* playerData = gamePlayers[i][@"data"];
 		player.mana = mana;
 		player.maxMana = 10;
 		player.totalPopulation = 0;
 		player.color = colors[i];
-		player.name = gamePlayers[i][@"data"];
+		player.name = playerData[@"name"];
+		player.level = [playerData[@"level"] integerValue];
 		player.playerId = playerId;
 		player.game = self;
 		player.usedPowers = [NSMutableArray array];

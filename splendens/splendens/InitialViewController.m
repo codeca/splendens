@@ -9,6 +9,7 @@
 #import "InitialViewController.h"
 #import "GameViewController.h"
 #import "DebugPlayer.h"
+#import "Player.h"
 
 // Tag values for view in the storyboard
 enum {
@@ -105,6 +106,8 @@ enum {
 	[[NSUserDefaults standardUserDefaults] setObject:self.name forKey:@"name"];
 	self.codeLabel.hidden = YES;
 	
+	NSDictionary* data = @{@"name": self.name, @"level": [NSNumber numberWithInt:Player.level]};
+	
 	if (self.randomMatch) {
 		// Start a random match
 		NSMutableArray* wishes = [NSMutableArray array];
@@ -116,15 +119,15 @@ enum {
 			else if (view.tag == ViewTagSwitch3) [wishes addObject:@3];
 			else if (view.tag == ViewTagSwitch4) [wishes addObject:@4];
 		}
-		[self.plug startSimpleMatch:self.name wishes:wishes];
+		[self.plug startSimpleMatch:data wishes:wishes];
 	} else {
 		NSString* code = self.codeInput.text;
 		if (code.length) {
 			// Join a friend match
-			[self.plug joinFriendMatch:self.name withKey:code];
+			[self.plug joinFriendMatch:data withKey:code];
 		} else {
 			// Start a friend match
-			code = [self.plug startFriendMatch:self.name numPlayers:self.friendsSegment.selectedSegmentIndex+2];
+			code = [self.plug startFriendMatch:data numPlayers:self.friendsSegment.selectedSegmentIndex+2];
 			self.matchProgress.progress = 0;
 			self.codeLabel.hidden = NO;
 			self.codeLabel.text = [NSString stringWithFormat:@"Tell your friends this code: %@", code];

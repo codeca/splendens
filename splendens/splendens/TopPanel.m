@@ -52,7 +52,7 @@
 			
 			name  = [SKLabelNode labelNodeWithFontNamed:@"Arial"];
 			name.verticalAlignmentMode = SKLabelVerticalAlignmentModeCenter;
-			name.text = i.name;
+			name.text = [NSString stringWithFormat:@"%@ (%d)", i.name, i.level];
 			name.name = @"name";
 			name.fontSize = 20;
 			[cell addChild:name];

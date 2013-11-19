@@ -51,7 +51,7 @@
 		
 		
 		float a = 5;
-		int n = 5;
+		int n = Player.numAvailablePowers;
 		UIColor* powerBarBrown = [UIColor colorWithRed:.6 green:.4 blue:.2 alpha:0.5];
 		self.powerBar = [SKSpriteNode spriteNodeWithColor:powerBarBrown size:CGSizeMake(a*(n+1)+64*n, 64+2*a)];
 		float d2 = (self.size.width - self.nextTurn.size.width - self.powerBar.size.width - d)/2;

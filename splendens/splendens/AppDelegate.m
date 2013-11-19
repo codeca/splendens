@@ -12,6 +12,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch
+	
+	// Set the default value for this player level
+	[[NSUserDefaults standardUserDefaults] registerDefaults:@{@"level": @1}];
+	
     return YES;
 }
 
