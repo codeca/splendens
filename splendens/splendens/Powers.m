@@ -25,6 +25,8 @@
 	// Show visual feedback
 	if (type != PowerClearMap) {
 		SKSpriteNode* node = [SKSpriteNode spriteNodeWithImageNamed:[Powers powerNames][type]];
+		node.color = game.thisPlayer.color;
+		node.colorBlendFactor = .33;
 		float size = cell.size.width;
 		node.name = @"powerOverlay";
 		node.position = cell.position;
@@ -60,6 +62,8 @@
 	// Show visual feedback
 	if (type != PowerClearMap) {
 		SKSpriteNode* node = [SKSpriteNode spriteNodeWithImageNamed:[Powers powerNames][type]];
+		node.color = player.color;
+		node.colorBlendFactor = .33;
 		float size = cell.size.width;
 		node.position = cell.position;
 		node.size = CGSizeMake(size*.6, size*.6);
