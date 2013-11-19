@@ -25,6 +25,10 @@
 // Possible values are self.city, self.tower, self.lab or nil
 @property TextButton* selected;
 
+@property NSMutableArray* powerAction;
+@property NSMutableArray* animationsTextures;
+
+
 @property (nonatomic) PowerButton* selectedPowerButton;
 
 @end
@@ -71,9 +75,37 @@
 			[self.powers addObject:power];
 		}
 		
+		
+		
 		self.upgradeButton = [[TextButton alloc] initWithImage:@"arrow"];
 		self.upgradeButton.colorBlendFactor = 1;
 		self.upgradeButton.delegate = self;
+		
+		self.powerAction = [[NSMutableArray alloc]init];
+		self.animationsTextures = [[NSMutableArray alloc]init];
+
+		for (NSString* power in @[@"infect",@"downgrade",@"clearMap",@"neutrilize",@"conquer"]){
+			SKTextureAtlas* atlas;
+			atlas = [SKTextureAtlas atlasNamed:power];
+			NSArray* textureNames = atlas.textureNames;
+			NSMutableArray* textures = [[NSMutableArray alloc] init];
+			for (int i=0; i < textureNames.count/2; i++){
+				NSString* name = [NSString stringWithFormat:@"%@%d@",power,i];
+				SKTexture* texture;
+				texture = [SKTexture textureWithImageNamed:name];
+				[texture preloadWithCompletionHandler:^{
+					NSLog(@"load em %@",name);
+				}];
+				[textures addObject:texture];
+			}
+			[self.animationsTextures addObject:textures];
+			SKAction* animation = [SKAction animateWithTextures: textures timePerFrame:0.1 resize:YES restore:YES];
+			SKAction* wait = [SKAction waitForDuration:1];
+			NSArray* animationArray = @[animation,wait];
+			SKAction* animationSequence = [SKAction sequence:animationArray];
+			animationSequence = [SKAction repeatActionForever:animationSequence];
+			[self.powerAction addObject:animationSequence];
+		}
 		
 	}
 	return self;
@@ -87,14 +119,19 @@
 
 - (void)setSelectedPower:(PowerType)selectedPower{
 	if (selectedPower == PowerNone){
-		[self clearpowerBar];
-	}
-	if (selectedPower != PowerNone){
-		self.selectedPowerButton = self.powers[selectedPower];
-	}
-	else{
+		[self stopPowerAnimation];
+		[self clearPowerBar];
 		self.selectedPowerButton = nil;
 	}
+	
+	if (selectedPower != PowerNone){
+		if (_selectedPower != PowerNone) [self stopPowerAnimation];
+		self.selectedPowerButton = self.powers[selectedPower];
+		
+		_selectedPower = selectedPower;
+		[self animatePower];
+	}
+	
 	_selectedPower = selectedPower;
 }
 
@@ -153,9 +190,6 @@
 				} else if([pwBt.name isEqualToString:@"power4"]){
 					self.selectedPower = (self.selectedPower == PowerConquer) ? PowerNone : PowerConquer;
 				}
-				if (self.selectedPowerButton != nil){
-					self.selectedPowerButton.color = [UIColor redColor];
-				}
 			}
 			else{
 				self.selectedPower = PowerNone;
@@ -166,17 +200,17 @@
 	
 }
 
-- (void) clearpowerBar{
+- (void) clearPowerBar{
 	// TODO: review this logic
 	for (PowerButton* bt in self.powers)
-		if (bt.used == NO)
-			bt.color = [UIColor magentaColor];
+		if (bt.used == NO);
+			//bt.color = [UIColor magentaColor];
 }
 
 - (void)resetPowerBar {
 	for (PowerButton* bt in self.powers)
 		bt.used = NO;
-	[self clearpowerBar];
+	[self clearPowerBar];
 }
 
 + (UIColor*) colorForPower: (PowerType) powerType{
@@ -209,6 +243,16 @@
 	_powerBarHidden = powerBarHidden;
 }
 
+- (void)animatePower{
+
+	[self.selectedPowerButton runAction:self.powerAction[self.selectedPower]];
+	 
+}
+
+- (void)stopPowerAnimation{
+	[self.selectedPowerButton removeAllActions];
+}
+
 - (void)update {
 	GameScene* game = (GameScene*)self.parent;
 	Cell* selectedCell = game.map.selected;
@@ -216,6 +260,12 @@
 	[self.upgradeButton removeAllChildren];
 	if (selectedCell == nil){
 		self.powerBarHidden = NO;
+		if (self.selectedPower != PowerNone){
+			
+			
+			
+
+		}
 	}
 	else{
 		self.powerBarHidden = YES;

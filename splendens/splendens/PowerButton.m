@@ -12,7 +12,7 @@
 
 - (void)setUsed:(BOOL)used {
 	// TODO: rewrite
-	self.color = used ? [UIColor blackColor] : [UIColor magentaColor];
+	//self.color = used ? [UIColor blackColor] : [UIColor magentaColor];
 	_used = used;
 }
 
