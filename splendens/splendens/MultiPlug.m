@@ -36,36 +36,24 @@
 
 - (id)init {
 	if (self = [super init]) {
-		NSString* url = [MULTIPLUG_EXTERNAL_HOST stringByAppendingFormat:@"/get.php?key=%@&noCache=%d", [[NSBundle mainBundle] bundleIdentifier], arc4random()];
-		if (MULTIPLUG_DEBUG) NSLog(@"Getting server ip in %@", url);
-		NSURLRequest* req = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
-		NSOperationQueue* queue = [NSOperationQueue currentQueue];
-		[NSURLConnection sendAsynchronousRequest:req queue:queue completionHandler:^(NSURLResponse* _, NSData* data, NSError* error) {
-			if (error) {
-				[self closeWithError];
-				if (MULTIPLUG_DEBUG) NSLog(@"Error with the request, check your Internet connection");
-				return;
-			}
-			
-			NSString* ip = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-			if (MULTIPLUG_DEBUG) NSLog(@"Got %@, connecting at port %d", ip, MULTIPLUG_PORT);
-			
-			CFReadStreamRef readStream;
-			CFWriteStreamRef writeStream;
-			CFStreamCreatePairWithSocketToHost(NULL, (__bridge CFStringRef)ip, MULTIPLUG_PORT, &readStream, &writeStream);
-			self.inputStream = (__bridge_transfer NSInputStream*)readStream;
-			self.outputStream = (__bridge_transfer NSOutputStream*)writeStream;
-			
-			[self.inputStream setDelegate:self];
-			[self.outputStream setDelegate:self];
-			[self.inputStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-			[self.outputStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-			[self.inputStream open];
-			[self.outputStream open];
-			
-			self.writeBuffer = [[NSMutableData alloc] initWithCapacity:1024];
-			self.readBuffer = [[NSMutableData alloc] initWithCapacity:1024];
-		}];
+		NSString* ip = MULTIPLUG_EXTERNAL_HOST;
+		if (MULTIPLUG_DEBUG) NSLog(@"Got %@, connecting at port %d", ip, MULTIPLUG_PORT);
+		
+		CFReadStreamRef readStream;
+		CFWriteStreamRef writeStream;
+		CFStreamCreatePairWithSocketToHost(NULL, (__bridge CFStringRef)ip, MULTIPLUG_PORT, &readStream, &writeStream);
+		self.inputStream = (__bridge_transfer NSInputStream*)readStream;
+		self.outputStream = (__bridge_transfer NSOutputStream*)writeStream;
+		
+		[self.inputStream setDelegate:self];
+		[self.outputStream setDelegate:self];
+		[self.inputStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+		[self.outputStream scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+		[self.inputStream open];
+		[self.outputStream open];
+		
+		self.writeBuffer = [[NSMutableData alloc] initWithCapacity:1024];
+		self.readBuffer = [[NSMutableData alloc] initWithCapacity:1024];
 		self.myId = [[NSUUID UUID] UUIDString];
 	}
 	return self;

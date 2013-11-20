@@ -9,7 +9,7 @@
 
 // External host to get the server local ip
 // sitegui.com.br will work for free
-#define MULTIPLUG_EXTERNAL_HOST @"http://sitegui.com.br/multiPlug"
+#define MULTIPLUG_EXTERNAL_HOST @"splendens-server.elasticbeanstalk.com"
 
 // Port to connect to
 #define MULTIPLUG_PORT 8081
