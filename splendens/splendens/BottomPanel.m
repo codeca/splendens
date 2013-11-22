@@ -136,7 +136,7 @@
 }
 
 - (void)usePower {
-	self.selectedPowerButton.used = YES;
+	self.selectedPowerButton.disabled = YES;
 	self.selectedPower = PowerNone;
 }
 
@@ -178,7 +178,7 @@
 	else{
 		if ([self.powers containsObject:button] && game.userTurn == UserTurn) {
 			PowerButton* pwBt = (PowerButton*)button;
-			if (pwBt.used != YES){
+			if (pwBt.disabled != YES){
 				if([pwBt.name isEqualToString:@"power0"]){
 					self.selectedPower = (self.selectedPower == PowerInfect) ? PowerNone : PowerInfect;
 				} else if([pwBt.name isEqualToString:@"power1"]){
@@ -203,13 +203,13 @@
 - (void) clearPowerBar{
 	// TODO: review this logic
 	for (PowerButton* bt in self.powers)
-		if (bt.used == NO);
+		if (bt.disabled == NO);
 			//bt.color = [UIColor magentaColor];
 }
 
 - (void)resetPowerBar {
 	for (PowerButton* bt in self.powers)
-		bt.used = NO;
+		bt.disabled = NO;
 	[self clearPowerBar];
 }
 
@@ -220,14 +220,12 @@
 	_powerBarHidden = powerBarHidden;
 }
 
-- (void)animatePower{
-
-	[self.selectedPowerButton runAction:self.powerActions[self.selectedPower]];
-	 
+- (void)animatePower {
+	[self.selectedPowerButton runAction:self.powerActions[self.selectedPower] withKey:@"frames"];
 }
 
 - (void)stopPowerAnimation{
-	[self.selectedPowerButton removeAllActions];
+	[self.selectedPowerButton removeActionForKey:@"frames"];
 }
 
 - (void)update {

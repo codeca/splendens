@@ -13,8 +13,10 @@
 @interface PowerButton : TextButton
 
 // Indicate whether this power has already been used
-@property (nonatomic) BOOL used;
+@property (nonatomic) BOOL disabled;
 
-- (void)setUsed:(BOOL)used;
+- (id)initWithImage:(NSString *)image;
+
+- (void)setDisabled:(BOOL)disabled;
 
 @end

@@ -10,10 +10,15 @@
 
 @implementation PowerButton
 
-- (void)setUsed:(BOOL)used {
-	// TODO: rewrite
-	//self.color = used ? [UIColor blackColor] : [UIColor magentaColor];
-	_used = used;
+- (id)initWithImage:(NSString *)image {
+	if (self = [super initWithImage:image])
+		self.color = [UIColor blackColor];
+	return self;
+}
+
+- (void)setDisabled:(BOOL)disabled {
+	[self runAction:[SKAction colorizeWithColorBlendFactor:disabled ? .25 : 0 duration:.5]];
+	_disabled = disabled;
 }
 
 @end
