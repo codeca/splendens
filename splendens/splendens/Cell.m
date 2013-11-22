@@ -97,6 +97,7 @@
 }
 
 - (void)setOwner:(Player *)owner {
+	self.bonus = owner.bonus;
 	_owner = owner;
 	[self updateOverlay];
 }
@@ -345,11 +346,7 @@
 	PowerType selectedPower = game.bottomPanel.selectedPower;
 	if (selectedPower != PowerNone) {
 		// Validate the action
-		if ((selectedPower == PowerInfect && [self isCenter] && self.owner != game.thisPlayer)
-			|| (selectedPower == PowerDowngrade && [self isCenter] && self.type != CellTypeBasic)
-			|| (selectedPower == PowerClearMap)
-			|| (selectedPower == PowerNeutralize && [self isCenter] && self.owner)
-			|| (selectedPower == PowerConquer && [self isCenter] && self.owner != game.thisPlayer)) {
+		if (selectedPower == PowerClearMap || [self isCenter]) {
 			[Powers planPower:selectedPower onCell:self game:game];
 			[game.bottomPanel usePower];
 		} else {

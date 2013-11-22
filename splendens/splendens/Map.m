@@ -353,9 +353,7 @@
 		} else if (troop.amount > destiny.population*destinyArmor){
 			// Attack resulted in conquest
 			if (destiny.bonus != BonusNone) {
-				if (destiny.owner) {
-					destiny.bonus = troop.owner.bonus;
-				} else {
+				if (!destiny.owner) {
 					troop.owner.bonus = destiny.bonus;
 					troop.owner.bonusTimeLeft = 7;
 				}

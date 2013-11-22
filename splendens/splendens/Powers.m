@@ -116,12 +116,10 @@
 
 + (void)applyNeutralizeOnCell:(Cell*)cell {
 	cell.owner = nil;
-	cell.bonus = BonusNone;
 }
 
 + (void)applyConquerOnCell:(Cell*)cell byPlayer:(Player*)player {
 	cell.owner = player;
-	cell.bonus = player.bonus;
 	cell.population = 0;
 }
 
