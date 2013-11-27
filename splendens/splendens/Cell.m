@@ -437,7 +437,7 @@
 			((GameScene*)self.parent.parent).thisPlayer.mana -= manaCost;
 			self.type = type;
 			self.level = 1;
-			if (type == CellTypeTower)
+			if (type == CellTypeTower && ((Map*)self.parent).selected == self)
 				[self updateRangeDisplayForTower];
 		}
 	}
@@ -451,7 +451,7 @@
 			self.population -= popCost;
 			self.owner.mana -= manaCost;
 			self.level += 1;
-			if (self.type == CellTypeTower)
+			if (self.type == CellTypeTower && ((Map*)self.parent).selected == self)
 				[self updateRangeDisplayForTower];
 		}
 	}
