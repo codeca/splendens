@@ -17,8 +17,11 @@
 }
 
 - (void)setDisabled:(BOOL)disabled {
-	[self runAction:[SKAction colorizeWithColorBlendFactor:disabled ? .25 : 0 duration:.5]];
-	_disabled = disabled;
+	if (_disabled != disabled){
+		[self removeActionForKey:@"disabled"];
+		[self runAction:[SKAction colorizeWithColorBlendFactor:disabled ? .25 : 0 duration:.5] withKey:@"disabled"];
+		_disabled = disabled;
+	}
 }
 
 @end

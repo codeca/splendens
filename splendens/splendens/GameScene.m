@@ -249,7 +249,9 @@
 		[self.view presentScene:nextScene transition:[SKTransition doorwayWithDuration:1.5]];
 	} else{
 		self.userTurn = UserTurn;
+		
 		[self.bottomPanel resetPowerBar];
+		[self.topPanel updateMaxMana];
 	}
 }
 

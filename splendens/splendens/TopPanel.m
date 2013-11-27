@@ -12,6 +12,7 @@
 #import "GameScene.h"
 #import "Map.h"
 #import "Economy.h"
+#import "PowerButton.h"
 
 
 @implementation TopPanel
@@ -91,6 +92,8 @@
 - (void) updateMaxMana{
 	GameScene* game = (GameScene*) self.parent;
 	Map* map = game.map;
+	BottomPanel* bottomPanel = game.bottomPanel;
+	Player* thisPlayer = game.thisPlayer;
 	
 	for (Player* i in game.players){
 		i.maxMana = 10;
@@ -103,10 +106,30 @@
 	
 	for (Player* i in game.players){
 		int index = [game.players indexOfObject:i];
-		
 		SKSpriteNode *cell = (SKSpriteNode*)[self childNodeWithName:[NSString stringWithFormat:@"celula%d",index]];
 		SKLabelNode *mana = (SKLabelNode*)[cell childNodeWithName:[NSString stringWithFormat:@"mana"]];
 		mana.text = [NSString stringWithFormat:@"Mana %d/%d",i.mana,i.maxMana];
+	}
+	PowerButton* power;
+	if ([Player numAvailablePowers] >= 5 && thisPlayer.mana < [Economy manaCostForPower:PowerConquer]){
+		power = bottomPanel.powers[PowerConquer];
+		power.disabled = YES;
+	}
+	if ([Player numAvailablePowers] >= 4 && thisPlayer.mana < [Economy manaCostForPower:PowerNeutralize]){
+		power = bottomPanel.powers[PowerNeutralize];
+		power.disabled = YES;
+	}
+	if ([Player numAvailablePowers] >= 3 && thisPlayer.mana < [Economy manaCostForPower:PowerClearMap]){
+		power = bottomPanel.powers[PowerClearMap];
+		power.disabled = YES;
+	}
+	if ([Player numAvailablePowers] >= 2 && thisPlayer.mana < [Economy manaCostForPower:PowerDowngrade]){
+		power = bottomPanel.powers[PowerDowngrade];
+		power.disabled = YES;
+	}
+	if ([Player numAvailablePowers] >= 1 && thisPlayer.mana < [Economy manaCostForPower:PowerInfect]){
+		power = bottomPanel.powers[PowerInfect];
+		power.disabled = YES;
 	}
 }
 
