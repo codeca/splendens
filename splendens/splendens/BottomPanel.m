@@ -120,7 +120,6 @@
 - (void)setSelectedPower:(PowerType)selectedPower{
 	if (selectedPower == PowerNone){
 		[self stopPowerAnimation];
-		[self clearPowerBar];
 		self.selectedPowerButton = nil;
 	}
 	
@@ -200,17 +199,9 @@
 	
 }
 
-- (void) clearPowerBar{
-	// TODO: review this logic
-	for (PowerButton* bt in self.powers)
-		if (bt.disabled == NO);
-			//bt.color = [UIColor magentaColor];
-}
-
 - (void)resetPowerBar {
 	for (PowerButton* bt in self.powers)
 		bt.disabled = NO;
-	[self clearPowerBar];
 }
 
 - (void)setPowerBarHidden:(BOOL)powerBarHidden {
